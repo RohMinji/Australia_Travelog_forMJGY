@@ -60,7 +60,8 @@
   .chev{flex-shrink:0;transition:transform .2s;}
   .chev.open{transform:rotate(180deg);}
   .day-body{border-top:1px solid var(--line);padding:14px 16px 16px;}
-  .maptoggle{display:flex;align-items:center;gap:6px;font-size:12px;font-weight:500;color:var(--harbour);background:var(--paperDark);border:1px solid var(--line);border-radius:999px;padding:7px 12px;margin-bottom:12px;cursor:pointer;}
+  .maptoggle{display:flex;align-items:center;gap:6px;font-size:12px;font-weight:500;color:var(--harbour);background:var(--paperDark);border:1px solid var(--line);border-radius:999px;padding:7px 12px;cursor:pointer;}
+  .daytools-row{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:12px;}
   .daymap{width:100%;height:220px;border-radius:14px;overflow:hidden;margin-bottom:14px;display:none;border:1px solid var(--line);}
   .daymap.show{display:block;}
   .timeline{position:relative;margin-left:6px;padding-left:20px;border-left:2px dashed var(--line);}
@@ -78,6 +79,8 @@
   .dayhead-actions{display:flex;align-items:center;gap:6px;}
   .iconbtn{border:none;background:none;cursor:pointer;padding:6px;border-radius:8px;color:var(--harbour);}
   .iconbtn:hover{background:var(--paperDark);}
+  .iconbtn:disabled{opacity:.35;cursor:not-allowed;}
+  .iconbtn:disabled:hover{background:none;}
   .edit-row{border:1px solid var(--line);background:var(--paperDark);border-radius:12px;padding:10px;margin-bottom:10px;}
   .edit-row .erow{display:flex;gap:6px;margin-bottom:6px;}
   .edit-row input{flex:1;border:1px solid var(--line);border-radius:8px;padding:7px 9px;font-size:12px;outline:none;background:var(--cream);min-width:0;}
@@ -488,15 +491,15 @@ function ItineraryTab(){
             <div class="packing-tags">${PACKING[day.id].map(p=>`<span class="ptag">${p}</span>`).join("")}</div>
           </div>
           `:''}
-          ${!editing && hasPins?`
-          <button class="maptoggle" data-maptoggle="${day.id}">${ICON.map} ${mapOpen?'지도 닫기':'지도로 보기'}</button>
-          <div class="daymap ${mapOpen?'show':''}" id="map-${day.id}"></div>
+          ${!editing?`
+          <div class="daytools-row">
+            ${hasPins?`<button class="maptoggle" data-maptoggle="${day.id}">${ICON.map} ${mapOpen?'지도 닫기':'지도로 보기'}</button>`:`<span></span>`}
+            <button class="iconbtn" data-startedit="${day.id}" ${!state.github.connected?'disabled':''} title="${state.github.connected?'일정 수정':'GitHub 연결 후 수정 가능해요'}">${ICON.edit}</button>
+          </div>
+          ${hasPins?`<div class="daymap ${mapOpen?'show':''}" id="map-${day.id}"></div>`:''}
           `:''}
 
           ${!editing?`
-            <div class="dayhead-actions" style="justify-content:flex-end;margin-bottom:10px;">
-              <button class="iconbtn" data-startedit="${day.id}" title="일정 수정">${ICON.edit}</button>
-            </div>
             <div class="timeline">
               ${items.map(it=>`
                 <div class="titem">
