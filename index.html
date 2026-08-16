@@ -87,6 +87,10 @@
   .edit-row .etools button.danger{color:var(--coral);}
   .itin-toolbar{display:flex;gap:8px;padding:0 16px 10px;align-items:center;}
   .itin-toolbar .sync-status{font-size:11px;opacity:.5;flex:1;}
+  .packing-box{background:#EAF6EF;border:1px solid #CFE8D9;border-radius:14px;padding:10px 12px;margin-bottom:12px;}
+  .packing-label{font-size:11px;font-weight:700;color:var(--gumDark);display:flex;align-items:center;gap:5px;margin:0 0 7px;}
+  .packing-tags{display:flex;flex-wrap:wrap;gap:6px;}
+  .ptag{font-size:11px;background:#fff;border:1px solid #CFE8D9;color:var(--gumDark);border-radius:999px;padding:4px 10px;}
 
   /* expense/diary shared */
   .summary-box{margin:16px 16px 0;background:linear-gradient(135deg,var(--harbour),var(--harbourLight));color:#fff;border-radius:18px;padding:14px 16px;display:flex;align-items:center;justify-content:space-between;}
@@ -189,12 +193,11 @@ const DEFAULT_ITINERARY = {
   3: [
     { time:"08:30", name:"서큘러키", address:"Circular Quay, Sydney NSW 2000", hours:"-", desc:"페리터미널 및 하버 전망", note:"", lat:-33.8611374, lng:151.2126457 },
     { time:"09:00", name:"시드니 오페라하우스", address:"Bennelong Point, Sydney NSW 2000", hours:"투어 사전예약", desc:"가이드 투어 약 1시간", note:"온라인 사전예약 권장", lat:-33.8567844, lng:151.2152967 },
-    { time:"10:30", name:"자유 산책 · 이른 점심", address:"서큘러키 일대", hours:"-", desc:"", note:"" },
-    { time:"12:00", name:"옵저버토리 힐", address:"Observatory Hill, Millers Point NSW 2000", hours:"24시간", desc:"하버브릿지 조망 명당", note:"", lat:-33.8595307, lng:151.2048216 },
-    { time:"12:30", name:"시드니 천문대", address:"1003 Upper Fort St, Millers Point NSW 2000", hours:"수~일 12:00–18:00", desc:"역사적 천문대, 가이드 투어", note:"월·화 휴무 — 목요일 방문 가능", lat:-33.8598345, lng:151.2048766 },
-    { time:"14:30", name:"자유시간", address:"-", hours:"-", desc:"", note:"" },
-    { time:"17:00", name:"오페라 바", address:"Sydney Opera House, Lower Concourse Level", hours:"10:00–24:00", desc:"오페라하우스 뷰 바에서 선셋 한잔", note:"크리스마스이브 혼잡 예상", lat:-33.8584964, lng:151.2136249 },
+    { time:"10:30", name:"자유 산책 · 이른 점심", address:"서큘러키 일대", hours:"-", desc:"오페라 바는 지나가는 길에 구경만 — 내부는 시끄러워서 패스", note:"" },
+    { time:"12:00", name:"시드니 천문대", address:"1003 Upper Fort St, Millers Point NSW 2000", hours:"수~일 12:00–18:00", desc:"역사적 천문대, 가이드 투어", note:"월·화 휴무 — 목요일 방문 가능", lat:-33.8598345, lng:151.2048766 },
+    { time:"14:00", name:"자유시간", address:"-", hours:"-", desc:"", note:"" },
     { time:"18:30", name:"크리스마스이브 디너", address:"-", hours:"-", desc:"사전 예약 필수", note:"성수기, 미리 예약" },
+    { time:"20:00", name:"옵저버토리 힐 — 일몰 감상", address:"Observatory Hill, Millers Point NSW 2000", hours:"24시간", desc:"하버브릿지 배경 일몰 명당", note:"12월 시드니 일몰은 20:05경 — 15분 전엔 자리 잡기", lat:-33.8595307, lng:151.2048216 },
   ],
   4: [
     { time:"09:00", name:"본다이 비치", address:"Bondi Beach NSW 2026", hours:"-", desc:"시드니 대표 해변", note:"", lat:-33.8914755, lng:151.2766845 },
@@ -266,6 +269,22 @@ const DEFAULT_ITINERARY = {
   ],
 };
 
+// day-by-day packing checklist (shown at the top of each day card)
+const PACKING = {
+  1: ["여권", "항공권/전자티켓", "충전기·보조배터리", "목베개"],
+  2: ["선글라스", "가벼운 겉옷", "편한 신발"],
+  3: ["카메라", "저녁엔 쌀쌀할 수 있어 얇은 겉옷"],
+  4: ["수영복", "수건", "선크림", "물안경", "방수팩"],
+  5: ["편한 신발", "장바구니(쇼핑백)"],
+  6: ["수영복", "선크림", "수건", "카메라"],
+  7: ["편한 신발", "모자"],
+  8: ["워킹화", "물", "간식", "얇은 겉옷(산간지역 쌀쌀)"],
+  9: ["돗자리", "수영복", "수건", "선크림", "물안경"],
+  10: ["돗자리", "담요", "방석", "간식", "보온병"],
+  11: ["편한 신발", "장바구니"],
+  12: ["여권", "숙소 체크아웃 확인"],
+};
+
 /* ---------------- state ---------------- */
 const state = {
   tab: "itinerary",
@@ -325,6 +344,7 @@ const ICON = {
   edit:'<svg class="icon" viewBox="0 0 24 24"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.1 2.1 0 0 1 3 3L12 15l-4 1 1-4z"/></svg>',
   up:'<svg class="icon" viewBox="0 0 24 24"><path d="M12 19V5M5 12l7-7 7 7"/></svg>',
   down:'<svg class="icon" viewBox="0 0 24 24"><path d="M12 5v14M5 12l7 7 7-7"/></svg>',
+  bag:'<svg class="icon" viewBox="0 0 24 24"><path d="M6 7h12l1 13H5L6 7z"/><path d="M9 7V5a3 3 0 0 1 6 0v2"/></svg>',
 };
 
 /* ---------------- helpers ---------------- */
@@ -462,6 +482,12 @@ function ItineraryTab(){
         </button>
         ${open?`
         <div class="day-body">
+          ${PACKING[day.id]?`
+          <div class="packing-box">
+            <p class="packing-label">${ICON.bag} 오늘의 준비물</p>
+            <div class="packing-tags">${PACKING[day.id].map(p=>`<span class="ptag">${p}</span>`).join("")}</div>
+          </div>
+          `:''}
           ${!editing && hasPins?`
           <button class="maptoggle" data-maptoggle="${day.id}">${ICON.map} ${mapOpen?'지도 닫기':'지도로 보기'}</button>
           <div class="daymap ${mapOpen?'show':''}" id="map-${day.id}"></div>
