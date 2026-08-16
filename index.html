@@ -67,6 +67,9 @@
   .titem{position:relative;padding-bottom:18px;}
   .titem:last-child{padding-bottom:0;}
   .titem .tdot{position:absolute;left:-26px;top:3px;width:11px;height:11px;border-radius:50%;background:var(--coral);border:2px solid var(--cream);}
+  .titem .tdot.numbered{width:19px;height:19px;left:-30px;top:-1px;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;color:#fff;}
+  .leaflet-tooltip.placelabel{background:var(--cream);border:1.5px solid var(--coral);color:var(--ink);font-size:11px;font-weight:600;padding:2px 7px;border-radius:999px;box-shadow:0 2px 6px rgba(0,0,0,.15);}
+  .leaflet-tooltip.placelabel::before{border-top-color:var(--coral);}
   .titem .ttime{font-size:12px;font-weight:700;color:var(--coral);display:block;margin-bottom:3px;}
   .titem .tname{font-size:14px;font-weight:600;margin:0;}
   .titem .tmeta{font-size:12px;opacity:.6;display:flex;align-items:flex-start;gap:4px;margin-top:3px;}
@@ -426,6 +429,14 @@ function renderTabContent(){
 }
 
 /* ================= ITINERARY TAB ================= */
+// annotate each day's items with a shared "map number" (only items with lat/lng get one),
+// so the timeline dot and the map pin for the same place always show the same number.
+function withMapNumbers(dayId){
+  const items = state.itinerary[dayId]||[];
+  let n = 0;
+  return items.map(it=> it.lat ? {...it, mapNum:++n} : {...it, mapNum:null});
+}
+
 function ItineraryTab(){
   return `
   <div class="itin-toolbar" style="padding-top:14px;">
@@ -434,7 +445,7 @@ function ItineraryTab(){
   </div>
   <div style="padding:0 0 28px;">
     ${DAYS.map(day=>{
-      const items = state.itinerary[day.id]||[];
+      const items = withMapNumbers(day.id);
       const open = state.openDay===day.id;
       const editing = state.editDay===day.id;
       const hasPins = items.some(i=>i.lat);
@@ -463,7 +474,7 @@ function ItineraryTab(){
             <div class="timeline">
               ${items.map(it=>`
                 <div class="titem">
-                  <span class="tdot"></span>
+                  <span class="tdot ${it.mapNum?'numbered':''}">${it.mapNum||''}</span>
                   <span class="ttime">${it.time}</span>
                   <p class="tname">${it.name}</p>
                   ${it.address!=="-"?`<p class="tmeta">${ICON.pin} ${it.address}</p>`:""}
@@ -512,7 +523,7 @@ function ItineraryTab(){
 }
 
 function initDayMap(dayId){
-  const items = (state.itinerary[dayId]||[]).filter(i=>i.lat);
+  const items = withMapNumbers(dayId).filter(i=>i.lat);
   if(items.length===0) return;
   const containerId = `map-${dayId}`;
   const container = document.getElementById(containerId);
@@ -522,20 +533,21 @@ function initDayMap(dayId){
   L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { maxZoom:19 }).addTo(map);
   const latlngs = items.map(i=>[i.lat,i.lng]);
   const bounds = L.latLngBounds(latlngs);
-  items.forEach((it,idx)=>{
+  items.forEach(it=>{
     const icon = L.divIcon({
       className:"",
-      html:`<div style="background:#E4572E;color:#fff;width:24px;height:24px;border-radius:50% 50% 50% 0;transform:rotate(-45deg);display:flex;align-items:center;justify-content:center;border:2px solid #fff;box-shadow:0 2px 6px rgba(0,0,0,.3);">
-              <span style="transform:rotate(45deg);font-size:11px;font-weight:700;">${idx+1}</span>
+      html:`<div style="background:#E2892E;color:#fff;width:24px;height:24px;border-radius:50% 50% 50% 0;transform:rotate(-45deg);display:flex;align-items:center;justify-content:center;border:2px solid #fff;box-shadow:0 2px 6px rgba(0,0,0,.3);">
+              <span style="transform:rotate(45deg);font-size:11px;font-weight:700;">${it.mapNum}</span>
             </div>`,
       iconSize:[24,24], iconAnchor:[12,22],
     });
-    L.marker([it.lat,it.lng], {icon}).addTo(map).bindPopup(`<b>${it.name}</b><br/>${it.time}`);
+    const marker = L.marker([it.lat,it.lng], {icon}).addTo(map).bindPopup(`<b>${it.mapNum}. ${it.name}</b><br/>${it.time}`);
+    marker.bindTooltip(`${it.mapNum}. ${it.name}`, { permanent:true, direction:"top", offset:[0,-22], className:"placelabel" });
   });
   if(latlngs.length>1){
-    L.polyline(latlngs, { color:"#0F3B40", weight:3, dashArray:"6 6", opacity:.8 }).addTo(map);
+    L.polyline(latlngs, { color:"#2E9CC7", weight:3, dashArray:"6 6", opacity:.8 }).addTo(map);
   }
-  map.fitBounds(bounds, { padding:[28,28] });
+  map.fitBounds(bounds, { padding:[34,44] });
   leafletMaps[dayId] = map;
 }
 
