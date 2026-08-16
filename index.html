@@ -223,7 +223,7 @@ const DEFAULT_ITINERARY = {
     { time:"10:30", name:"Harry's Café de Wheels (타이거 파이)", address:"Cowper Wharf Roadway, Woolloomooloo NSW 2011", hours:"09:00–22:00", desc:"1938년부터 이어진 시드니 대표 미트파이 — 오페라 바는 지나가는 길에 구경만, 내부는 시끄러워서 패스", note:"", lat:-33.8692049, lng:151.2211607 },
     { time:"12:00", name:"시드니 천문대", address:"1003 Upper Fort St, Millers Point NSW 2000", hours:"수~일 12:00–18:00", desc:"역사적 천문대, 가이드 투어", note:"월·화 휴무 — 목요일 방문 가능", lat:-33.8598345, lng:151.2048766 },
     { time:"14:00", name:"자유시간", address:"-", hours:"-", desc:"", note:"" },
-    { time:"18:30", name:"Midden by Mark Olive (크리스마스이브 디너)", address:"Western Broadwalk, Sydney Opera House, Bennelong Point", hours:"예약 권장", desc:"오페라하우스 안 원주민 셰프의 네이티브 호주 파인다이닝 — 부시 파블로바(그린 앤트) 추천, 캥거루 대신 바라(생선) 등 다른 메뉴도 선택 가능", note:"성수기, 미리 예약", lat:-33.8570618, lng:151.2146531 },
+    { time:"18:30", name:"Alfie's (크리스마스이브 디너)", address:"Shop 2, 4/6 Bligh St, Sydney NSW 2000", hours:"11:30–24:00", desc:"오페라하우스에서 도보 10분 — 스테이크 단일 메뉴로 유명한 가성비 스테이크하우스", note:"성수기, 미리 예약", lat:-33.865653, lng:151.2104365 },
     { time:"19:00", name:"옵저버토리 힐 — 일몰 감상", address:"Observatory Hill, Millers Point NSW 2000", hours:"24시간", desc:"하버브릿지 배경 일몰 명당", note:"12월 시드니 일몰은 20:05경 — 여유 있게 도착해서 자리 잡기", lat:-33.8595307, lng:151.2048216 },
   ],
   4: [
@@ -607,7 +607,7 @@ function transitRowHtml(dayId, fromItem, toItem){
 
 function distanceTagHtml(fromItem, toItem, toNum){
   const dist = haversine(fromItem.lat, fromItem.lng, toItem.lat, toItem.lng);
-  return `<div class="dist-tag">↓ 직선거리 약 ${dist.toFixed(2)}km${toNum?` (${toNum-1}→${toNum})`:''}</div>`;
+  return `<div class="dist-tag">직선거리 약 ${dist.toFixed(2)}km${toNum?` (${toNum-1}→${toNum})`:''}</div>`;
 }
 
 function renderTimeline(dayId, items){
