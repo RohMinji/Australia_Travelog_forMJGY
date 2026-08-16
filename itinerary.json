@@ -148,7 +148,7 @@
         "lng": 151.2073516
       },
       {
-        "time": "18:00",
+        "time": "20:00",
         "name": "소현❤️슨형부",
         "address": "Canberra St, Oxley Park NSW 2760, Australia",
         "hours": "-",
@@ -168,17 +168,7 @@
         "lng": 151.2126457
       },
       {
-        "time": "09:00",
-        "name": "시드니 오페라하우스",
-        "address": "Bennelong Point, Sydney NSW 2000",
-        "hours": "투어 사전예약",
-        "desc": "가이드 투어 약 1시간",
-        "note": "온라인 사전예약 권장",
-        "lat": -33.8567844,
-        "lng": 151.2152967
-      },
-      {
-        "time": "10:30",
+        "time": "9:30",
         "name": "Harry's Café de Wheels (타이거 파이)",
         "address": "Cowper Wharf Roadway, Woolloomooloo NSW 2011",
         "hours": "09:00–22:00",
@@ -188,7 +178,17 @@
         "lng": 151.2211607
       },
       {
-        "time": "12:00",
+        "time": "10:30",
+        "name": "시드니 오페라하우스",
+        "address": "Bennelong Point, Sydney NSW 2000",
+        "hours": "투어 사전예약",
+        "desc": "가이드 투어 약 1시간",
+        "note": "온라인 사전예약 권장",
+        "lat": -33.8567844,
+        "lng": 151.2152967
+      },
+      {
+        "time": "15:00",
         "name": "시드니 천문대",
         "address": "1003 Upper Fort St, Millers Point NSW 2000",
         "hours": "수~일 12:00–18:00",
@@ -198,15 +198,7 @@
         "lng": 151.2048766
       },
       {
-        "time": "14:00",
-        "name": "자유시간",
-        "address": "-",
-        "hours": "-",
-        "desc": "",
-        "note": ""
-      },
-      {
-        "time": "18:30",
+        "time": "17:30",
         "name": "Alfie's (크리스마스이브 디너)",
         "address": "Shop 2, 4/6 Bligh St, Sydney NSW 2000",
         "hours": "11:30–24:00",
@@ -216,7 +208,7 @@
         "lng": 151.2104365
       },
       {
-        "time": "20:00",
+        "time": "19:00",
         "name": "옵저버토리 힐 — 일몰 감상",
         "address": "Observatory Hill, Millers Point NSW 2000",
         "hours": "24시간",
