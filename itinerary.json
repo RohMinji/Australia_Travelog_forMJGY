@@ -705,16 +705,6 @@
       },
       {
         "time": "11:30",
-        "name": "씨라이프 시드니 아쿠아리움",
-        "address": "1-5 Wheat Rd, Sydney NSW 2000",
-        "hours": "09:30–16:00(토·일)",
-        "desc": "펭귄·상어 등 해양생물",
-        "note": "",
-        "lat": -33.8695997,
-        "lng": 151.2021381
-      },
-      {
-        "time": "13:30",
         "name": "시드니 하버 관광 크루즈",
         "address": "달링하버 승선",
         "hours": "-",
@@ -724,7 +714,7 @@
         "lng": 151.201
       },
       {
-        "time": "15:30",
+        "time": "13:00",
         "name": "시드니대학교",
         "address": "Camperdown NSW 2050",
         "hours": "09:00–17:00(금)",
@@ -734,7 +724,15 @@
         "lng": 151.1867648
       },
       {
-        "time": "16:30",
+        "time": "15:00",
+        "name": "Uncle Tee's Crepes Newtown",
+        "address": "121a King St, Newtown NSW 2042 오스트레일리아",
+        "hours": "17:00-22:30",
+        "desc": "",
+        "note": ""
+      },
+      {
+        "time": "16:00",
         "name": "Sydney Park",
         "address": "416 Sydney Park Rd, Alexandria NSW 2015",
         "hours": "24시간",
