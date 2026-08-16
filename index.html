@@ -153,6 +153,24 @@
   #toast .box{border-radius:999px;padding:10px 16px;font-size:12px;font-weight:500;display:flex;align-items:center;gap:10px;box-shadow:0 8px 24px rgba(0,0,0,.15);}
   .share-note{margin:16px;padding:12px 14px;background:#EAF4F1;border:1px solid #CFE4DE;border-radius:14px;font-size:12px;line-height:1.6;color:var(--harbour);}
 
+  /* info tab */
+  .info-card{margin:0 16px 12px;border:1px solid var(--line);background:var(--cream);border-radius:16px;padding:14px 16px;scroll-margin-top:70px;}
+  .info-card h3{font-size:14px;font-weight:700;margin:0 0 6px;color:var(--harbourLight);}
+  .info-card p{font-size:12.5px;line-height:1.7;margin:0;opacity:.85;}
+  .info-sectiontitle{padding:16px 16px 6px;font-size:13px;font-weight:700;color:var(--coralDark);text-transform:uppercase;letter-spacing:.05em;}
+  .info-card.highlight{outline:2px solid var(--coral);}
+  /* itinerary item action buttons (info / copy) */
+  .titem .tactions{display:flex;gap:6px;margin-top:6px;}
+  .pillbtn{display:inline-flex;align-items:center;gap:4px;font-size:11px;font-weight:600;border:1px solid var(--line);background:var(--paperDark);color:var(--harbourLight);border-radius:999px;padding:4px 9px;cursor:pointer;}
+  .pillbtn.copied{background:#DCFCE7;border-color:#86EFAC;color:#15803D;}
+  /* transit connector row inside timeline */
+  .transit-row{position:relative;margin:2px 0 14px;padding:8px 10px;background:var(--paperDark);border:1px dashed var(--line);border-radius:10px;font-size:11.5px;display:flex;align-items:flex-start;gap:8px;}
+  .transit-row .tmode{flex-shrink:0;width:22px;height:22px;border-radius:50%;background:var(--harbour);color:#fff;display:flex;align-items:center;justify-content:center;}
+  .transit-row .tmode svg{width:13px;height:13px;}
+  .transit-row .ttext{flex:1;line-height:1.5;}
+  .transit-row .ttext b{display:block;font-size:11.5px;}
+  .rentalcar-row{position:relative;margin:2px 0 14px;padding:8px 10px;background:#FFF1E9;border:1px dashed var(--coral);border-radius:10px;font-size:11.5px;display:flex;align-items:center;gap:8px;color:var(--coralDark);font-weight:600;}
+
   svg.icon{width:14px;height:14px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;}
 </style>
 </head>
@@ -296,6 +314,78 @@ const PACKING = {
   12: ["여권", "숙소 체크아웃 확인"],
 };
 
+/* ================= INFO TAB DATA ================= */
+const AUSTRALIA_INFO = [
+  {
+    id: "history",
+    title: "호주의 역사",
+    body: "호주 대륙은 약 6만 년 전부터 애보리진(Aboriginal) 원주민들이 살아온 세계에서 가장 오래된 대륙 문화를 품고 있어요. 1770년 제임스 쿡이 동부 해안을 탐사한 뒤, 1788년 영국이 시드니 코브(현 서큘러키 일대)에 첫 유형지를 세우면서 유럽인 정착이 시작됐습니다. 이후 19세기 골드러시로 이민자가 급증했고, 1901년 여러 식민지가 연합해 오늘날의 호주 연방이 탄생했어요. 시드니는 그 첫 정착지였던 만큼 도시 곳곳(더 록스, 하이드 파크 등)에 식민지 시대 건물이 남아있습니다."
+  },
+  {
+    id: "geo-culture",
+    title: "지리·문화적 특성",
+    body: "호주는 남반구에 위치한 세계에서 가장 작은 대륙이자 가장 큰 섬으로, 국토 대부분이 건조한 아웃백이지만 시드니가 있는 동남부 해안은 온화하고 습윤한 기후예요. 인구의 약 90%가 해안가 대도시에 몰려 살고, 이민자 비율이 매우 높아 다양한 문화가 자연스럽게 섞여있어요 (차이나타운, 리틀 이탈리아 등). '여유로운 해변 라이프스타일'이 국민성의 큰 축이라 주말이면 해변과 공원이 늘 붐빕니다."
+  },
+  {
+    id: "climate",
+    title: "기후 (여행 시기 기준)",
+    body: "남반구라 12월~1월은 한여름이에요. 시드니 평균 기온은 최고 26°C 안팍, 습도는 낮은 편이라 그늘에 있으면 쾌적하지만 자외선이 한국보다 훨씬 강해서 선크림이 필수예요. 오존층이 얇은 지역이라 UV 지수가 높은 날이 많고, 여름철엔 오후에 갑자기 소나기가 오는 경우도 있으니 얇은 우비 하나 챙기면 좋아요. 크리스마스와 새해가 한여름에 껴 있는 게 호주만의 독특한 포인트예요."
+  },
+];
+
+// key = one or more substrings that appear in an itinerary item's `name`; first match wins.
+const PLACE_INFO = [
+  { id:"opera-house", keys:["오페라하우스"], title:"시드니 오페라하우스", body:"덴마크 건축가 예른 웃손이 설계했고, 조개껍질 또는 돛을 형상화한 지붕이 상징이에요. 1959년 착공해 1973년 완공까지 우여곡절이 많았던 걸로 유명하고, 2007년 유네스코 세계문화유산으로 등재됐어요. 내부는 콘서트홀, 오페라극장 등 여러 공연장으로 이뤄져 있어 투어로 둘러볼 수 있어요." },
+  { id:"botanic-garden", keys:["로열 보타닉 가든"], title:"로열 보타닉 가든", body:"1816년 조성된 호주에서 가장 오래된 식물원으로, 원래 이 자리는 시드니 최초 정착민들의 농경지였어요. 무료 입장이며 오페라하우스와 하버브릿지를 동시에 조망할 수 있는 산책로가 매력이에요." },
+  { id:"mrs-macquarie", keys:["미세스 맥쿼리 포인트"], title:"미세스 맥쿼리 포인트", body:"1810년대 총독 부인 엘리자베스 맥쿼리가 매일 이 바위에 앉아 항구를 바라봤다고 해서 붙은 이름이에요. '맥쿼리 부인의 의자'라는 실제 바위 조각도 남아있고, 시드니에서 손꼽히는 일몰 명당이에요." },
+  { id:"harbour-bridge", keys:["하버브릿지"], title:"시드니 하버브릿지", body:"1932년 개통된 세계에서 가장 폭이 넓은 철제 아치교로, 현지인들은 '더 쿳헹거(The Coathanger, 옷걸이)'라는 애칭으로 불러요. 다리 위 브릿지클라임(등반 투어)이 유명하고, 다리 자체를 걸어서 건너는 것도 무료로 가능해요." },
+  { id:"observatory", keys:["천문대", "옵저버토리"], title:"시드니 천문대 & 옵저버토리 힐", body:"1858년 세워진 호주에서 가장 오래된 천문대예요. 원래 이 언덕엔 1804년 지어진 요새(포트 필립)가 있었는데, 그 돌을 재활용해 천문대를 지었대요. 하버브릿지를 정면으로 바라보는 일몰 명당으로도 유명해요." },
+  { id:"bondi", keys:["본다이"], title:"본다이 비치", body:"애보리진 언어로 '바위에 부서지는 파도 소리'라는 뜻이에요. 서핑 문화의 발상지 중 하나로, 1907년 세계 최초의 인명구조대(서프 라이프 세이빙 클럽)가 여기서 시작됐어요. 본다이 아이스버그 클럽은 파도가 그대로 들이치는 독특한 해수 수영장이에요." },
+  { id:"bronte", keys:["브론테"], title:"브론테 비치", body:"본다이보다 훨씬 한적한 로컬 해변이에요. 방파제로 둘러싸인 천연 바위 수영장(브론테 배스)이 있고, 본다이~쿠지 코스탈워크의 중간 지점이라 산책하는 사람들이 많아요." },
+  { id:"taronga", keys:["타롱가"], title:"타롱가 동물원", body:"애보리진어로 '아름다운 전망'이라는 뜻으로, 1916년 개장했어요. 하버 뷰를 배경으로 코알라, 캥거루 같은 호주 고유종을 볼 수 있는 세계에서 몇 안 되는 동물원 중 하나예요." },
+  { id:"manly", keys:["맨리"], title:"맨리 비치", body:"1788년 초대 총독 아서 필립이 원주민들의 당당한(manly) 태도를 보고 이름 붙였다는 설이 있어요. 서큘러키에서 페리로 30분, 시드니 도심에서 가장 가까운 서핑 명소예요." },
+  { id:"luna-park", keys:["루나파크"], title:"루나파크 시드니", body:"1935년 개장한 아르데코 양식의 클래식 놀이공원이에요. 입구의 거대한 웃는 얼굴 조형물이 상징이고, 하버브릿지 바로 옆이라 롤러코스터를 타면서 하버 뷰를 함께 즐길 수 있어요." },
+  { id:"blue-mountains", keys:["블루마운틴", "시닉월드", "에코 포인트", "세자매봉", "링컨스 락"], title:"블루마운틴 & 세자매봉", body:"유칼립투스 나무에서 나오는 오일 성분이 대기 중에 퍼지며 산이 푸른빛으로 보여서 '블루'마운틴이란 이름이 붙었어요. 세자매봉(Three Sisters)에는 세 자매가 마법에 걸려 돌이 됐다는 애보리진 전설이 전해져요. 2000년 유네스코 세계자연유산으로 등재됐습니다." },
+  { id:"watsons-bay", keys:["파슬리 베이", "니엘슨 파크", "캠프 코브", "갭 파크", "왓슨스"], title:"왓슨스베이 일대", body:"시드니 항구 초입, 태즈먼해와 맞닿은 조용한 동부 해안 지역이에요. 잔잔한 파슬리 베이·캠프 코브 같은 하버비치와, 거친 파도가 절벽에 부딪히는 갭 파크가 걸어서 5분 거리에 공존하는 게 이 지역의 매력이에요." },
+  { id:"barangaroo", keys:["바랑가루"], title:"바랑가루 리저브", body:"원래 항만 시설이었던 곳을 2015년 대규모 재개발로 시민 공원화한 곳이에요. 이름은 이 지역 초기 원주민 여성 지도자 '바랑가루'에서 따왔고, 조성 시 자생 사암 절벽과 토종 식물을 복원한 게 특징이에요." },
+  { id:"darling-harbour", keys:["달링하버"], title:"달링하버", body:"1988년 호주 건국 200주년을 기념해 낙후된 항만 부지를 재개발한 곳이에요. 씨라이프 아쿠아리움, 컨벤션센터 등이 모여있는 시드니의 대표 워터프론트 관광지예요." },
+  { id:"sea-life", keys:["아쿠아리움"], title:"씨라이프 시드니 아쿠아리움", body:"호주 고유종인 듀공, 그레이너스상어 등 다양한 해양생물을 볼 수 있어요. 특히 남극 펭귄 서식지를 재현한 '펭귄 익스페디션' 보트투어가 인기예요." },
+  { id:"sydney-uni", keys:["시드니대학교"], title:"시드니대학교", body:"1850년 설립된 호주에서 가장 오래된 대학이에요. 메인 쿼드랭글 건물은 옥스포드·케임브리지풍 고딕 양식으로 지어져 '해리포터 나오는 학교'로도 유명해요." },
+  { id:"sydney-park", keys:["Sydney Park"], title:"Sydney Park", body:"원래 벽돌공장과 쓰레기 매립지였던 곳을 1980년대부터 대규모 공원으로 복원했어요. 남아있는 옛 굴뚝 4개가 랜드마크처럼 남아있고, 노을 무렵 언덕에서 보는 시내 스카이라인이 특히 예뻐요." },
+  { id:"fish-market", keys:["피쉬 마켓"], title:"시드니 피쉬 마켓", body:"남반구 최대 규모의 수산시장이에요. 2026년 초 대규모 신축 건물로 이전 개장했고, 새벽 경매부터 시작해 아침 일찍부터 신선한 해산물을 맛볼 수 있어요." },
+  { id:"qvb", keys:["퀸 빅토리아 빌딩"], title:"퀸 빅토리아 빌딩 (QVB)", body:"1898년 빅토리아 여왕 즉위 기념으로 지어진 로마네스크 양식 건물이에요. 원래는 시장 건물이었다가 현재는 고급 쇼핑몰로 쓰이고 있고, 내부의 대형 스테인드글라스 돔 천장이 압권이에요." },
+  { id:"chinatown", keys:["차이나타운"], title:"차이나타운", body:"1980년대부터 딕슨 스트리트를 중심으로 형성됐어요. 시드니는 이민자 비율이 매우 높은 도시라, 차이나타운 역시 단순 관광지가 아니라 실제로 많은 화교·아시아계 시드니 시민들의 생활 중심지예요." },
+];
+
+function findPlaceInfo(name) {
+  for (const p of PLACE_INFO) {
+    if (p.keys.some(k => name.includes(k))) return p;
+  }
+  return null;
+}
+
+// days where the person already has a private/rental car for the whole day —
+// transit suggestions don't make sense here, everything is by car.
+const CAR_DAYS = new Set([8, 9]);
+
+// manual transit legs: {day, fromKey, toKey, mode, route, mins, transfers, note}
+// fromKey/toKey are substrings matched against item.name.
+const TRANSIT = [
+  { day:2, fromKey:"공항", toKey:"로열 보타닉 가든", mode:"train", route:"국제/국내공항역 → 세인트제임스역 (T8 Airport & South Line)", mins:18, transfers:0, note:"하차 후 가든까지 도보 약 10분" },
+  { day:3, fromKey:"Harry's", toKey:"천문대", mode:"bus", route:"Cowper Wharf Rd 정류장 → Argyle St 정류장 (버스 311)", mins:20, transfers:0, note:"도보로도 25분 정도라 날씨 좋으면 걷기도 좋음" },
+  { day:4, fromKey:"브론테", toKey:"D.Bowls", mode:"bus", route:"Bronte Beach 정류장 → Bondi Beach 정류장 (버스 378/379)", mins:12, transfers:0, note:"" },
+  { day:6, fromKey:"서큘러키 페리", toKey:"타롱가", mode:"ferry", route:"서큘러키 4번 부두 → 타롱가 동물원 부두 (페리 F1 Taronga)", mins:12, transfers:0, note:"동물원 입장권에 페리 왕복이 포함된 콤보 티켓도 있음" },
+  { day:6, fromKey:"타롱가 동물원", toKey:"서큘러키 복귀", mode:"ferry", route:"타롱가 동물원 부두 → 서큘러키 4번 부두 (페리 F1)", mins:12, transfers:0, note:"" },
+  { day:6, fromKey:"서큘러키 복귀", toKey:"맨리", mode:"ferry", route:"서큘러키 3번 부두 → 맨리 부두 (페리 F1 Manly, 완속 30분 / 고속선 18분)", mins:25, transfers:0, note:"" },
+  { day:11, fromKey:"크루즈", toKey:"시드니대학교", mode:"bus", route:"Darling Dr 정류장 → Sydney Uni 정류장 (버스 370, Broadway 경유)", mins:22, transfers:0, note:"" },
+  { day:11, fromKey:"시드니대학교", toKey:"Sydney Park", mode:"bus", route:"City Rd 정류장 → Sydney Park 정류장 (버스 352)", mins:15, transfers:0, note:"" },
+  { day:11, fromKey:"Sydney Park", toKey:"Hanoi on King", mode:"walk", route:"도보 약 20분, 또는 버스 352", mins:20, transfers:0, note:"짧은 구간이라 걷기도 무난" },
+];
+
+function findTransitLeg(day, fromName, toName) {
+  return TRANSIT.find(t => t.day === day && fromName.includes(t.fromKey) && toName.includes(t.toKey));
+}
+
 /* ---------------- state ---------------- */
 const state = {
   tab: "itinerary",
@@ -315,6 +405,7 @@ const state = {
   github: { owner:"RohMinji", repo:"Australia_Travelog_forMJGY", branch:"master", token:"", connected:false },
   rate: 900,
   toast: null,
+  pendingScrollTo: null,
 };
 let leafletMaps = {};
 
@@ -356,6 +447,13 @@ const ICON = {
   up:'<svg class="icon" viewBox="0 0 24 24"><path d="M12 19V5M5 12l7-7 7 7"/></svg>',
   down:'<svg class="icon" viewBox="0 0 24 24"><path d="M12 5v14M5 12l7 7 7-7"/></svg>',
   bag:'<svg class="icon" viewBox="0 0 24 24"><path d="M6 7h12l1 13H5L6 7z"/><path d="M9 7V5a3 3 0 0 1 6 0v2"/></svg>',
+  copy:'<svg class="icon" viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>',
+  train:'<svg class="icon" viewBox="0 0 24 24"><rect x="4" y="3" width="16" height="14" rx="2"/><path d="M4 11h16M8 21l2-3h4l2 3M8 3v14M16 3v14"/><circle cx="8" cy="14" r="0"/></svg>',
+  bus:'<svg class="icon" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="12" rx="2"/><path d="M3 11h18M7 17v3M17 17v3"/><circle cx="7" cy="14" r="1"/><circle cx="17" cy="14" r="1"/></svg>',
+  ferry:'<svg class="icon" viewBox="0 0 24 24"><path d="M3 15l1.5 4.5a2 2 0 0 0 1.9 1.5h11.2a2 2 0 0 0 1.9-1.5L21 15"/><path d="M5 15V9h14v6M9 9V4h6v5"/></svg>',
+  walk:'<svg class="icon" viewBox="0 0 24 24"><circle cx="13" cy="4" r="1.5"/><path d="M10 22l1-6-2-2 1-5 3 2 2 4 3 1M9 14l-3 2v6"/></svg>',
+  car:'<svg class="icon" viewBox="0 0 24 24"><path d="M5 17h14M5 17a2 2 0 1 0 4 0M15 17a2 2 0 1 0 4 0M3 17V11l2-5h14l2 5v6"/></svg>',
+  info2:'<svg class="icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/></svg>',
 };
 
 /* ---------------- helpers ---------------- */
@@ -430,6 +528,7 @@ function NavBar(){
     {id:"itinerary", label:"여행일정", icon:ICON.calendar},
     {id:"expense", label:"가계부", icon:ICON.wallet},
     {id:"diary", label:"여행일기", icon:ICON.book},
+    {id:"info", label:"정보", icon:ICON.info2},
   ];
   return `<nav>${tabs.map(t=>`
     <button data-tab="${t.id}" class="${state.tab===t.id?'active':''}">${t.icon}${t.label}</button>
@@ -456,7 +555,17 @@ function renderTabContent(){
   if(state.tab==="itinerary") c.innerHTML = ItineraryTab();
   if(state.tab==="expense") c.innerHTML = ExpenseTab();
   if(state.tab==="diary") c.innerHTML = DiaryTab();
+  if(state.tab==="info") c.innerHTML = InfoTab();
   bindTabEvents();
+  if(state.tab==="info" && state.pendingScrollTo){
+    const target = document.getElementById(state.pendingScrollTo);
+    if(target){
+      target.scrollIntoView({behavior:"smooth", block:"start"});
+      target.classList.add("highlight");
+      setTimeout(()=>target.classList.remove("highlight"), 1800);
+    }
+    state.pendingScrollTo = null;
+  }
 }
 
 /* ================= ITINERARY TAB ================= */
@@ -466,6 +575,58 @@ function withMapNumbers(dayId){
   const items = state.itinerary[dayId]||[];
   let n = 0;
   return items.map(it=> it.lat ? {...it, mapNum:++n} : {...it, mapNum:null});
+}
+
+function haversine(lat1, lon1, lat2, lon2){
+  const R = 6371;
+  const p1 = lat1*Math.PI/180, p2 = lat2*Math.PI/180;
+  const dp = (lat2-lat1)*Math.PI/180, dl = (lon2-lon1)*Math.PI/180;
+  const a = Math.sin(dp/2)**2 + Math.cos(p1)*Math.cos(p2)*Math.sin(dl/2)**2;
+  return 2*R*Math.asin(Math.sqrt(a));
+}
+
+function transitRowHtml(dayId, fromItem, toItem){
+  if(CAR_DAYS.has(dayId)) return '';
+  const dist = haversine(fromItem.lat, fromItem.lng, toItem.lat, toItem.lng);
+  if(dist <= 1.5) return '';
+  const leg = findTransitLeg(dayId, fromItem.name, toItem.name);
+  if(leg && leg.rentalRecommended){
+    return `<div class="rentalcar-row">${ICON.car} 렌트카 이용 권장 — ${fromItem.name} → ${toItem.name} (대중교통 1시간 이상, 환승 2회 이상 예상)</div>`;
+  }
+  if(leg){
+    const modeIcon = leg.mode==="train"?ICON.train : leg.mode==="bus"?ICON.bus : leg.mode==="ferry"?ICON.ferry : ICON.walk;
+    return `<div class="transit-row"><span class="tmode">${modeIcon}</span><span class="ttext"><b>${fromItem.name} → ${toItem.name}</b>${leg.route} · 약 ${leg.mins}분${leg.note?' · '+leg.note:''}</span></div>`;
+  }
+  return `<div class="transit-row"><span class="tmode">${ICON.bus}</span><span class="ttext"><b>${fromItem.name} → ${toItem.name}</b>직선거리 약 ${dist.toFixed(1)}km — 정확한 대중교통 경로는 TripView 앱에서 확인해주세요</span></div>`;
+}
+
+function renderTimeline(dayId, items){
+  let html = '<div class="timeline">';
+  let lastGeo = null;
+  for(const it of items){
+    if(it.lat){
+      if(lastGeo) html += transitRowHtml(dayId, lastGeo, it);
+      lastGeo = it;
+    }
+    const info = findPlaceInfo(it.name);
+    html += `
+      <div class="titem">
+        <span class="tdot ${it.mapNum?'numbered':''}">${it.mapNum||''}</span>
+        <span class="ttime">${it.time}</span>
+        <p class="tname">${it.name}</p>
+        ${it.address!=="-"?`<p class="tmeta">${ICON.pin} ${it.address}</p>`:""}
+        ${it.hours!=="-"?`<p class="tmeta">${ICON.clock} ${it.hours}</p>`:""}
+        ${it.desc?`<p class="tdesc">${it.desc}</p>`:""}
+        ${it.note?`<p class="tnote">${ICON.info} ${it.note}</p>`:""}
+        ${(info || it.lat)?`<div class="tactions">
+          ${info?`<button class="pillbtn" data-infojump="${info.id}">${ICON.info2} 정보</button>`:""}
+          ${it.lat?`<button class="pillbtn" data-copy="${encodeURIComponent(it.name + ', ' + it.address)}">${ICON.copy} 복사</button>`:""}
+        </div>`:""}
+      </div>
+    `;
+  }
+  html += '</div>';
+  return html;
 }
 
 function ItineraryTab(){
@@ -508,19 +669,7 @@ function ItineraryTab(){
           `:''}
 
           ${!editing?`
-            <div class="timeline">
-              ${items.map(it=>`
-                <div class="titem">
-                  <span class="tdot ${it.mapNum?'numbered':''}">${it.mapNum||''}</span>
-                  <span class="ttime">${it.time}</span>
-                  <p class="tname">${it.name}</p>
-                  ${it.address!=="-"?`<p class="tmeta">${ICON.pin} ${it.address}</p>`:""}
-                  ${it.hours!=="-"?`<p class="tmeta">${ICON.clock} ${it.hours}</p>`:""}
-                  ${it.desc?`<p class="tdesc">${it.desc}</p>`:""}
-                  ${it.note?`<p class="tnote">${ICON.info} ${it.note}</p>`:""}
-                </div>
-              `).join("")}
-            </div>
+            ${renderTimeline(day.id, items)}
           `:`
             <div class="edit-list">
               ${items.map((it,idx)=>`
@@ -674,6 +823,24 @@ function DiaryTab(){
   </div>`;
 }
 
+/* ================= INFO TAB ================= */
+function InfoTab(){
+  return `
+  <div style="padding-bottom:32px;">
+    <div class="info-sectiontitle">호주 알아가기</div>
+    ${AUSTRALIA_INFO.map(s=>`
+      <div class="info-card"><h3>${s.title}</h3><p>${s.body}</p></div>
+    `).join("")}
+
+    <div class="info-sectiontitle">방문 명소 정보</div>
+    ${PLACE_INFO.map(p=>`
+      <div class="info-card" id="info-${p.id}"><h3>${p.title}</h3><p>${p.body}</p></div>
+    `).join("")}
+
+    <div class="share-note">${ICON.bus} 대중교통 경로/소요시간은 참고용이며, 실제 운행 정보는 출발 전 Transport NSW의 TripView 앱에서 다시 한 번 확인하는 걸 권장해요.</div>
+  </div>`;
+}
+
 /* ---------------- events ---------------- */
 function bindTabEvents(){
   if(state.tab==="itinerary"){
@@ -696,6 +863,32 @@ function bindTabEvents(){
     // if a map is already flagged open (kept state across day toggle), init it
     Object.keys(state.mapOpenDays).forEach(id=>{
       if(state.mapOpenDays[id]) setTimeout(()=>initDayMap(Number(id)),50);
+    });
+
+    // jump to info tab section
+    document.querySelectorAll("[data-infojump]").forEach(b=>{
+      b.onclick = (e)=>{
+        e.stopPropagation();
+        state.pendingScrollTo = "info-" + b.dataset.infojump;
+        state.tab = "info";
+        renderNavAndTab();
+      };
+    });
+
+    // copy place name+address to clipboard (for pasting into Google/Apple Maps)
+    document.querySelectorAll("[data-copy]").forEach(b=>{
+      b.onclick = async (e)=>{
+        e.stopPropagation();
+        const text = decodeURIComponent(b.dataset.copy);
+        try{
+          await navigator.clipboard.writeText(text);
+          b.classList.add("copied");
+          b.innerHTML = `${ICON.check} 복사됨`;
+          setTimeout(()=>{ b.classList.remove("copied"); b.innerHTML = `${ICON.copy} 복사`; }, 1600);
+        }catch(err){
+          showToast("error", "복사에 실패했어요 — 브라우저 권한을 확인해주세요.");
+        }
+      };
     });
 
     // enter edit mode
