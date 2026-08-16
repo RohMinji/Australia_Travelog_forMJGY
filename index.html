@@ -168,6 +168,7 @@
   .pillbtn{display:inline-flex;align-items:center;gap:4px;font-size:11px;font-weight:600;border:1px solid var(--line);background:var(--paperDark);color:var(--harbourLight);border-radius:999px;padding:4px 9px;cursor:pointer;}
   .pillbtn.copied{background:#DCFCE7;border-color:#86EFAC;color:#15803D;}
   /* transit connector row inside timeline */
+  .dist-tag{margin:-6px 0 4px -6px;padding-left:0;font-size:10px;color:#B79B5B;opacity:.85;line-height:1.4;}
   .transit-row{position:relative;margin:2px 0 14px;padding:8px 10px;background:var(--paperDark);border:1px dashed var(--line);border-radius:10px;font-size:11.5px;display:flex;align-items:flex-start;gap:8px;}
   .transit-row .tmode{flex-shrink:0;width:22px;height:22px;border-radius:50%;background:var(--harbour);color:#fff;display:flex;align-items:center;justify-content:center;}
   .transit-row .tmode svg{width:13px;height:13px;}
@@ -223,7 +224,7 @@ const DEFAULT_ITINERARY = {
     { time:"12:00", name:"시드니 천문대", address:"1003 Upper Fort St, Millers Point NSW 2000", hours:"수~일 12:00–18:00", desc:"역사적 천문대, 가이드 투어", note:"월·화 휴무 — 목요일 방문 가능", lat:-33.8598345, lng:151.2048766 },
     { time:"14:00", name:"자유시간", address:"-", hours:"-", desc:"", note:"" },
     { time:"18:30", name:"Midden by Mark Olive (크리스마스이브 디너)", address:"Western Broadwalk, Sydney Opera House, Bennelong Point", hours:"예약 권장", desc:"오페라하우스 안 원주민 셰프의 네이티브 호주 파인다이닝 — 부시 파블로바(그린 앤트) 추천, 캥거루 대신 바라(생선) 등 다른 메뉴도 선택 가능", note:"성수기, 미리 예약", lat:-33.8570618, lng:151.2146531 },
-    { time:"20:00", name:"옵저버토리 힐 — 일몰 감상", address:"Observatory Hill, Millers Point NSW 2000", hours:"24시간", desc:"하버브릿지 배경 일몰 명당", note:"12월 시드니 일몰은 20:05경 — 15분 전엔 자리 잡기", lat:-33.8595307, lng:151.2048216 },
+    { time:"19:00", name:"옵저버토리 힐 — 일몰 감상", address:"Observatory Hill, Millers Point NSW 2000", hours:"24시간", desc:"하버브릿지 배경 일몰 명당", note:"12월 시드니 일몰은 20:05경 — 여유 있게 도착해서 자리 잡기", lat:-33.8595307, lng:151.2048216 },
   ],
   4: [
     { time:"09:00", name:"본다이 비치", address:"Bondi Beach NSW 2026", hours:"-", desc:"시드니 대표 해변", note:"", lat:-33.8914755, lng:151.2766845 },
@@ -604,17 +605,25 @@ function transitRowHtml(dayId, fromItem, toItem){
   return `<div class="transit-row"><span class="tmode">${ICON.bus}</span><span class="ttext"><b>${fromItem.name} → ${toItem.name}</b>직선거리 약 ${dist.toFixed(1)}km — 정확한 대중교통 경로는 TripView 앱에서 확인해주세요</span></div>`;
 }
 
+function distanceTagHtml(fromItem, toItem, toNum){
+  const dist = haversine(fromItem.lat, fromItem.lng, toItem.lat, toItem.lng);
+  return `<div class="dist-tag">↓ 직선거리 약 ${dist.toFixed(2)}km${toNum?` (${toNum-1}→${toNum})`:''}</div>`;
+}
+
 function renderTimeline(dayId, items){
   let html = '<div class="timeline">';
   let lastGeo = null;
   for(const it of items){
     if(it.lat){
-      if(lastGeo) html += transitRowHtml(dayId, lastGeo, it);
+      if(lastGeo){
+        html += distanceTagHtml(lastGeo, it, it.mapNum);
+        html += transitRowHtml(dayId, lastGeo, it);
+      }
       lastGeo = it;
     }
     const info = findPlaceInfo(it.name);
     const infoBtn = info?`<button class="pillbtn" data-infojump="${info.id}">${ICON.info2} 정보</button>`:"";
-    const copyBtn = it.lat?`<button class="pillbtn" data-copy="${encodeURIComponent(it.name + ', ' + it.address)}">${ICON.copy} 복사</button>`:"";
+    const copyBtn = (it.address && it.address!=="-")?`<button class="pillbtn" data-copy="${encodeURIComponent(it.name + ', ' + it.address)}">${ICON.copy} 복사</button>`:"";
     html += `
       <div class="titem">
         <span class="tdot ${it.mapNum?'numbered':''}">${it.mapNum||''}</span>
