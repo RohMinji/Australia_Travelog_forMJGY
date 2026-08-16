@@ -160,7 +160,11 @@
   .info-sectiontitle{padding:16px 16px 6px;font-size:13px;font-weight:700;color:var(--coralDark);text-transform:uppercase;letter-spacing:.05em;}
   .info-card.highlight{outline:2px solid var(--coral);}
   /* itinerary item action buttons (info / copy) */
-  .titem .tactions{display:flex;gap:6px;margin-top:6px;}
+  .titem .tname-row{display:flex;align-items:center;justify-content:space-between;gap:8px;}
+  .titem .tname-row .tname{margin:0;flex:1;}
+  .titem .taddr-row{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-top:2px;}
+  .titem .taddr-row .tmeta{margin:0;flex:1;}
+  .titem .taddr-row .pillbtn, .titem .tname-row .pillbtn{flex-shrink:0;}
   .pillbtn{display:inline-flex;align-items:center;gap:4px;font-size:11px;font-weight:600;border:1px solid var(--line);background:var(--paperDark);color:var(--harbourLight);border-radius:999px;padding:4px 9px;cursor:pointer;}
   .pillbtn.copied{background:#DCFCE7;border-color:#86EFAC;color:#15803D;}
   /* transit connector row inside timeline */
@@ -609,19 +613,20 @@ function renderTimeline(dayId, items){
       lastGeo = it;
     }
     const info = findPlaceInfo(it.name);
+    const infoBtn = info?`<button class="pillbtn" data-infojump="${info.id}">${ICON.info2} 정보</button>`:"";
+    const copyBtn = it.lat?`<button class="pillbtn" data-copy="${encodeURIComponent(it.name + ', ' + it.address)}">${ICON.copy} 복사</button>`:"";
     html += `
       <div class="titem">
         <span class="tdot ${it.mapNum?'numbered':''}">${it.mapNum||''}</span>
         <span class="ttime">${it.time}</span>
-        <p class="tname">${it.name}</p>
-        ${it.address!=="-"?`<p class="tmeta">${ICON.pin} ${it.address}</p>`:""}
+        <div class="tname-row">
+          <p class="tname">${it.name}</p>
+          ${infoBtn}
+        </div>
+        ${it.address!=="-"?`<div class="taddr-row"><p class="tmeta">${ICON.pin} ${it.address}</p>${copyBtn}</div>`:(copyBtn?`<div class="taddr-row"><span></span>${copyBtn}</div>`:"")}
         ${it.hours!=="-"?`<p class="tmeta">${ICON.clock} ${it.hours}</p>`:""}
         ${it.desc?`<p class="tdesc">${it.desc}</p>`:""}
         ${it.note?`<p class="tnote">${ICON.info} ${it.note}</p>`:""}
-        ${(info || it.lat)?`<div class="tactions">
-          ${info?`<button class="pillbtn" data-infojump="${info.id}">${ICON.info2} 정보</button>`:""}
-          ${it.lat?`<button class="pillbtn" data-copy="${encodeURIComponent(it.name + ', ' + it.address)}">${ICON.copy} 복사</button>`:""}
-        </div>`:""}
       </div>
     `;
   }
