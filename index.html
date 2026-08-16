@@ -8,23 +8,29 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
 <style>
   :root{
-    --ink:#1E2A2A; --paper:#F7F2E7; --paperDark:#EFE7D4; --harbour:#0F3B40;
-    --harbourLight:#1B565D; --coral:#E4572E; --coralDark:#C7431D; --gold:#C79A2E;
-    --line:#D9CFB4; --cream:#FFFDF8;
+    --ink:#2E2418; --paper:#FFF7E6; --paperDark:#FBE9C4; --harbour:#2E9CC7;
+    --harbourLight:#57BEDB; --coral:#E2892E; --coralDark:#BD6A18; --gold:#EFB324;
+    --line:#F0DBA8; --cream:#FFFDF6; --gum:#4F9270; --gumDark:#3B7358;
   }
   *{box-sizing:border-box;}
   body{margin:0;background:var(--paper);font-family:'Apple SD Gothic Neo','Malgun Gothic',sans-serif;color:var(--ink);}
   #app{max-width:480px;margin:0 auto;min-height:100vh;background:var(--paper);box-shadow:0 0 24px rgba(0,0,0,.08);position:relative;}
 
   /* header */
-  header{background:linear-gradient(135deg,var(--harbour),var(--harbourLight));color:#fff;padding:32px 20px 24px;position:relative;overflow:hidden;}
-  header::before{content:"";position:absolute;inset:0;opacity:.1;background-image:repeating-linear-gradient(45deg,transparent,transparent 18px,rgba(255,255,255,.4) 18px,rgba(255,255,255,.4) 19px);}
+  header{background:linear-gradient(160deg,var(--harbour) 0%,var(--harbourLight) 55%,#7FD1C6 100%);color:#fff;padding:32px 20px 40px;position:relative;overflow:hidden;}
+  header::before{content:"";position:absolute;inset:0;opacity:.12;background-image:radial-gradient(rgba(255,255,255,.5) 1.5px, transparent 1.5px);background-size:16px 16px;}
+  header .wave{position:absolute;left:0;right:0;bottom:-1px;line-height:0;}
+  header .wave svg{width:100%;height:28px;display:block;}
   .hdr-row{position:relative;display:flex;justify-content:space-between;align-items:flex-start;}
   .hdr-eyebrow{font-size:11px;letter-spacing:.25em;text-transform:uppercase;color:var(--gold);margin:0 0 6px;}
-  .hdr-title{font-size:24px;font-weight:700;line-height:1.3;margin:0;font-family:Georgia,'Noto Serif KR',serif;}
-  .hdr-btn{display:flex;align-items:center;gap:6px;border-radius:999px;padding:9px 12px;font-size:12px;border:1px solid rgba(255,255,255,.3);background:rgba(255,255,255,.1);color:#fff;cursor:pointer;}
+  .hdr-title{font-size:24px;font-weight:800;line-height:1.3;margin:0;font-family:Georgia,'Noto Serif KR',serif;}
+  .hdr-btn{display:flex;align-items:center;gap:6px;border-radius:999px;padding:9px 12px;font-size:12px;border:1px solid rgba(255,255,255,.35);background:rgba(255,255,255,.15);color:#fff;cursor:pointer;}
   .dot{width:8px;height:8px;border-radius:50%;background:#94A3B8;margin-left:2px;}
   .dot.on{background:#4ADE80;}
+  .hdr-critter{position:absolute;font-size:30px;filter:drop-shadow(0 3px 4px rgba(0,0,0,.15));user-select:none;}
+  .c-koala{right:14px;top:6px;transform:rotate(8deg);font-size:34px;}
+  .c-kangaroo{right:70px;top:64px;transform:rotate(-6deg);font-size:26px;opacity:.92;}
+  .c-bird{left:0px;top:2px;transform:rotate(-10deg);font-size:22px;opacity:.9;}
 
   /* nav */
   nav{position:sticky;top:0;z-index:20;display:flex;background:var(--cream);border-bottom:1px solid var(--line);}
@@ -33,9 +39,11 @@
   nav svg{width:18px;height:18px;}
 
   /* day stamps */
-  .stamp-row{display:flex;gap:8px;overflow-x:auto;padding:14px 16px 6px;}
+  .stamp-row{display:flex;gap:8px;overflow-x:auto;padding:14px 16px 10px;}
   .stamp{flex-shrink:0;min-width:66px;border:2px dashed var(--line);border-radius:999px;background:var(--cream);color:var(--ink);display:flex;flex-direction:column;align-items:center;justify-content:center;padding:9px 8px;cursor:pointer;transform:rotate(-2deg);}
-  .stamp.active{border-color:var(--coral);color:var(--coral);background:#FFF6F1;transform:rotate(0);}
+  .stamp.active{border-color:var(--coral);color:var(--coral);background:#FFF3E4;transform:rotate(0);}
+  .stamp.day0{border-style:solid;border-color:var(--gum);}
+  .stamp.day0.active{border-color:var(--gum);color:var(--gumDark);background:#EAF6EF;}
   .stamp .l1{font-size:9px;letter-spacing:.15em;text-transform:uppercase;opacity:.6;}
   .stamp .l2{font-size:14px;font-weight:700;}
   .stamp .l3{font-size:9px;opacity:.6;}
@@ -78,7 +86,7 @@
   .itin-toolbar .sync-status{font-size:11px;opacity:.5;flex:1;}
 
   /* expense/diary shared */
-  .summary-box{margin:0 16px;background:var(--harbour);color:#fff;border-radius:18px;padding:14px 16px;display:flex;align-items:center;justify-content:space-between;}
+  .summary-box{margin:16px 16px 0;background:linear-gradient(135deg,var(--harbour),var(--harbourLight));color:#fff;border-radius:18px;padding:14px 16px;display:flex;align-items:center;justify-content:space-between;}
   .summary-box .lab{font-size:11px;opacity:.7;margin:0;}
   .summary-box .val{font-size:18px;font-weight:700;margin:2px 0 0;}
   .summary-box .val small{font-size:11px;font-weight:400;opacity:.7;}
@@ -156,6 +164,12 @@ const DAYS = [
   { id:10, date:"2026-12-31", md:"12/31", wd:"목", label:"새해맞이" },
   { id:11, date:"2027-01-01", md:"1/1", wd:"금", label:"달링하버 & 인너웨스트" },
   { id:12, date:"2027-01-02", md:"1/2", wd:"토", label:"출국" },
+];
+
+// expense tab only: adds a Day 0 for pre-trip prep spending (flights, gear, visas...)
+const EXP_DAYS = [
+  { id:0, date:"2026-12-01", md:"준비", wd:"", label:"여행 준비" },
+  ...DAYS,
 ];
 
 // each item: time, name, address, hours, desc, note, lat/lng (optional -> shown on map)
@@ -363,6 +377,9 @@ function render(){
 function Header(){
   return `
   <header>
+    <span class="hdr-critter c-bird">🦜</span>
+    <span class="hdr-critter c-koala">🐨</span>
+    <span class="hdr-critter c-kangaroo">🦘</span>
     <div class="hdr-row">
       <div>
         <p class="hdr-eyebrow">Sydney · 2026.12.22 – 2027.01.02</p>
@@ -370,6 +387,7 @@ function Header(){
       </div>
       <button class="hdr-btn" id="btnSettings">${ICON.settings}<span>설정</span><span class="dot ${state.github.connected?'on':''}"></span></button>
     </div>
+    <div class="wave"><svg viewBox="0 0 400 28" preserveAspectRatio="none"><path d="M0 14 Q 25 28 50 14 T 100 14 T 150 14 T 200 14 T 250 14 T 300 14 T 350 14 T 400 14 V28 H0 Z" fill="#FFF7E6"/></svg></div>
   </header>`;
 }
 
@@ -527,16 +545,16 @@ function ExpenseTab(){
   const total = dayEntries.reduce((s,e)=>s+Number(e.aud||0),0);
   return `
   <div style="padding-bottom:32px;">
-    <div class="stamp-row">${DAYS.map(d=>Stamp(d, state.expDay===d.id, 'exp')).join("")}</div>
+    <div class="stamp-row">${EXP_DAYS.map(d=>Stamp(d, state.expDay===d.id, 'exp', d.id===0)).join("")}</div>
     <div class="summary-box">
       <div>
-        <p class="lab">${DAYS.find(d=>d.id===state.expDay).md} 지출 합계</p>
+        <p class="lab">${EXP_DAYS.find(d=>d.id===state.expDay).md} 지출 합계</p>
         <p class="val">A$${total.toFixed(2)} <small>(약 ₩${Math.round(total*state.rate).toLocaleString()})</small></p>
       </div>
       <button class="btn" id="syncExpDay" ${dayEntries.length===0?"disabled":""}>${state.github.connected?ICON.github:''}${state.github.connected?'GitHub 저장':'다운로드'}</button>
     </div>
     <div class="entry-list">
-      ${dayEntries.length===0?`<p class="empty-msg">이 날의 지출 내역이 아직 없어요.</p>`:dayEntries.map(e=>`
+      ${dayEntries.length===0?`<p class="empty-msg">🐨 이 날의 지출 내역이 아직 없어요.</p>`:dayEntries.map(e=>`
         <div class="entry">
           ${e.photo?`<img src="${e.photo}"/>`:`<div class="ph-empty">${ICON.camera}</div>`}
           <div class="body">
@@ -564,15 +582,16 @@ function ExpenseTab(){
   </div>`;
 }
 
-function Stamp(day, active, tag){
-  return `<button class="stamp ${active?'active':''}" data-${tag}day="${day.id}">
-    <span class="l1">Day ${day.id}</span><span class="l2">${day.md}</span><span class="l3">${day.wd}</span>
+function Stamp(day, active, tag, isPrep){
+  return `<button class="stamp ${active?'active':''} ${isPrep?'day0':''}" data-${tag}day="${day.id}">
+    <span class="l1">${isPrep?'Prep':'Day '+day.id}</span><span class="l2">${isPrep?'🧳':day.md}</span><span class="l3">${isPrep?day.md:day.wd}</span>
   </button>`;
 }
 
 function buildExpenseMd(day, entries){
   const total = entries.reduce((s,e)=>s+Number(e.aud||0),0);
-  let md = `# 가계부 — ${day.md} (${day.wd})\n\n`;
+  const heading = day.wd ? `${day.md} (${day.wd})` : day.label;
+  let md = `# 가계부 — ${heading}\n\n`;
   md += `| 장소 | 항목 | AUD | KRW(약) |\n|---|---|---|---|\n`;
   entries.forEach(e=>{ md += `| ${e.place} | ${e.item||"-"} | $${Number(e.aud).toFixed(2)} | ₩${Math.round(e.aud*state.rate).toLocaleString()} |\n`; });
   md += `\n**합계: A$${total.toFixed(2)} (약 ₩${Math.round(total*state.rate).toLocaleString()}, 환율 1AUD≈${state.rate}KRW 기준)**\n`;
@@ -756,7 +775,7 @@ function bindTabEvents(){
       renderTabContent();
     };
     document.getElementById("syncExpDay").onclick = async ()=>{
-      const day = DAYS.find(d=>d.id===state.expDay);
+      const day = EXP_DAYS.find(d=>d.id===state.expDay);
       const dayEntries = state.expenses.filter(e=>e.dayId===state.expDay);
       const md = buildExpenseMd(day, dayEntries);
       if(!state.github.connected){ downloadText(`${day.date}-가계부.md`, md); showToast("info","GitHub 미연결 — 파일로 다운로드했습니다."); return; }
