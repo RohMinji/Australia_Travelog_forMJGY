@@ -21,25 +21,7 @@
       "lng": 151.1753
     },
     {
-      "time": "12:30",
-      "name": "숙소 체크인",
-      "address": "Canberra St, Oxley Park NSW 2760, Australia",
-      "hours": "-",
-      "desc": "짐 정리 및 휴식",
-      "note": ""
-    },
-    {
-      "time": "14:30",
-      "name": "로열 보타닉 가든",
-      "address": "Mrs Macquaries Rd, Sydney NSW 2000",
-      "hours": "07:00–17:00",
-      "desc": "하버뷰 정원 산책, 무료 입장",
-      "note": "",
-      "lat": -33.8641859,
-      "lng": 151.2165708
-    },
-    {
-      "time": "15:00",
+      "time": "12:00",
       "name": "Piccolo Me @ RBG (브런치)",
       "address": "Macquarie St, Sydney NSW 2000",
       "hours": "06:30–15:30(평일)/07:00–14:00(주말)",
@@ -49,7 +31,17 @@
       "lng": 151.2130629
     },
     {
-      "time": "16:00",
+      "time": "13:30",
+      "name": "로열 보타닉 가든",
+      "address": "Mrs Macquaries Rd, Sydney NSW 2000",
+      "hours": "07:00–17:00",
+      "desc": "하버뷰 정원 산책, 무료 입장",
+      "note": "",
+      "lat": -33.8641859,
+      "lng": 151.2165708
+    },
+    {
+      "time": "17:00",
       "name": "미세스 맥쿼리 포인트",
       "address": "Mrs Macquaries Point, Sydney NSW 2000",
       "hours": "24시간",
@@ -57,6 +49,14 @@
       "note": "일몰 시간대 추천",
       "lat": -33.8593976,
       "lng": 151.2222374
+    },
+    {
+      "time": "18:00",
+      "name": "소현❤️슨형부",
+      "address": "Canberra St, Oxley Park NSW 2760, Australia",
+      "hours": "-",
+      "desc": "짐 정리 및 휴식",
+      "note": ""
     }
   ],
   "3": [
