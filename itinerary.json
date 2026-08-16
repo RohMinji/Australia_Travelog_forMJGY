@@ -1,0 +1,616 @@
+{
+  "1": [
+    {
+      "time": "21:40",
+      "name": "인천공항 출발 (ICN)",
+      "address": "인천국제공항",
+      "hours": "-",
+      "desc": "대한항공 시드니행 출발",
+      "note": ""
+    }
+  ],
+  "2": [
+    {
+      "time": "10:15",
+      "name": "시드니 공항 도착 (SYD)",
+      "address": "Sydney Airport, Mascot NSW",
+      "hours": "-",
+      "desc": "입국심사 및 수하물 수취",
+      "note": "장거리 비행 다음날, 무리하지 않기",
+      "lat": -33.9399,
+      "lng": 151.1753
+    },
+    {
+      "time": "12:30",
+      "name": "숙소 체크인",
+      "address": "Canberra St, Oxley Park NSW 2760, Australia",
+      "hours": "-",
+      "desc": "짐 정리 및 휴식",
+      "note": ""
+    },
+    {
+      "time": "14:30",
+      "name": "로열 보타닉 가든",
+      "address": "Mrs Macquaries Rd, Sydney NSW 2000",
+      "hours": "07:00–17:00",
+      "desc": "하버뷰 정원 산책, 무료 입장",
+      "note": "",
+      "lat": -33.8641859,
+      "lng": 151.2165708
+    },
+    {
+      "time": "16:00",
+      "name": "미세스 맥쿼리 포인트",
+      "address": "Mrs Macquaries Point, Sydney NSW 2000",
+      "hours": "24시간",
+      "desc": "오페라하우스·하버브릿지 동시 조망 명당",
+      "note": "일몰 시간대 추천",
+      "lat": -33.8593976,
+      "lng": 151.2222374
+    }
+  ],
+  "3": [
+    {
+      "time": "08:30",
+      "name": "서큘러키",
+      "address": "Circular Quay, Sydney NSW 2000",
+      "hours": "-",
+      "desc": "페리터미널 및 하버 전망",
+      "note": "",
+      "lat": -33.8611374,
+      "lng": 151.2126457
+    },
+    {
+      "time": "09:00",
+      "name": "시드니 오페라하우스",
+      "address": "Bennelong Point, Sydney NSW 2000",
+      "hours": "투어 사전예약",
+      "desc": "가이드 투어 약 1시간",
+      "note": "온라인 사전예약 권장",
+      "lat": -33.8567844,
+      "lng": 151.2152967
+    },
+    {
+      "time": "10:30",
+      "name": "자유 산책 · 이른 점심",
+      "address": "서큘러키 일대",
+      "hours": "-",
+      "desc": "",
+      "note": ""
+    },
+    {
+      "time": "12:00",
+      "name": "옵저버토리 힐",
+      "address": "Observatory Hill, Millers Point NSW 2000",
+      "hours": "24시간",
+      "desc": "하버브릿지 조망 명당",
+      "note": "",
+      "lat": -33.8595307,
+      "lng": 151.2048216
+    },
+    {
+      "time": "12:30",
+      "name": "시드니 천문대",
+      "address": "1003 Upper Fort St, Millers Point NSW 2000",
+      "hours": "수~일 12:00–18:00",
+      "desc": "역사적 천문대, 가이드 투어",
+      "note": "월·화 휴무 — 목요일 방문 가능",
+      "lat": -33.8598345,
+      "lng": 151.2048766
+    },
+    {
+      "time": "14:30",
+      "name": "자유시간",
+      "address": "-",
+      "hours": "-",
+      "desc": "",
+      "note": ""
+    },
+    {
+      "time": "17:00",
+      "name": "오페라 바",
+      "address": "Sydney Opera House, Lower Concourse Level",
+      "hours": "10:00–24:00",
+      "desc": "오페라하우스 뷰 바에서 선셋 한잔",
+      "note": "크리스마스이브 혼잡 예상",
+      "lat": -33.8584964,
+      "lng": 151.2136249
+    },
+    {
+      "time": "18:30",
+      "name": "크리스마스이브 디너",
+      "address": "-",
+      "hours": "-",
+      "desc": "사전 예약 필수",
+      "note": "성수기, 미리 예약"
+    }
+  ],
+  "4": [
+    {
+      "time": "09:00",
+      "name": "본다이 비치",
+      "address": "Bondi Beach NSW 2026",
+      "hours": "-",
+      "desc": "시드니 대표 해변",
+      "note": "",
+      "lat": -33.8914755,
+      "lng": 151.2766845
+    },
+    {
+      "time": "10:30",
+      "name": "본다이 아이스버그 클럽",
+      "address": "1 Notts Ave, Bondi Beach NSW 2026",
+      "hours": "11:00–22:00",
+      "desc": "오션풀 & 레스토랑",
+      "note": "",
+      "lat": -33.8950891,
+      "lng": 151.2743049
+    },
+    {
+      "time": "12:00",
+      "name": "브론테 비치",
+      "address": "Bronte Beach, Bronte NSW 2024",
+      "hours": "-",
+      "desc": "코스탈워크 경유지, 피크닉 명소",
+      "note": "",
+      "lat": -33.9034192,
+      "lng": 151.2682636
+    },
+    {
+      "time": "14:00",
+      "name": "오후 자유시간",
+      "address": "-",
+      "hours": "-",
+      "desc": "",
+      "note": "크리스마스 당일 상점·레스토랑 다수 휴무, 알코올 반입(BYO) 금지"
+    }
+  ],
+  "5": [
+    {
+      "time": "08:30",
+      "name": "세인트 메리 대성당",
+      "address": "St Marys Rd, Sydney NSW 2000",
+      "hours": "06:30–19:00(토·일)",
+      "desc": "고딕 양식 대성당",
+      "note": "",
+      "lat": -33.8711905,
+      "lng": 151.2133254
+    },
+    {
+      "time": "09:15",
+      "name": "하이드 파크",
+      "address": "Elizabeth St, Sydney NSW 2000",
+      "hours": "24시간",
+      "desc": "도심 속 공원",
+      "note": "",
+      "lat": -33.8715202,
+      "lng": 151.2116243
+    },
+    {
+      "time": "10:00",
+      "name": "퀸 빅토리아 빌딩 (QVB)",
+      "address": "455 George St, Sydney NSW 2000",
+      "hours": "09:00–18:00",
+      "desc": "박싱데이 세일, 역사적 쇼핑몰",
+      "note": "",
+      "lat": -33.8717161,
+      "lng": 151.2067008
+    },
+    {
+      "time": "11:00",
+      "name": "피트 스트리트 몰",
+      "address": "Pitt St, Sydney NSW 2000",
+      "hours": "-",
+      "desc": "메인 쇼핑 거리",
+      "note": "",
+      "lat": -33.8706,
+      "lng": 151.2086
+    },
+    {
+      "time": "12:00",
+      "name": "점심",
+      "address": "-",
+      "hours": "-",
+      "desc": "",
+      "note": ""
+    },
+    {
+      "time": "13:00",
+      "name": "웨스트필드 시드니",
+      "address": "Cnr Pitt St Mall & Market St, Sydney NSW 2000",
+      "hours": "09:30–19:00",
+      "desc": "대형 쇼핑몰",
+      "note": "",
+      "lat": -33.8705723,
+      "lng": 151.208515
+    },
+    {
+      "time": "14:00",
+      "name": "마틴 플레이스",
+      "address": "Martin Pl, Sydney NSW 2000",
+      "hours": "-",
+      "desc": "금융가 거리",
+      "note": "",
+      "lat": -33.8676606,
+      "lng": 151.2098596
+    },
+    {
+      "time": "15:00",
+      "name": "차이나타운",
+      "address": "Dixon St, Haymarket NSW 2000",
+      "hours": "24시간",
+      "desc": "딤섬 등 아시안 푸드",
+      "note": "",
+      "lat": -33.8793561,
+      "lng": 151.2041567
+    },
+    {
+      "time": "16:00",
+      "name": "패디스 마켓",
+      "address": "Hay St, Haymarket NSW 2000",
+      "hours": "10:00–18:00(수~일)",
+      "desc": "기념품 및 잡화 마켓",
+      "note": "월·화 휴무",
+      "lat": -33.8800089,
+      "lng": 151.2035622
+    }
+  ],
+  "6": [
+    {
+      "time": "08:30",
+      "name": "서큘러키 페리 탑승",
+      "address": "Circular Quay, Sydney NSW 2000",
+      "hours": "-",
+      "desc": "",
+      "note": "",
+      "lat": -33.8611374,
+      "lng": 151.2126457
+    },
+    {
+      "time": "09:00",
+      "name": "타롱가 동물원",
+      "address": "Bradleys Head Rd, Mosman NSW 2088",
+      "hours": "09:30–16:30",
+      "desc": "코알라·캥거루 등 호주 동물, 하버뷰 케이블카",
+      "note": "",
+      "lat": -33.8435473,
+      "lng": 151.2413418
+    },
+    {
+      "time": "13:00",
+      "name": "서큘러키 복귀",
+      "address": "-",
+      "hours": "-",
+      "desc": "",
+      "note": "",
+      "lat": -33.8611374,
+      "lng": 151.2126457
+    },
+    {
+      "time": "14:00",
+      "name": "맨리행 페리",
+      "address": "Circular Quay, Sydney NSW 2000",
+      "hours": "-",
+      "desc": "",
+      "note": ""
+    },
+    {
+      "time": "14:45",
+      "name": "맨리 비치",
+      "address": "Manly Beach, NSW",
+      "hours": "-",
+      "desc": "서핑 명소, 코르소 산책로",
+      "note": "",
+      "lat": -33.7931501,
+      "lng": 151.2876488
+    },
+    {
+      "time": "18:00",
+      "name": "서큘러키 복귀",
+      "address": "-",
+      "hours": "-",
+      "desc": "",
+      "note": ""
+    }
+  ],
+  "7": [
+    {
+      "time": "10:00",
+      "name": "루나파크 시드니",
+      "address": "1 Olympic Dr, Milsons Point NSW 2061",
+      "hours": "월요일 10:00–14:00",
+      "desc": "빅디퍼 등 스릴 라이드 집중 공략",
+      "note": "요일별 운영시간 상이 — 월요일은 단축 운영",
+      "lat": -33.8476987,
+      "lng": 151.2098382
+    },
+    {
+      "time": "14:00",
+      "name": "폐장",
+      "address": "-",
+      "hours": "-",
+      "desc": "",
+      "note": ""
+    },
+    {
+      "time": "14:30",
+      "name": "밀슨스 포인트",
+      "address": "Milsons Point NSW 2061",
+      "hours": "-",
+      "desc": "산책로",
+      "note": "",
+      "lat": -33.8474389,
+      "lng": 151.2119408
+    },
+    {
+      "time": "15:00",
+      "name": "하버브릿지 뷰",
+      "address": "Sydney Harbour Bridge, Sydney NSW",
+      "hours": "-",
+      "desc": "대표 랜드마크 조망",
+      "note": "",
+      "lat": -33.8523063,
+      "lng": 151.2107871
+    }
+  ],
+  "8": [
+    {
+      "time": "07:00",
+      "name": "차량 출발",
+      "address": "-",
+      "hours": "-",
+      "desc": "블루마운틴으로 이동 (약 2시간)",
+      "note": ""
+    },
+    {
+      "time": "09:00",
+      "name": "에코 포인트 & 세자매봉",
+      "address": "Prince Henry Cliff Walk, Katoomba NSW 2780",
+      "hours": "24시간",
+      "desc": "블루마운틴 대표 전망대",
+      "note": "",
+      "lat": -33.7325833,
+      "lng": 150.3120446
+    },
+    {
+      "time": "10:00",
+      "name": "시닉월드",
+      "address": "1 Violet St, Katoomba NSW 2780",
+      "hours": "10:00–16:00(평일)",
+      "desc": "케이블카 & 스카이웨이",
+      "note": "",
+      "lat": -33.7288041,
+      "lng": 150.3012037
+    },
+    {
+      "time": "13:00",
+      "name": "카툼바 점심",
+      "address": "Katoomba NSW 2780",
+      "hours": "-",
+      "desc": "",
+      "note": ""
+    },
+    {
+      "time": "14:00",
+      "name": "링컨스 락",
+      "address": "51 Little Switzerland Dr, Wentworth Falls NSW 2782",
+      "hours": "24시간",
+      "desc": "절벽 전망대",
+      "note": "주차 공간 협소",
+      "lat": -33.7401395,
+      "lng": 150.372104
+    },
+    {
+      "time": "16:00",
+      "name": "귀환 출발",
+      "address": "-",
+      "hours": "-",
+      "desc": "",
+      "note": ""
+    }
+  ],
+  "9": [
+    {
+      "time": "09:00",
+      "name": "파슬리 베이",
+      "address": "Parsley Rd, Vaucluse NSW 2030",
+      "hours": "24시간",
+      "desc": "안전한 하버 수영, 샤크넷 설치",
+      "note": "개인 차량 이동",
+      "lat": -33.8522487,
+      "lng": 151.2781447
+    },
+    {
+      "time": "11:00",
+      "name": "니엘슨 파크",
+      "address": "6 Steele Point Rd, Vaucluse NSW 2030",
+      "hours": "07:00–19:00",
+      "desc": "샤크 비치, 피크닉",
+      "note": "",
+      "lat": -33.8530491,
+      "lng": 151.2674231
+    },
+    {
+      "time": "13:00",
+      "name": "왓슨스 베이 점심",
+      "address": "Watsons Bay NSW 2030",
+      "hours": "-",
+      "desc": "",
+      "note": ""
+    },
+    {
+      "time": "14:00",
+      "name": "캠프 코브 비치",
+      "address": "Camp Cove Beach, NSW 2030",
+      "hours": "-",
+      "desc": "스노클링 명소",
+      "note": "",
+      "lat": -33.8390757,
+      "lng": 151.2795163
+    },
+    {
+      "time": "15:00",
+      "name": "갭 파크",
+      "address": "Gap Road, Watsons Bay NSW 2030",
+      "hours": "24시간",
+      "desc": "절벽 전망대",
+      "note": "",
+      "lat": -33.846274,
+      "lng": 151.285666
+    }
+  ],
+  "10": [
+    {
+      "time": "10:00",
+      "name": "여유로운 아침",
+      "address": "-",
+      "hours": "-",
+      "desc": "",
+      "note": ""
+    },
+    {
+      "time": "11:30",
+      "name": "서큘러키 산책",
+      "address": "Circular Quay, Sydney NSW 2000",
+      "hours": "-",
+      "desc": "",
+      "note": "",
+      "lat": -33.8611374,
+      "lng": 151.2126457
+    },
+    {
+      "time": "12:30",
+      "name": "레스토랑 점심",
+      "address": "-",
+      "hours": "-",
+      "desc": "",
+      "note": "사전 예약 권장"
+    },
+    {
+      "time": "14:00",
+      "name": "바랑가루 리저브",
+      "address": "Hickson Rd, Barangaroo NSW 2000",
+      "hours": "24시간",
+      "desc": "불꽃놀이 명당 중 하나",
+      "note": "",
+      "lat": -33.857208,
+      "lng": 151.201206
+    },
+    {
+      "time": "17:00",
+      "name": "자리 잡기",
+      "address": "-",
+      "hours": "-",
+      "desc": "",
+      "note": "이른 시간부터 인파 몰림 주의"
+    },
+    {
+      "time": "21:00",
+      "name": "9시 불꽃놀이",
+      "address": "-",
+      "hours": "-",
+      "desc": "가족 단위 프리쇼",
+      "note": ""
+    },
+    {
+      "time": "24:00",
+      "name": "자정 하버브릿지 불꽃놀이",
+      "address": "-",
+      "hours": "-",
+      "desc": "메인 불꽃놀이",
+      "note": "",
+      "lat": -33.8523063,
+      "lng": 151.2107871
+    }
+  ],
+  "11": [
+    {
+      "time": "08:30",
+      "name": "시드니 피쉬 마켓",
+      "address": "1 Bridge Rd, Glebe NSW 2037",
+      "hours": "07:00–22:00",
+      "desc": "신선 해산물 아침 식사",
+      "note": "",
+      "lat": -33.8751173,
+      "lng": 151.199992
+    },
+    {
+      "time": "10:30",
+      "name": "달링하버",
+      "address": "Sydney NSW 2000",
+      "hours": "-",
+      "desc": "워터프론트 산책",
+      "note": "",
+      "lat": -33.87488,
+      "lng": 151.2009
+    },
+    {
+      "time": "11:30",
+      "name": "씨라이프 시드니 아쿠아리움",
+      "address": "1-5 Wheat Rd, Sydney NSW 2000",
+      "hours": "09:30–16:00(토·일)",
+      "desc": "펭귄·상어 등 해양생물",
+      "note": "",
+      "lat": -33.8695997,
+      "lng": 151.2021381
+    },
+    {
+      "time": "13:30",
+      "name": "시드니 하버 관광 크루즈",
+      "address": "달링하버 승선",
+      "hours": "-",
+      "desc": "점심 포함 옵션 고려",
+      "note": "",
+      "lat": -33.873,
+      "lng": 151.201
+    },
+    {
+      "time": "15:30",
+      "name": "시드니대학교",
+      "address": "Camperdown NSW 2050",
+      "hours": "09:00–17:00(금)",
+      "desc": "고딕 양식 캠퍼스",
+      "note": "",
+      "lat": -33.8884041,
+      "lng": 151.1867648
+    },
+    {
+      "time": "16:30",
+      "name": "Sydney Park",
+      "address": "416 Sydney Park Rd, Alexandria NSW 2015",
+      "hours": "24시간",
+      "desc": "도심 속 대형 공원, 노을 뷰",
+      "note": "",
+      "lat": -33.9098337,
+      "lng": 151.1851663
+    }
+  ],
+  "12": [
+    {
+      "time": "08:00",
+      "name": "체크아웃",
+      "address": "-",
+      "hours": "-",
+      "desc": "",
+      "note": "전날 짐 정리 권장"
+    },
+    {
+      "time": "09:00",
+      "name": "공항 이동",
+      "address": "-",
+      "hours": "-",
+      "desc": "",
+      "note": ""
+    },
+    {
+      "time": "12:15",
+      "name": "시드니 출발 (SYD)",
+      "address": "Sydney Airport",
+      "hours": "-",
+      "desc": "→ ICN 19:15 도착 예정",
+      "note": "",
+      "lat": -33.9399,
+      "lng": 151.1753
+    }
+  ]
+}
