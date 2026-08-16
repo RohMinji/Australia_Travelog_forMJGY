@@ -190,9 +190,9 @@ const DAYS = [
   { id:3, date:"2026-12-24", md:"12/24", wd:"목", label:"오페라하우스 & 록스" },
   { id:4, date:"2026-12-25", md:"12/25", wd:"금", label:"크리스마스, 본다이" },
   { id:5, date:"2026-12-26", md:"12/26", wd:"토", label:"박싱데이 & 쇼핑" },
-  { id:6, date:"2026-12-27", md:"12/27", wd:"일", label:"타롱가 & 맨리" },
+  { id:6, date:"2026-12-27", md:"12/27", wd:"일", label:"블루마운틴" },
   { id:7, date:"2026-12-28", md:"12/28", wd:"월", label:"루나파크" },
-  { id:8, date:"2026-12-29", md:"12/29", wd:"화", label:"블루마운틴" },
+  { id:8, date:"2026-12-29", md:"12/29", wd:"화", label:"타롱가 & 맨리" },
   { id:9, date:"2026-12-30", md:"12/30", wd:"수", label:"파슬리 베이" },
   { id:10, date:"2026-12-31", md:"12/31", wd:"목", label:"새해맞이" },
   { id:11, date:"2027-01-01", md:"1/1", wd:"금", label:"달링하버 & 인너웨스트" },
@@ -246,15 +246,12 @@ const DEFAULT_ITINERARY = {
     { time:"16:00", name:"패디스 마켓", address:"Hay St, Haymarket NSW 2000", hours:"10:00–18:00(수~일)", desc:"기념품 및 잡화 마켓", note:"월·화 휴무", lat:-33.8800089, lng:151.2035622 },
   ],
   6: [
-    { time:"08:30", name:"서큘러키 페리 탑승", address:"Circular Quay, Sydney NSW 2000", hours:"-", desc:"", note:"", lat:-33.8611374, lng:151.2126457 },
-    { time:"09:00", name:"타롱가 동물원", address:"Bradleys Head Rd, Mosman NSW 2088", hours:"09:30–16:30", desc:"코알라·캥거루 등 호주 동물, 하버뷰 케이블카", note:"", lat:-33.8435473, lng:151.2413418 },
-    { time:"13:00", name:"서큘러키 복귀", address:"-", hours:"-", desc:"", note:"", lat:-33.8611374, lng:151.2126457 },
-    { time:"14:00", name:"맨리행 페리", address:"Circular Quay, Sydney NSW 2000", hours:"-", desc:"", note:"" },
-    { time:"14:45", name:"맨리 비치", address:"Manly Beach, NSW", hours:"-", desc:"서핑 명소, 코르소 산책로", note:"", lat:-33.7931501, lng:151.2876488 },
-    { time:"15:00", name:"Palmó Artisan Açaí", address:"2/41 Market Ln, Manly NSW 2095", hours:"07:15–15:30", desc:"맨리 대표 아사이볼 — OG 볼 추천", note:"", lat:-33.7976223, lng:151.2863997 },
-    { time:"16:00", name:"맨리비치 자유시간", address:"-", hours:"-", desc:"", note:"" },
-    { time:"17:30", name:"Felons Seafood (피시앤칩스)", address:"West Esplanade, Manly NSW 2095", hours:"12:00–23:00", desc:"맨리 워프 바로 위, 평점 4.4 — 비프탈로 튀김 감자칩 필수", note:"", lat:-33.7995125, lng:151.2840075 },
-    { time:"19:00", name:"서큘러키 복귀", address:"-", hours:"-", desc:"", note:"" },
+    { time:"07:00", name:"차량 출발", address:"-", hours:"-", desc:"블루마운틴으로 이동 (약 2시간)", note:"" },
+    { time:"09:00", name:"에코 포인트 & 세자매봉", address:"Prince Henry Cliff Walk, Katoomba NSW 2780", hours:"24시간", desc:"블루마운틴 대표 전망대", note:"", lat:-33.7325833, lng:150.3120446 },
+    { time:"10:00", name:"시닉월드", address:"1 Violet St, Katoomba NSW 2780", hours:"09:00–17:00(주말)", desc:"케이블카 & 스카이웨이", note:"일요일이라 주말 운영시간 적용", lat:-33.7288041, lng:150.3012037 },
+    { time:"13:00", name:"Unique Patisserie (카툼바 점심)", address:"169 Katoomba St, Katoomba NSW 2780", hours:"09:00–17:00(수요일 휴무)", desc:"말레이시안 퓨전 베이커리 카페 — 락사, 스위트&사워 포크 추천", note:"", lat:-33.7161031, lng:150.3110880 },
+    { time:"14:00", name:"링컨스 락", address:"51 Little Switzerland Dr, Wentworth Falls NSW 2782", hours:"24시간", desc:"절벽 전망대", note:"주차 공간 협소", lat:-33.7401395, lng:150.372104 },
+    { time:"16:00", name:"귀환 출발", address:"-", hours:"-", desc:"", note:"" },
   ],
   7: [
     { time:"10:00", name:"루나파크 시드니", address:"1 Olympic Dr, Milsons Point NSW 2061", hours:"월요일 10:00–14:00", desc:"빅디퍼 등 스릴 라이드 집중 공략", note:"요일별 운영시간 상이 — 월요일은 단축 운영", lat:-33.8476987, lng:151.2098382 },
@@ -264,12 +261,15 @@ const DEFAULT_ITINERARY = {
     { time:"18:30", name:"Lavendra Indian (저녁)", address:"5 Walker St, Lavender Bay NSW 2060", hours:"12:00–22:00(화~일)", desc:"하버브릿지 뷰, 인도+일본 퓨전 — 버터치킨 가츠 커리 추천", note:"BYO 가능, 예약 권장", lat:-33.843236, lng:151.208143 },
   ],
   8: [
-    { time:"07:00", name:"차량 출발", address:"-", hours:"-", desc:"블루마운틴으로 이동 (약 2시간)", note:"" },
-    { time:"09:00", name:"에코 포인트 & 세자매봉", address:"Prince Henry Cliff Walk, Katoomba NSW 2780", hours:"24시간", desc:"블루마운틴 대표 전망대", note:"", lat:-33.7325833, lng:150.3120446 },
-    { time:"10:00", name:"시닉월드", address:"1 Violet St, Katoomba NSW 2780", hours:"10:00–16:00(평일)", desc:"케이블카 & 스카이웨이", note:"", lat:-33.7288041, lng:150.3012037 },
-    { time:"13:00", name:"Hominy Bakery (카툼바 점심)", address:"185 Katoomba St, Katoomba NSW 2780", hours:"화~토 06:00–16:00", desc:"블루마운틴 대표 베이커리 — 비프파이, 포크·펜넬 소시지롤", note:"월·일 휴무", lat:-33.7164623, lng:150.3110433 },
-    { time:"14:00", name:"링컨스 락", address:"51 Little Switzerland Dr, Wentworth Falls NSW 2782", hours:"24시간", desc:"절벽 전망대", note:"주차 공간 협소", lat:-33.7401395, lng:150.372104 },
-    { time:"16:00", name:"귀환 출발", address:"-", hours:"-", desc:"", note:"" },
+    { time:"08:30", name:"서큘러키 페리 탑승", address:"Circular Quay, Sydney NSW 2000", hours:"-", desc:"", note:"", lat:-33.8611374, lng:151.2126457 },
+    { time:"09:00", name:"타롱가 동물원", address:"Bradleys Head Rd, Mosman NSW 2088", hours:"09:30–16:30", desc:"코알라·캥거루 등 호주 동물, 하버뷰 케이블카", note:"", lat:-33.8435473, lng:151.2413418 },
+    { time:"13:00", name:"서큘러키 복귀", address:"-", hours:"-", desc:"", note:"", lat:-33.8611374, lng:151.2126457 },
+    { time:"14:00", name:"맨리행 페리", address:"Circular Quay, Sydney NSW 2000", hours:"-", desc:"", note:"" },
+    { time:"14:45", name:"맨리 비치", address:"Manly Beach, NSW", hours:"-", desc:"서핑 명소, 코르소 산책로", note:"", lat:-33.7931501, lng:151.2876488 },
+    { time:"15:00", name:"Palmó Artisan Açaí", address:"2/41 Market Ln, Manly NSW 2095", hours:"07:15–15:30", desc:"맨리 대표 아사이볼 — OG 볼 추천", note:"", lat:-33.7976223, lng:151.2863997 },
+    { time:"16:00", name:"맨리비치 자유시간", address:"-", hours:"-", desc:"", note:"" },
+    { time:"17:30", name:"Felons Seafood (피시앤칩스)", address:"West Esplanade, Manly NSW 2095", hours:"12:00–23:00(화~일)", desc:"맨리 워프 바로 위, 평점 4.4 — 비프탈로 튀김 감자칩 필수", note:"", lat:-33.7995125, lng:151.2840075 },
+    { time:"19:00", name:"서큘러키 복귀", address:"-", hours:"-", desc:"", note:"" },
   ],
   9: [
     { time:"09:00", name:"파슬리 베이", address:"Parsley Rd, Vaucluse NSW 2030", hours:"24시간", desc:"안전한 하버 수영, 샤크넷 설치", note:"개인 차량 이동", lat:-33.8522487, lng:151.2781447 },
@@ -310,9 +310,9 @@ const PACKING = {
   3: ["카메라", "저녁엔 쌀쌀할 수 있어 얇은 겉옷"],
   4: ["수영복", "수건", "선크림", "물안경", "방수팩"],
   5: ["편한 신발", "장바구니(쇼핑백)"],
-  6: ["수영복", "선크림", "수건", "카메라"],
+  6: ["워킹화", "물", "간식", "얇은 겉옷(산간지역 쌀쌀)"],
   7: ["편한 신발", "모자"],
-  8: ["워킹화", "물", "간식", "얇은 겉옷(산간지역 쌀쌀)"],
+  8: ["수영복", "선크림", "수건", "카메라"],
   9: ["돗자리", "수영복", "수건", "선크림", "물안경"],
   10: ["돗자리", "담요", "방석", "간식", "보온병"],
   11: ["편한 신발", "장바구니"],
@@ -371,7 +371,7 @@ function findPlaceInfo(name) {
 
 // days where the person already has a private/rental car for the whole day —
 // transit suggestions don't make sense here, everything is by car.
-const CAR_DAYS = new Set([8, 9]);
+const CAR_DAYS = new Set([6, 9]);
 
 // manual transit legs: {day, fromKey, toKey, mode, route, mins, transfers, note}
 // fromKey/toKey are substrings matched against item.name.
@@ -379,9 +379,9 @@ const TRANSIT = [
   { day:2, fromKey:"공항", toKey:"로열 보타닉 가든", mode:"train", route:"국제/국내공항역 → 세인트제임스역 (T8 Airport & South Line)", mins:18, transfers:0, note:"하차 후 가든까지 도보 약 10분" },
   { day:3, fromKey:"Harry's", toKey:"천문대", mode:"bus", route:"Cowper Wharf Rd 정류장 → Argyle St 정류장 (버스 311)", mins:20, transfers:0, note:"도보로도 25분 정도라 날씨 좋으면 걷기도 좋음" },
   { day:4, fromKey:"브론테", toKey:"D.Bowls", mode:"bus", route:"Bronte Beach 정류장 → Bondi Beach 정류장 (버스 378/379)", mins:12, transfers:0, note:"" },
-  { day:6, fromKey:"서큘러키 페리", toKey:"타롱가", mode:"ferry", route:"서큘러키 4번 부두 → 타롱가 동물원 부두 (페리 F1 Taronga)", mins:12, transfers:0, note:"동물원 입장권에 페리 왕복이 포함된 콤보 티켓도 있음" },
-  { day:6, fromKey:"타롱가 동물원", toKey:"서큘러키 복귀", mode:"ferry", route:"타롱가 동물원 부두 → 서큘러키 4번 부두 (페리 F1)", mins:12, transfers:0, note:"" },
-  { day:6, fromKey:"서큘러키 복귀", toKey:"맨리", mode:"ferry", route:"서큘러키 3번 부두 → 맨리 부두 (페리 F1 Manly, 완속 30분 / 고속선 18분)", mins:25, transfers:0, note:"" },
+  { day:8, fromKey:"서큘러키 페리", toKey:"타롱가", mode:"ferry", route:"서큘러키 4번 부두 → 타롱가 동물원 부두 (페리 F1 Taronga)", mins:12, transfers:0, note:"동물원 입장권에 페리 왕복이 포함된 콤보 티켓도 있음" },
+  { day:8, fromKey:"타롱가 동물원", toKey:"서큘러키 복귀", mode:"ferry", route:"타롱가 동물원 부두 → 서큘러키 4번 부두 (페리 F1)", mins:12, transfers:0, note:"" },
+  { day:8, fromKey:"서큘러키 복귀", toKey:"맨리", mode:"ferry", route:"서큘러키 3번 부두 → 맨리 부두 (페리 F1 Manly, 완속 30분 / 고속선 18분)", mins:25, transfers:0, note:"" },
   { day:11, fromKey:"크루즈", toKey:"시드니대학교", mode:"bus", route:"Darling Dr 정류장 → Sydney Uni 정류장 (버스 370, Broadway 경유)", mins:22, transfers:0, note:"" },
   { day:11, fromKey:"시드니대학교", toKey:"Sydney Park", mode:"bus", route:"City Rd 정류장 → Sydney Park 정류장 (버스 352)", mins:15, transfers:0, note:"" },
   { day:11, fromKey:"Sydney Park", toKey:"Hanoi on King", mode:"walk", route:"도보 약 20분, 또는 버스 352", mins:20, transfers:0, note:"짧은 구간이라 걷기도 무난" },
