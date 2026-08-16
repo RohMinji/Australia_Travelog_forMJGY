@@ -39,6 +39,16 @@
       "lng": 151.2165708
     },
     {
+      "time": "15:00",
+      "name": "Piccolo Me @ RBG (브런치)",
+      "address": "Macquarie St, Sydney NSW 2000",
+      "hours": "06:30–15:30(평일)/07:00–14:00(주말)",
+      "desc": "로열보타닉가든 안 카페 — 행오버 롤 추천",
+      "note": "",
+      "lat": -33.8645075,
+      "lng": 151.2130629
+    },
+    {
       "time": "16:00",
       "name": "미세스 맥쿼리 포인트",
       "address": "Mrs Macquaries Point, Sydney NSW 2000",
@@ -72,11 +82,13 @@
     },
     {
       "time": "10:30",
-      "name": "자유 산책 · 이른 점심",
-      "address": "서큘러키 일대",
-      "hours": "-",
-      "desc": "오페라 바는 지나가는 길에 구경만 — 내부는 시끄러워서 패스",
-      "note": ""
+      "name": "Harry's Café de Wheels (타이거 파이)",
+      "address": "Cowper Wharf Roadway, Woolloomooloo NSW 2011",
+      "hours": "09:00–22:00",
+      "desc": "1938년부터 이어진 시드니 대표 미트파이 — 오페라 바는 지나가는 길에 구경만, 내부는 시끄러워서 패스",
+      "note": "",
+      "lat": -33.8692049,
+      "lng": 151.2211607
     },
     {
       "time": "12:00",
@@ -98,11 +110,13 @@
     },
     {
       "time": "18:30",
-      "name": "크리스마스이브 디너",
-      "address": "-",
-      "hours": "-",
-      "desc": "사전 예약 필수",
-      "note": "성수기, 미리 예약"
+      "name": "Midden by Mark Olive (크리스마스이브 디너)",
+      "address": "Western Broadwalk, Sydney Opera House, Bennelong Point",
+      "hours": "예약 권장",
+      "desc": "오페라하우스 안 원주민 셰프의 네이티브 호주 파인다이닝 — 부시 파블로바(그린 앤트) 추천, 캥거루 대신 바라(생선) 등 다른 메뉴도 선택 가능",
+      "note": "성수기, 미리 예약",
+      "lat": -33.8570618,
+      "lng": 151.2146531
     },
     {
       "time": "20:00",
@@ -147,6 +161,16 @@
       "lng": 151.2682636
     },
     {
+      "time": "13:30",
+      "name": "D.Bowls Açaí Bondi",
+      "address": "18/110 Ramsgate Ave, Bondi Beach NSW 2026",
+      "hours": "08:00–17:00",
+      "desc": "시드니 최고의 아사이볼로 손꼽히는 곳 — 땅콩버터 토핑 필수",
+      "note": "",
+      "lat": -33.889556,
+      "lng": 151.281075
+    },
+    {
       "time": "14:00",
       "name": "오후 자유시간",
       "address": "-",
@@ -156,6 +180,16 @@
     }
   ],
   "5": [
+    {
+      "time": "07:30",
+      "name": "A.P Bakery (오픈 샌드위치)",
+      "address": "80 Commonwealth St, Surry Hills NSW 2010",
+      "hours": "07:30–15:00",
+      "desc": "켜켜이 쌓은 오픈 샌드위치·페이스트리로 한국인들 사이에서 특히 유명한 곳",
+      "note": "박싱데이 CBD 일정 시작 전, 살짝 우회",
+      "lat": -33.8793612,
+      "lng": 151.2110565
+    },
     {
       "time": "08:30",
       "name": "세인트 메리 대성당",
@@ -226,13 +260,13 @@
     },
     {
       "time": "15:00",
-      "name": "차이나타운",
-      "address": "Dixon St, Haymarket NSW 2000",
-      "hours": "24시간",
-      "desc": "딤섬 등 아시안 푸드",
+      "name": "차이나타운 — Royal Palace Seafood (얌차)",
+      "address": "393-399 Sussex St, Haymarket NSW 2000",
+      "hours": "09:30–15:00, 17:00–23:00",
+      "desc": "차이나타운 얌차 명소 — 하가우(새우딤섬), 차슈바오 추천",
       "note": "",
-      "lat": -33.8793561,
-      "lng": 151.2041567
+      "lat": -33.8779247,
+      "lng": 151.2046542
     },
     {
       "time": "16:00",
@@ -295,7 +329,35 @@
       "lng": 151.2876488
     },
     {
-      "time": "18:00",
+      "time": "15:00",
+      "name": "Palmó Artisan Açaí",
+      "address": "2/41 Market Ln, Manly NSW 2095",
+      "hours": "07:15–15:30",
+      "desc": "맨리 대표 아사이볼 — OG 볼 추천",
+      "note": "",
+      "lat": -33.7976223,
+      "lng": 151.2863997
+    },
+    {
+      "time": "16:00",
+      "name": "맨리비치 자유시간",
+      "address": "-",
+      "hours": "-",
+      "desc": "",
+      "note": ""
+    },
+    {
+      "time": "17:30",
+      "name": "Felons Seafood (피시앤칩스)",
+      "address": "West Esplanade, Manly NSW 2095",
+      "hours": "12:00–23:00",
+      "desc": "맨리 워프 바로 위, 평점 4.4 — 비프탈로 튀김 감자칩 필수",
+      "note": "",
+      "lat": -33.7995125,
+      "lng": 151.2840075
+    },
+    {
+      "time": "19:00",
       "name": "서큘러키 복귀",
       "address": "-",
       "hours": "-",
@@ -341,6 +403,16 @@
       "note": "",
       "lat": -33.8523063,
       "lng": 151.2107871
+    },
+    {
+      "time": "18:30",
+      "name": "Lavendra Indian (저녁)",
+      "address": "5 Walker St, Lavender Bay NSW 2060",
+      "hours": "12:00–22:00(화~일)",
+      "desc": "하버브릿지 뷰, 인도+일본 퓨전 — 버터치킨 가츠 커리 추천",
+      "note": "BYO 가능, 예약 권장",
+      "lat": -33.843236,
+      "lng": 151.208143
     }
   ],
   "8": [
@@ -374,11 +446,13 @@
     },
     {
       "time": "13:00",
-      "name": "카툼바 점심",
-      "address": "Katoomba NSW 2780",
-      "hours": "-",
-      "desc": "",
-      "note": ""
+      "name": "Hominy Bakery (카툼바 점심)",
+      "address": "185 Katoomba St, Katoomba NSW 2780",
+      "hours": "화~토 06:00–16:00",
+      "desc": "블루마운틴 대표 베이커리 — 비프파이, 포크·펜넬 소시지롤",
+      "note": "월·일 휴무",
+      "lat": -33.7164623,
+      "lng": 150.3110433
     },
     {
       "time": "14:00",
@@ -422,11 +496,13 @@
     },
     {
       "time": "13:00",
-      "name": "왓슨스 베이 점심",
-      "address": "Watsons Bay NSW 2030",
-      "hours": "-",
-      "desc": "",
-      "note": ""
+      "name": "Doyle's on the Beach (왓슨스베이 점심)",
+      "address": "11 Marine Parade, Watsons Bay NSW 2030",
+      "hours": "11:45–20:30(요일별 상이)",
+      "desc": "1885년부터 이어진 시드니 대표 피시앤칩스·시푸드",
+      "note": "",
+      "lat": -33.8428953,
+      "lng": 151.2818157
     },
     {
       "time": "14:00",
@@ -470,11 +546,13 @@
     },
     {
       "time": "12:30",
-      "name": "레스토랑 점심",
-      "address": "-",
-      "hours": "-",
-      "desc": "",
-      "note": "사전 예약 권장"
+      "name": "Wild Sage (점심)",
+      "address": "Exchange Place, 3 Sussex St, Barangaroo NSW 2000",
+      "hours": "07:00–15:00",
+      "desc": "바랑가루 리저브 바로 옆 — 그린 샥슈카, 참치 포케볼 추천",
+      "note": "",
+      "lat": -33.8650518,
+      "lng": 151.2028378
     },
     {
       "time": "14:00",
@@ -573,6 +651,16 @@
       "note": "",
       "lat": -33.9098337,
       "lng": 151.1851663
+    },
+    {
+      "time": "17:30",
+      "name": "Hanoi on King (뉴타운 저녁)",
+      "address": "126 King St, Newtown NSW 2042",
+      "hours": "11:00–21:00",
+      "desc": "Sydney Park에서 도보권 — 분짜, 소고기 쌀국수 추천",
+      "note": "",
+      "lat": -33.8932831,
+      "lng": 151.1840488
     }
   ],
   "12": [
