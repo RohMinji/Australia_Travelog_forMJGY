@@ -1,0 +1,706 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
+<title>기엽이 & 민지의 호주여행</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css" />
+<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
+<style>
+  :root{
+    --ink:#1E2A2A; --paper:#F7F2E7; --paperDark:#EFE7D4; --harbour:#0F3B40;
+    --harbourLight:#1B565D; --coral:#E4572E; --coralDark:#C7431D; --gold:#C79A2E;
+    --line:#D9CFB4; --cream:#FFFDF8;
+  }
+  *{box-sizing:border-box;}
+  body{margin:0;background:var(--paper);font-family:'Apple SD Gothic Neo','Malgun Gothic',sans-serif;color:var(--ink);}
+  #app{max-width:480px;margin:0 auto;min-height:100vh;background:var(--paper);box-shadow:0 0 24px rgba(0,0,0,.08);position:relative;}
+
+  /* header */
+  header{background:linear-gradient(135deg,var(--harbour),var(--harbourLight));color:#fff;padding:32px 20px 24px;position:relative;overflow:hidden;}
+  header::before{content:"";position:absolute;inset:0;opacity:.1;background-image:repeating-linear-gradient(45deg,transparent,transparent 18px,rgba(255,255,255,.4) 18px,rgba(255,255,255,.4) 19px);}
+  .hdr-row{position:relative;display:flex;justify-content:space-between;align-items:flex-start;}
+  .hdr-eyebrow{font-size:11px;letter-spacing:.25em;text-transform:uppercase;color:var(--gold);margin:0 0 6px;}
+  .hdr-title{font-size:24px;font-weight:700;line-height:1.3;margin:0;font-family:Georgia,'Noto Serif KR',serif;}
+  .hdr-btn{display:flex;align-items:center;gap:6px;border-radius:999px;padding:9px 12px;font-size:12px;border:1px solid rgba(255,255,255,.3);background:rgba(255,255,255,.1);color:#fff;cursor:pointer;}
+  .dot{width:8px;height:8px;border-radius:50%;background:#94A3B8;margin-left:2px;}
+  .dot.on{background:#4ADE80;}
+
+  /* nav */
+  nav{position:sticky;top:0;z-index:20;display:flex;background:var(--cream);border-bottom:1px solid var(--line);}
+  nav button{flex:1;display:flex;flex-direction:column;align-items:center;gap:4px;padding:11px 0;border:none;background:none;font-size:12px;font-weight:500;color:var(--ink);border-bottom:2px solid transparent;cursor:pointer;}
+  nav button.active{color:var(--coral);border-color:var(--coral);}
+  nav svg{width:18px;height:18px;}
+
+  /* day stamps */
+  .stamp-row{display:flex;gap:8px;overflow-x:auto;padding:14px 16px 6px;}
+  .stamp{flex-shrink:0;min-width:66px;border:2px dashed var(--line);border-radius:999px;background:var(--cream);color:var(--ink);display:flex;flex-direction:column;align-items:center;justify-content:center;padding:9px 8px;cursor:pointer;transform:rotate(-2deg);}
+  .stamp.active{border-color:var(--coral);color:var(--coral);background:#FFF6F1;transform:rotate(0);}
+  .stamp .l1{font-size:9px;letter-spacing:.15em;text-transform:uppercase;opacity:.6;}
+  .stamp .l2{font-size:14px;font-weight:700;}
+  .stamp .l3{font-size:9px;opacity:.6;}
+
+  /* itinerary */
+  .day-card{margin:0 16px 12px;border:1px solid var(--line);background:var(--cream);border-radius:18px;overflow:hidden;}
+  .day-head{width:100%;display:flex;align-items:center;gap:12px;padding:12px 16px;background:none;border:none;text-align:left;cursor:pointer;}
+  .day-badge{flex-shrink:0;width:44px;height:44px;border-radius:50%;background:var(--harbour);color:#fff;display:flex;flex-direction:column;align-items:center;justify-content:center;}
+  .day-badge .t1{font-size:9px;opacity:.7;line-height:1;}
+  .day-badge .t2{font-size:14px;font-weight:700;line-height:1;}
+  .day-head-info{flex:1;min-width:0;}
+  .day-head-info p.title{font-size:14px;font-weight:600;margin:0;}
+  .day-head-info p.sub{font-size:12px;opacity:.5;margin:2px 0 0;}
+  .chev{flex-shrink:0;transition:transform .2s;}
+  .chev.open{transform:rotate(180deg);}
+  .day-body{border-top:1px solid var(--line);padding:14px 16px 16px;}
+  .maptoggle{display:flex;align-items:center;gap:6px;font-size:12px;font-weight:500;color:var(--harbour);background:var(--paperDark);border:1px solid var(--line);border-radius:999px;padding:7px 12px;margin-bottom:12px;cursor:pointer;}
+  .daymap{width:100%;height:220px;border-radius:14px;overflow:hidden;margin-bottom:14px;display:none;border:1px solid var(--line);}
+  .daymap.show{display:block;}
+  .timeline{position:relative;margin-left:6px;padding-left:20px;border-left:2px dashed var(--line);}
+  .titem{position:relative;padding-bottom:18px;}
+  .titem:last-child{padding-bottom:0;}
+  .titem .tdot{position:absolute;left:-26px;top:3px;width:11px;height:11px;border-radius:50%;background:var(--coral);border:2px solid var(--cream);}
+  .titem .ttime{font-size:12px;font-weight:700;color:var(--coral);display:block;margin-bottom:3px;}
+  .titem .tname{font-size:14px;font-weight:600;margin:0;}
+  .titem .tmeta{font-size:12px;opacity:.6;display:flex;align-items:flex-start;gap:4px;margin-top:3px;}
+  .titem .tdesc{font-size:12px;margin-top:5px;}
+  .titem .tnote{font-size:12px;background:#FFF3E9;color:var(--coralDark);border-radius:8px;padding:5px 8px;margin-top:5px;display:inline-flex;gap:5px;align-items:flex-start;}
+
+  /* expense/diary shared */
+  .summary-box{margin:0 16px;background:var(--harbour);color:#fff;border-radius:18px;padding:14px 16px;display:flex;align-items:center;justify-content:space-between;}
+  .summary-box .lab{font-size:11px;opacity:.7;margin:0;}
+  .summary-box .val{font-size:18px;font-weight:700;margin:2px 0 0;}
+  .summary-box .val small{font-size:11px;font-weight:400;opacity:.7;}
+  .btn{border:none;border-radius:999px;padding:9px 14px;font-size:12px;font-weight:600;color:#fff;background:var(--coral);cursor:pointer;display:inline-flex;align-items:center;gap:6px;}
+  .btn:disabled{opacity:.4;}
+  .entry-list{padding:14px 16px;display:flex;flex-direction:column;gap:10px;}
+  .entry{display:flex;gap:10px;border:1px solid var(--line);background:var(--cream);border-radius:14px;padding:10px;}
+  .entry img{width:52px;height:52px;border-radius:10px;object-fit:cover;flex-shrink:0;}
+  .entry .ph-empty{width:52px;height:52px;border-radius:10px;background:var(--paperDark);display:flex;align-items:center;justify-content:center;flex-shrink:0;opacity:.4;}
+  .entry .body{flex:1;min-width:0;}
+  .entry .body p.place{font-size:13px;font-weight:600;margin:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+  .entry .body p.item{font-size:12px;opacity:.6;margin:2px 0 0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+  .entry .body p.amt{font-size:12px;font-weight:600;color:var(--coral);margin:4px 0 0;}
+  .entry .side{display:flex;flex-direction:column;align-items:flex-end;gap:6px;flex-shrink:0;}
+  .entry .side button{background:none;border:none;cursor:pointer;opacity:.4;}
+  .empty-msg{text-align:center;font-size:13px;opacity:.4;padding:26px 0;}
+
+  .form-box{margin:18px 16px 0;background:var(--paperDark);border:1px solid var(--line);border-radius:18px;padding:16px;display:flex;flex-direction:column;gap:10px;}
+  .form-box .lbl{font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;opacity:.5;margin:0 0 2px;}
+  .form-box input, .form-box textarea{width:100%;border:1px solid var(--line);background:var(--cream);border-radius:10px;padding:10px 12px;font-size:13px;outline:none;font-family:inherit;}
+  .form-row{display:flex;gap:8px;}
+  .file-btn{border:1px solid var(--line);background:var(--cream);border-radius:10px;padding:10px 12px;font-size:13px;display:flex;align-items:center;gap:6px;cursor:pointer;flex-shrink:0;white-space:nowrap;}
+  .file-btn input{display:none;}
+
+  .person-row{display:flex;gap:8px;margin:14px 16px 0;}
+  .person-btn{flex:1;border:1px solid var(--line);background:var(--cream);border-radius:14px;padding:11px 0;font-size:13px;font-weight:600;cursor:pointer;}
+  .person-btn.active{background:var(--coral);border-color:var(--coral);color:#fff;}
+  .diary-box{margin:14px 16px 0;border:1px solid var(--line);background:var(--cream);border-radius:18px;padding:16px;}
+  .diary-box .drow{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;}
+  .diary-box .drow p{font-size:12px;font-weight:600;opacity:.6;margin:0;}
+  .diary-box .saved{font-size:11px;color:#22C55E;display:flex;align-items:center;gap:4px;}
+  .diary-box textarea{width:100%;min-height:170px;border:1px solid var(--line);background:var(--paper);border-radius:14px;padding:12px;font-size:13px;line-height:1.7;font-family:Georgia,'Noto Serif KR',serif;outline:none;resize:vertical;}
+  .diary-box .dphoto{width:100%;height:150px;object-fit:cover;border-radius:14px;margin-top:10px;}
+  .diary-box .drow2{display:flex;gap:8px;margin-top:10px;}
+  .diary-box .drow2 label, .diary-box .drow2 button{flex:1;justify-content:center;}
+
+  /* modal */
+  .overlay{position:fixed;inset:0;background:rgba(0,0,0,.4);z-index:50;display:flex;align-items:flex-end;justify-content:center;}
+  .modal{width:100%;max-width:480px;background:var(--cream);border-radius:24px 24px 0 0;padding:20px;max-height:88vh;overflow-y:auto;}
+  .modal-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;}
+  .modal-head h2{font-size:15px;font-weight:700;margin:0;}
+  .modal-head button{background:none;border:none;cursor:pointer;}
+  .sect-lbl{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;opacity:.5;margin:0 0 8px;}
+  .modal input{width:100%;border:1px solid var(--line);border-radius:10px;padding:10px 12px;font-size:13px;margin-bottom:8px;outline:none;}
+  .hint{font-size:11px;opacity:.5;line-height:1.6;margin-top:8px;}
+  .result-ok{font-size:12px;color:#22C55E;display:flex;align-items:center;gap:5px;margin-top:8px;}
+  .result-fail{font-size:12px;color:var(--coral);display:flex;align-items:center;gap:5px;margin-top:8px;}
+  .divider{border-top:1px solid var(--line);margin:18px 0 14px;}
+  .rate-row{display:flex;align-items:center;gap:8px;}
+  .rate-row input{margin:0;}
+
+  /* toast */
+  #toast{position:fixed;bottom:16px;left:16px;right:16px;max-width:448px;margin:0 auto;z-index:60;display:none;justify-content:center;}
+  #toast .box{border-radius:999px;padding:10px 16px;font-size:12px;font-weight:500;display:flex;align-items:center;gap:10px;box-shadow:0 8px 24px rgba(0,0,0,.15);}
+  .share-note{margin:16px;padding:12px 14px;background:#EAF4F1;border:1px solid #CFE4DE;border-radius:14px;font-size:12px;line-height:1.6;color:var(--harbour);}
+
+  svg.icon{width:14px;height:14px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;}
+</style>
+</head>
+<body>
+<div id="app"></div>
+
+<script>
+/* ---------------- data ---------------- */
+const DAYS = [
+  { id:1, date:"2026-12-22", md:"12/22", wd:"화", label:"출국" },
+  { id:2, date:"2026-12-23", md:"12/23", wd:"수", label:"도착" },
+  { id:3, date:"2026-12-24", md:"12/24", wd:"목", label:"오페라하우스 & 록스" },
+  { id:4, date:"2026-12-25", md:"12/25", wd:"금", label:"크리스마스, 본다이" },
+  { id:5, date:"2026-12-26", md:"12/26", wd:"토", label:"박싱데이 & 쇼핑" },
+  { id:6, date:"2026-12-27", md:"12/27", wd:"일", label:"타롱가 & 맨리" },
+  { id:7, date:"2026-12-28", md:"12/28", wd:"월", label:"루나파크" },
+  { id:8, date:"2026-12-29", md:"12/29", wd:"화", label:"블루마운틴" },
+  { id:9, date:"2026-12-30", md:"12/30", wd:"수", label:"파슬리 베이" },
+  { id:10, date:"2026-12-31", md:"12/31", wd:"목", label:"새해맞이" },
+  { id:11, date:"2027-01-01", md:"1/1", wd:"금", label:"달링하버 & 인너웨스트" },
+  { id:12, date:"2027-01-02", md:"1/2", wd:"토", label:"출국" },
+];
+
+// each item: time, name, address, hours, desc, note, lat/lng (optional -> shown on map)
+const ITINERARY = {
+  1: [
+    { time:"21:40", name:"인천공항 출발 (ICN)", address:"인천국제공항", hours:"-", desc:"대한항공 시드니행 출발", note:"" },
+  ],
+  2: [
+    { time:"10:15", name:"시드니 공항 도착 (SYD)", address:"Sydney Airport, Mascot NSW", hours:"-", desc:"입국심사 및 수하물 수취", note:"장거리 비행 다음날, 무리하지 않기", lat:-33.9399, lng:151.1753 },
+    { time:"12:30", name:"숙소 체크인", address:"-", hours:"-", desc:"짐 정리 및 휴식", note:"" },
+    { time:"14:30", name:"로열 보타닉 가든", address:"Mrs Macquaries Rd, Sydney NSW 2000", hours:"07:00–17:00", desc:"하버뷰 정원 산책, 무료 입장", note:"", lat:-33.8641859, lng:151.2165708 },
+    { time:"16:00", name:"미세스 맥쿼리 포인트", address:"Mrs Macquaries Point, Sydney NSW 2000", hours:"24시간", desc:"오페라하우스·하버브릿지 동시 조망 명당", note:"일몰 시간대 추천", lat:-33.8593976, lng:151.2222374 },
+  ],
+  3: [
+    { time:"08:30", name:"서큘러키", address:"Circular Quay, Sydney NSW 2000", hours:"-", desc:"페리터미널 및 하버 전망", note:"", lat:-33.8611374, lng:151.2126457 },
+    { time:"09:00", name:"시드니 오페라하우스", address:"Bennelong Point, Sydney NSW 2000", hours:"투어 사전예약", desc:"가이드 투어 약 1시간", note:"온라인 사전예약 권장", lat:-33.8567844, lng:151.2152967 },
+    { time:"10:30", name:"자유 산책 · 이른 점심", address:"서큘러키 일대", hours:"-", desc:"", note:"" },
+    { time:"12:00", name:"옵저버토리 힐", address:"Observatory Hill, Millers Point NSW 2000", hours:"24시간", desc:"하버브릿지 조망 명당", note:"", lat:-33.8595307, lng:151.2048216 },
+    { time:"12:30", name:"시드니 천문대", address:"1003 Upper Fort St, Millers Point NSW 2000", hours:"수~일 12:00–18:00", desc:"역사적 천문대, 가이드 투어", note:"월·화 휴무 — 목요일 방문 가능", lat:-33.8598345, lng:151.2048766 },
+    { time:"14:30", name:"자유시간", address:"-", hours:"-", desc:"", note:"" },
+    { time:"17:00", name:"오페라 바", address:"Sydney Opera House, Lower Concourse Level", hours:"10:00–24:00", desc:"오페라하우스 뷰 바에서 선셋 한잔", note:"크리스마스이브 혼잡 예상", lat:-33.8584964, lng:151.2136249 },
+    { time:"18:30", name:"크리스마스이브 디너", address:"-", hours:"-", desc:"사전 예약 필수", note:"성수기, 미리 예약" },
+  ],
+  4: [
+    { time:"09:00", name:"본다이 비치", address:"Bondi Beach NSW 2026", hours:"-", desc:"시드니 대표 해변", note:"", lat:-33.8914755, lng:151.2766845 },
+    { time:"10:30", name:"본다이 아이스버그 클럽", address:"1 Notts Ave, Bondi Beach NSW 2026", hours:"11:00–22:00", desc:"오션풀 & 레스토랑", note:"", lat:-33.8950891, lng:151.2743049 },
+    { time:"12:00", name:"브론테 비치", address:"Bronte Beach, Bronte NSW 2024", hours:"-", desc:"코스탈워크 경유지, 피크닉 명소", note:"", lat:-33.9034192, lng:151.2682636 },
+    { time:"14:00", name:"오후 자유시간", address:"-", hours:"-", desc:"", note:"크리스마스 당일 상점·레스토랑 다수 휴무, 알코올 반입(BYO) 금지" },
+  ],
+  5: [
+    { time:"08:30", name:"세인트 메리 대성당", address:"St Marys Rd, Sydney NSW 2000", hours:"06:30–19:00(토·일)", desc:"고딕 양식 대성당", note:"", lat:-33.8711905, lng:151.2133254 },
+    { time:"09:15", name:"하이드 파크", address:"Elizabeth St, Sydney NSW 2000", hours:"24시간", desc:"도심 속 공원", note:"", lat:-33.8715202, lng:151.2116243 },
+    { time:"10:00", name:"퀸 빅토리아 빌딩 (QVB)", address:"455 George St, Sydney NSW 2000", hours:"09:00–18:00", desc:"박싱데이 세일, 역사적 쇼핑몰", note:"", lat:-33.8717161, lng:151.2067008 },
+    { time:"11:00", name:"피트 스트리트 몰", address:"Pitt St, Sydney NSW 2000", hours:"-", desc:"메인 쇼핑 거리", note:"", lat:-33.8706, lng:151.2086 },
+    { time:"12:00", name:"점심", address:"-", hours:"-", desc:"", note:"" },
+    { time:"13:00", name:"웨스트필드 시드니", address:"Cnr Pitt St Mall & Market St, Sydney NSW 2000", hours:"09:30–19:00", desc:"대형 쇼핑몰", note:"", lat:-33.8705723, lng:151.208515 },
+    { time:"14:00", name:"마틴 플레이스", address:"Martin Pl, Sydney NSW 2000", hours:"-", desc:"금융가 거리", note:"", lat:-33.8676606, lng:151.2098596 },
+    { time:"15:00", name:"차이나타운", address:"Dixon St, Haymarket NSW 2000", hours:"24시간", desc:"딤섬 등 아시안 푸드", note:"", lat:-33.8793561, lng:151.2041567 },
+    { time:"16:00", name:"패디스 마켓", address:"Hay St, Haymarket NSW 2000", hours:"10:00–18:00(수~일)", desc:"기념품 및 잡화 마켓", note:"월·화 휴무", lat:-33.8800089, lng:151.2035622 },
+  ],
+  6: [
+    { time:"08:30", name:"서큘러키 페리 탑승", address:"Circular Quay, Sydney NSW 2000", hours:"-", desc:"", note:"", lat:-33.8611374, lng:151.2126457 },
+    { time:"09:00", name:"타롱가 동물원", address:"Bradleys Head Rd, Mosman NSW 2088", hours:"09:30–16:30", desc:"코알라·캥거루 등 호주 동물, 하버뷰 케이블카", note:"", lat:-33.8435473, lng:151.2413418 },
+    { time:"13:00", name:"서큘러키 복귀", address:"-", hours:"-", desc:"", note:"", lat:-33.8611374, lng:151.2126457 },
+    { time:"14:00", name:"맨리행 페리", address:"Circular Quay, Sydney NSW 2000", hours:"-", desc:"", note:"" },
+    { time:"14:45", name:"맨리 비치", address:"Manly Beach, NSW", hours:"-", desc:"서핑 명소, 코르소 산책로", note:"", lat:-33.7931501, lng:151.2876488 },
+    { time:"18:00", name:"서큘러키 복귀", address:"-", hours:"-", desc:"", note:"" },
+  ],
+  7: [
+    { time:"10:00", name:"루나파크 시드니", address:"1 Olympic Dr, Milsons Point NSW 2061", hours:"월요일 10:00–14:00", desc:"빅디퍼 등 스릴 라이드 집중 공략", note:"요일별 운영시간 상이 — 월요일은 단축 운영", lat:-33.8476987, lng:151.2098382 },
+    { time:"14:00", name:"폐장", address:"-", hours:"-", desc:"", note:"" },
+    { time:"14:30", name:"밀슨스 포인트", address:"Milsons Point NSW 2061", hours:"-", desc:"산책로", note:"", lat:-33.8474389, lng:151.2119408 },
+    { time:"15:00", name:"하버브릿지 뷰", address:"Sydney Harbour Bridge, Sydney NSW", hours:"-", desc:"대표 랜드마크 조망", note:"", lat:-33.8523063, lng:151.2107871 },
+  ],
+  8: [
+    { time:"07:00", name:"차량 출발", address:"-", hours:"-", desc:"블루마운틴으로 이동 (약 2시간)", note:"" },
+    { time:"09:00", name:"에코 포인트 & 세자매봉", address:"Prince Henry Cliff Walk, Katoomba NSW 2780", hours:"24시간", desc:"블루마운틴 대표 전망대", note:"", lat:-33.7325833, lng:150.3120446 },
+    { time:"10:00", name:"시닉월드", address:"1 Violet St, Katoomba NSW 2780", hours:"10:00–16:00(평일)", desc:"케이블카 & 스카이웨이", note:"", lat:-33.7288041, lng:150.3012037 },
+    { time:"13:00", name:"카툼바 점심", address:"Katoomba NSW 2780", hours:"-", desc:"", note:"" },
+    { time:"14:00", name:"링컨스 락", address:"51 Little Switzerland Dr, Wentworth Falls NSW 2782", hours:"24시간", desc:"절벽 전망대", note:"주차 공간 협소", lat:-33.7401395, lng:150.372104 },
+    { time:"16:00", name:"귀환 출발", address:"-", hours:"-", desc:"", note:"" },
+  ],
+  9: [
+    { time:"09:00", name:"파슬리 베이", address:"Parsley Rd, Vaucluse NSW 2030", hours:"24시간", desc:"안전한 하버 수영, 샤크넷 설치", note:"개인 차량 이동", lat:-33.8522487, lng:151.2781447 },
+    { time:"11:00", name:"니엘슨 파크", address:"6 Steele Point Rd, Vaucluse NSW 2030", hours:"07:00–19:00", desc:"샤크 비치, 피크닉", note:"", lat:-33.8530491, lng:151.2674231 },
+    { time:"13:00", name:"왓슨스 베이 점심", address:"Watsons Bay NSW 2030", hours:"-", desc:"", note:"" },
+    { time:"14:00", name:"캠프 코브 비치", address:"Camp Cove Beach, NSW 2030", hours:"-", desc:"스노클링 명소", note:"", lat:-33.8390757, lng:151.2795163 },
+    { time:"15:00", name:"갭 파크", address:"Gap Road, Watsons Bay NSW 2030", hours:"24시간", desc:"절벽 전망대", note:"", lat:-33.846274, lng:151.285666 },
+  ],
+  10: [
+    { time:"10:00", name:"여유로운 아침", address:"-", hours:"-", desc:"", note:"" },
+    { time:"11:30", name:"서큘러키 산책", address:"Circular Quay, Sydney NSW 2000", hours:"-", desc:"", note:"", lat:-33.8611374, lng:151.2126457 },
+    { time:"12:30", name:"레스토랑 점심", address:"-", hours:"-", desc:"", note:"사전 예약 권장" },
+    { time:"14:00", name:"바랑가루 리저브", address:"Hickson Rd, Barangaroo NSW 2000", hours:"24시간", desc:"불꽃놀이 명당 중 하나", note:"", lat:-33.857208, lng:151.201206 },
+    { time:"17:00", name:"자리 잡기", address:"-", hours:"-", desc:"", note:"이른 시간부터 인파 몰림 주의" },
+    { time:"21:00", name:"9시 불꽃놀이", address:"-", hours:"-", desc:"가족 단위 프리쇼", note:"" },
+    { time:"24:00", name:"자정 하버브릿지 불꽃놀이", address:"-", hours:"-", desc:"메인 불꽃놀이", note:"", lat:-33.8523063, lng:151.2107871 },
+  ],
+  11: [
+    { time:"08:30", name:"시드니 피쉬 마켓", address:"1 Bridge Rd, Glebe NSW 2037", hours:"07:00–22:00", desc:"신선 해산물 아침 식사", note:"", lat:-33.8751173, lng:151.199992 },
+    { time:"10:30", name:"달링하버", address:"Sydney NSW 2000", hours:"-", desc:"워터프론트 산책", note:"", lat:-33.87488, lng:151.2009 },
+    { time:"11:30", name:"씨라이프 시드니 아쿠아리움", address:"1-5 Wheat Rd, Sydney NSW 2000", hours:"09:30–16:00(토·일)", desc:"펭귄·상어 등 해양생물", note:"", lat:-33.8695997, lng:151.2021381 },
+    { time:"13:30", name:"시드니 하버 관광 크루즈", address:"달링하버 승선", hours:"-", desc:"점심 포함 옵션 고려", note:"", lat:-33.8730, lng:151.2010 },
+    { time:"15:30", name:"시드니대학교", address:"Camperdown NSW 2050", hours:"09:00–17:00(금)", desc:"고딕 양식 캠퍼스", note:"", lat:-33.8884041, lng:151.1867648 },
+    { time:"16:30", name:"Sydney Park", address:"416 Sydney Park Rd, Alexandria NSW 2015", hours:"24시간", desc:"도심 속 대형 공원, 노을 뷰", note:"", lat:-33.9098337, lng:151.1851663 },
+  ],
+  12: [
+    { time:"08:00", name:"체크아웃", address:"-", hours:"-", desc:"", note:"전날 짐 정리 권장" },
+    { time:"09:00", name:"공항 이동", address:"-", hours:"-", desc:"", note:"" },
+    { time:"12:15", name:"시드니 출발 (SYD)", address:"Sydney Airport", hours:"-", desc:"→ ICN 19:15 도착 예정", note:"", lat:-33.9399, lng:151.1753 },
+  ],
+};
+
+/* ---------------- state ---------------- */
+const state = {
+  tab: "itinerary",
+  openDay: 2,
+  mapOpenDays: {},
+  expDay: 2,
+  expenses: [],
+  expForm: { place:"", item:"", aud:"", photo:null, photoName:"" },
+  diaryDay: 2,
+  diaryPerson: "기엽이",
+  diary: {}, // key `${day}-${person}` -> {text, photo, photoName, synced}
+  settingsOpen: false,
+  github: { owner:"", repo:"", branch:"main", token:"", connected:false },
+  rate: 900,
+  toast: null,
+};
+let leafletMaps = {};
+
+/* ---------------- icons (feather-ish inline svg) ---------------- */
+const ICON = {
+  settings:'<svg class="icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>',
+  calendar:'<svg class="icon" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>',
+  wallet:'<svg class="icon" viewBox="0 0 24 24"><path d="M21 12V7a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-1"/><path d="M18 12a2 2 0 0 0 0 4h4v-4Z"/></svg>',
+  book:'<svg class="icon" viewBox="0 0 24 24"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>',
+  pin:'<svg class="icon" viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>',
+  clock:'<svg class="icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>',
+  info:'<svg class="icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/></svg>',
+  map:'<svg class="icon" viewBox="0 0 24 24"><path d="M9 20l-6 3V4l6-3 6 3 6-3v19l-6 3-6-3-6 3"/><path d="M9 1v19M15 4v19"/></svg>',
+  camera:'<svg class="icon" viewBox="0 0 24 24"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg>',
+  plus:'<svg class="icon" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg>',
+  trash:'<svg class="icon" viewBox="0 0 24 24"><path d="M3 6h18M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2m3 0v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6h14z"/></svg>',
+  check:'<svg class="icon" viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg>',
+  x:'<svg class="icon" viewBox="0 0 24 24"><path d="M18 6L6 18M6 6l12 12"/></svg>',
+  github:'<svg class="icon" viewBox="0 0 24 24"><path d="M9 19c-4.3 1.4-4.3-2.5-6-3m12 5v-3.5c0-1 .1-1.4-.5-2 2.8-.3 5.5-1.4 5.5-6a4.6 4.6 0 0 0-1.3-3.2 4.2 4.2 0 0 0-.1-3.2s-1.1-.3-3.5 1.3a12.3 12.3 0 0 0-6.2 0C6.5 2.8 5.4 3.1 5.4 3.1a4.2 4.2 0 0 0-.1 3.2A4.6 4.6 0 0 0 4 9.5c0 4.6 2.7 5.7 5.5 6-.6.6-.6 1.2-.5 2V21"/></svg>',
+  save:'<svg class="icon" viewBox="0 0 24 24"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/><path d="M17 21v-8H7v8M7 3v5h8"/></svg>',
+  loader:'<svg class="icon spin" viewBox="0 0 24 24"><path d="M21 12a9 9 0 1 1-6.2-8.5"/></svg>',
+  alert:'<svg class="icon" viewBox="0 0 24 24"><path d="M10.3 3.9L1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0z"/><path d="M12 9v4M12 17h.01"/></svg>',
+};
+
+/* ---------------- helpers ---------------- */
+function fileToBase64(file){
+  return new Promise((res,rej)=>{ const r=new FileReader(); r.onload=()=>res(r.result); r.onerror=rej; r.readAsDataURL(file); });
+}
+function b64Utf8(str){ return btoa(unescape(encodeURIComponent(str))); }
+function downloadText(filename, text){
+  const blob = new Blob([text], {type:"text/markdown;charset=utf-8"});
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement("a"); a.href=url; a.download=filename;
+  document.body.appendChild(a); a.click(); document.body.removeChild(a);
+  URL.revokeObjectURL(url);
+}
+async function githubUpsert(cfg, path, base64Content, message){
+  const url = `https://api.github.com/repos/${cfg.owner}/${cfg.repo}/contents/${path.split("/").map(encodeURIComponent).join("/")}`;
+  const headers = { Authorization:`token ${cfg.token}`, Accept:"application/vnd.github+json" };
+  let sha;
+  try{
+    const getRes = await fetch(`${url}?ref=${encodeURIComponent(cfg.branch)}`, {headers});
+    if(getRes.ok){ const j = await getRes.json(); sha = j.sha; }
+  }catch(e){}
+  const body = { message, content: base64Content, branch: cfg.branch };
+  if(sha) body.sha = sha;
+  const putRes = await fetch(url, { method:"PUT", headers:{...headers,"Content-Type":"application/json"}, body: JSON.stringify(body) });
+  if(!putRes.ok){ const t = await putRes.text().catch(()=> ""); throw new Error(`(${putRes.status}) ${t.slice(0,180)}`); }
+  return true;
+}
+function showToast(type, text){
+  state.toast = {type, text};
+  renderToast();
+  clearTimeout(showToast._t);
+  showToast._t = setTimeout(()=>{ state.toast=null; renderToast(); }, 3500);
+}
+function el(html){ const d=document.createElement("div"); d.innerHTML=html.trim(); return d.firstChild; }
+
+/* ---------------- render root ---------------- */
+function render(){
+  const app = document.getElementById("app");
+  app.innerHTML = `
+    ${Header()}
+    ${NavBar()}
+    <div id="tabContent"></div>
+    <div id="modalRoot"></div>
+    <div id="toast"></div>
+  `;
+  renderTabContent();
+  renderModal();
+  renderToast();
+  bindHeaderNav();
+}
+
+function Header(){
+  return `
+  <header>
+    <div class="hdr-row">
+      <div>
+        <p class="hdr-eyebrow">Sydney · 2026.12.22 – 2027.01.02</p>
+        <h1 class="hdr-title">기엽이 &amp; 민지의<br/>호주여행 🇦🇺</h1>
+      </div>
+      <button class="hdr-btn" id="btnSettings">${ICON.settings}<span>설정</span><span class="dot ${state.github.connected?'on':''}"></span></button>
+    </div>
+  </header>`;
+}
+
+function NavBar(){
+  const tabs = [
+    {id:"itinerary", label:"여행일정", icon:ICON.calendar},
+    {id:"expense", label:"가계부", icon:ICON.wallet},
+    {id:"diary", label:"여행일기", icon:ICON.book},
+  ];
+  return `<nav>${tabs.map(t=>`
+    <button data-tab="${t.id}" class="${state.tab===t.id?'active':''}">${t.icon}${t.label}</button>
+  `).join("")}</nav>`;
+}
+
+function bindHeaderNav(){
+  document.getElementById("btnSettings").onclick = ()=>{ state.settingsOpen=true; renderModal(); };
+  document.querySelectorAll("nav button").forEach(b=>{
+    b.onclick = ()=>{ state.tab = b.dataset.tab; renderNavAndTab(); };
+  });
+}
+function renderNavAndTab(){
+  document.querySelector("nav").outerHTML = NavBar();
+  document.querySelectorAll("nav button").forEach(b=>{
+    b.onclick = ()=>{ state.tab = b.dataset.tab; renderNavAndTab(); };
+  });
+  renderTabContent();
+}
+
+function renderTabContent(){
+  const c = document.getElementById("tabContent");
+  leafletMaps = {}; // reset map instance cache on tab switch
+  if(state.tab==="itinerary") c.innerHTML = ItineraryTab();
+  if(state.tab==="expense") c.innerHTML = ExpenseTab();
+  if(state.tab==="diary") c.innerHTML = DiaryTab();
+  bindTabEvents();
+}
+
+/* ================= ITINERARY TAB ================= */
+function ItineraryTab(){
+  return `<div style="padding:18px 0 28px;">
+    ${DAYS.map(day=>{
+      const items = ITINERARY[day.id]||[];
+      const open = state.openDay===day.id;
+      const hasPins = items.some(i=>i.lat);
+      const mapOpen = !!state.mapOpenDays[day.id];
+      return `
+      <div class="day-card">
+        <button class="day-head" data-day="${day.id}">
+          <div class="day-badge"><span class="t1">DAY</span><span class="t2">${day.id}</span></div>
+          <div class="day-head-info">
+            <p class="title">${day.md} (${day.wd}) · ${day.label}</p>
+            <p class="sub">${items.length}개 일정</p>
+          </div>
+          <span class="chev ${open?'open':''}"><svg class="icon" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg></span>
+        </button>
+        ${open?`
+        <div class="day-body">
+          ${hasPins?`
+          <button class="maptoggle" data-maptoggle="${day.id}">${ICON.map} ${mapOpen?'지도 닫기':'지도로 보기'}</button>
+          <div class="daymap ${mapOpen?'show':''}" id="map-${day.id}"></div>
+          `:''}
+          <div class="timeline">
+            ${items.map(it=>`
+              <div class="titem">
+                <span class="tdot"></span>
+                <span class="ttime">${it.time}</span>
+                <p class="tname">${it.name}</p>
+                ${it.address!=="-"?`<p class="tmeta">${ICON.pin} ${it.address}</p>`:""}
+                ${it.hours!=="-"?`<p class="tmeta">${ICON.clock} ${it.hours}</p>`:""}
+                ${it.desc?`<p class="tdesc">${it.desc}</p>`:""}
+                ${it.note?`<p class="tnote">${ICON.info} ${it.note}</p>`:""}
+              </div>
+            `).join("")}
+          </div>
+        </div>`:""}
+      </div>`;
+    }).join("")}
+  </div>`;
+}
+
+function initDayMap(dayId){
+  const items = (ITINERARY[dayId]||[]).filter(i=>i.lat);
+  if(items.length===0) return;
+  const containerId = `map-${dayId}`;
+  const container = document.getElementById(containerId);
+  if(!container) return;
+  if(leafletMaps[dayId]){ leafletMaps[dayId].invalidateSize(); return; }
+  const map = L.map(containerId, { zoomControl:true, attributionControl:false });
+  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { maxZoom:19 }).addTo(map);
+  const latlngs = items.map(i=>[i.lat,i.lng]);
+  const bounds = L.latLngBounds(latlngs);
+  items.forEach((it,idx)=>{
+    const icon = L.divIcon({
+      className:"",
+      html:`<div style="background:#E4572E;color:#fff;width:24px;height:24px;border-radius:50% 50% 50% 0;transform:rotate(-45deg);display:flex;align-items:center;justify-content:center;border:2px solid #fff;box-shadow:0 2px 6px rgba(0,0,0,.3);">
+              <span style="transform:rotate(45deg);font-size:11px;font-weight:700;">${idx+1}</span>
+            </div>`,
+      iconSize:[24,24], iconAnchor:[12,22],
+    });
+    L.marker([it.lat,it.lng], {icon}).addTo(map).bindPopup(`<b>${it.name}</b><br/>${it.time}`);
+  });
+  if(latlngs.length>1){
+    L.polyline(latlngs, { color:"#0F3B40", weight:3, dashArray:"6 6", opacity:.8 }).addTo(map);
+  }
+  map.fitBounds(bounds, { padding:[28,28] });
+  leafletMaps[dayId] = map;
+}
+
+/* ================= EXPENSE TAB ================= */
+function ExpenseTab(){
+  const dayEntries = state.expenses.filter(e=>e.dayId===state.expDay);
+  const total = dayEntries.reduce((s,e)=>s+Number(e.aud||0),0);
+  return `
+  <div style="padding-bottom:32px;">
+    <div class="stamp-row">${DAYS.map(d=>Stamp(d, state.expDay===d.id, 'exp')).join("")}</div>
+    <div class="summary-box">
+      <div>
+        <p class="lab">${DAYS.find(d=>d.id===state.expDay).md} 지출 합계</p>
+        <p class="val">A$${total.toFixed(2)} <small>(약 ₩${Math.round(total*state.rate).toLocaleString()})</small></p>
+      </div>
+      <button class="btn" id="syncExpDay" ${dayEntries.length===0?"disabled":""}>${state.github.connected?ICON.github:''}${state.github.connected?'GitHub 저장':'다운로드'}</button>
+    </div>
+    <div class="entry-list">
+      ${dayEntries.length===0?`<p class="empty-msg">이 날의 지출 내역이 아직 없어요.</p>`:dayEntries.map(e=>`
+        <div class="entry">
+          ${e.photo?`<img src="${e.photo}"/>`:`<div class="ph-empty">${ICON.camera}</div>`}
+          <div class="body">
+            <p class="place">${e.place}</p>
+            ${e.item?`<p class="item">${e.item}</p>`:""}
+            <p class="amt">A$${Number(e.aud).toFixed(2)} · ₩${Math.round(e.aud*state.rate).toLocaleString()}</p>
+          </div>
+          <div class="side">
+            ${e.synced?ICON.check:""}
+            <button data-remove="${e.id}">${ICON.trash}</button>
+          </div>
+        </div>
+      `).join("")}
+    </div>
+    <div class="form-box">
+      <p class="lbl">지출 추가</p>
+      <input id="fPlace" placeholder="장소 (예: 본다이 아이스버그 클럽)" value="${state.expForm.place}"/>
+      <input id="fItem" placeholder="구매 항목 (예: 플랫화이트 2잔)" value="${state.expForm.item}"/>
+      <div class="form-row">
+        <input id="fAud" type="number" placeholder="금액 (AUD)" value="${state.expForm.aud}" style="flex:1;"/>
+        <label class="file-btn">${ICON.camera} ${state.expForm.photo?'선택됨':'영수증'}<input type="file" id="fPhoto" accept="image/*"/></label>
+      </div>
+      <button class="btn" id="addExpense" style="justify-content:center;">${ICON.plus} 추가하기</button>
+    </div>
+  </div>`;
+}
+
+function Stamp(day, active, tag){
+  return `<button class="stamp ${active?'active':''}" data-${tag}day="${day.id}">
+    <span class="l1">Day ${day.id}</span><span class="l2">${day.md}</span><span class="l3">${day.wd}</span>
+  </button>`;
+}
+
+function buildExpenseMd(day, entries){
+  const total = entries.reduce((s,e)=>s+Number(e.aud||0),0);
+  let md = `# 가계부 — ${day.md} (${day.wd})\n\n`;
+  md += `| 장소 | 항목 | AUD | KRW(약) |\n|---|---|---|---|\n`;
+  entries.forEach(e=>{ md += `| ${e.place} | ${e.item||"-"} | $${Number(e.aud).toFixed(2)} | ₩${Math.round(e.aud*state.rate).toLocaleString()} |\n`; });
+  md += `\n**합계: A$${total.toFixed(2)} (약 ₩${Math.round(total*state.rate).toLocaleString()}, 환율 1AUD≈${state.rate}KRW 기준)**\n`;
+  return md;
+}
+
+/* ================= DIARY TAB ================= */
+function DiaryTab(){
+  const key = `${state.diaryDay}-${state.diaryPerson}`;
+  const cur = state.diary[key] || {text:"", photo:null, synced:false};
+  const day = DAYS.find(d=>d.id===state.diaryDay);
+  return `
+  <div style="padding-bottom:32px;">
+    <div class="stamp-row">${DAYS.map(d=>Stamp(d, state.diaryDay===d.id, 'dia')).join("")}</div>
+    <div class="person-row">
+      ${["기엽이","민지"].map(p=>`<button class="person-btn ${state.diaryPerson===p?'active':''}" data-person="${p}">${p}의 일기</button>`).join("")}
+    </div>
+    <div class="diary-box">
+      <div class="drow">
+        <p>${day.md} · ${state.diaryPerson}</p>
+        ${cur.synced?`<span class="saved">${ICON.check} 저장됨</span>`:""}
+      </div>
+      <textarea id="diaryText" placeholder="오늘 하루는 어땠나요? 자유롭게 적어보세요...">${cur.text||""}</textarea>
+      ${cur.photo?`<img class="dphoto" src="${cur.photo}"/>`:""}
+      <div class="drow2">
+        <label class="file-btn">${ICON.camera} 사진 첨부<input type="file" id="diaryPhoto" accept="image/*"/></label>
+        <button class="btn" id="diarySave">${state.github.connected?ICON.save:''} ${state.github.connected?'GitHub 저장':'다운로드'}</button>
+      </div>
+    </div>
+    <div class="share-note">${ICON.info} 남편분께 보여주고 싶다면 우측 상단 공유 버튼으로 이 페이지 링크를 보내거나, GitHub 저장소를 GitHub Pages로 공개하면 누구나 접속 가능한 링크가 생겨요.</div>
+  </div>`;
+}
+
+/* ---------------- events ---------------- */
+function bindTabEvents(){
+  if(state.tab==="itinerary"){
+    document.querySelectorAll(".day-head").forEach(b=>{
+      b.onclick = ()=>{
+        const id = Number(b.dataset.day);
+        state.openDay = state.openDay===id? null : id;
+        renderTabContent();
+      };
+    });
+    document.querySelectorAll("[data-maptoggle]").forEach(b=>{
+      b.onclick = (e)=>{
+        e.stopPropagation();
+        const id = Number(b.dataset.maptoggle);
+        state.mapOpenDays[id] = !state.mapOpenDays[id];
+        renderTabContent();
+        if(state.mapOpenDays[id]) requestAnimationFrame(()=>setTimeout(()=>initDayMap(id),50));
+      };
+    });
+    // if a map is already flagged open (kept state across day toggle), init it
+    Object.keys(state.mapOpenDays).forEach(id=>{
+      if(state.mapOpenDays[id]) setTimeout(()=>initDayMap(Number(id)),50);
+    });
+  }
+  if(state.tab==="expense"){
+    document.querySelectorAll("[data-expday]").forEach(b=>{
+      b.onclick = ()=>{ state.expDay = Number(b.dataset.expday); renderTabContent(); };
+    });
+    document.querySelectorAll("[data-remove]").forEach(b=>{
+      b.onclick = ()=>{ state.expenses = state.expenses.filter(e=>e.id!==Number(b.dataset.remove)); renderTabContent(); };
+    });
+    const fPlace=document.getElementById("fPlace"), fItem=document.getElementById("fItem"), fAud=document.getElementById("fAud"), fPhoto=document.getElementById("fPhoto");
+    fPlace.oninput = ()=>state.expForm.place=fPlace.value;
+    fItem.oninput = ()=>state.expForm.item=fItem.value;
+    fAud.oninput = ()=>state.expForm.aud=fAud.value;
+    fPhoto.onchange = async ()=>{
+      const f = fPhoto.files[0]; if(!f) return;
+      state.expForm.photo = await fileToBase64(f);
+      state.expForm.photoName = f.name;
+      renderTabContent();
+    };
+    document.getElementById("addExpense").onclick = ()=>{
+      if(!state.expForm.place || !state.expForm.aud) return;
+      state.expenses.push({ id:Date.now(), dayId:state.expDay, place:state.expForm.place, item:state.expForm.item, aud:Number(state.expForm.aud), photo:state.expForm.photo, photoName:state.expForm.photoName, synced:false });
+      state.expForm = { place:"", item:"", aud:"", photo:null, photoName:"" };
+      renderTabContent();
+    };
+    document.getElementById("syncExpDay").onclick = async ()=>{
+      const day = DAYS.find(d=>d.id===state.expDay);
+      const dayEntries = state.expenses.filter(e=>e.dayId===state.expDay);
+      const md = buildExpenseMd(day, dayEntries);
+      if(!state.github.connected){ downloadText(`${day.date}-가계부.md`, md); showToast("info","GitHub 미연결 — 파일로 다운로드했습니다."); return; }
+      try{
+        await githubUpsert(state.github, `expenses/${day.date}.md`, b64Utf8(md), `가계부 업데이트: ${day.date}`);
+        for(const e of dayEntries){
+          if(e.photo && !e.synced){
+            const ext = (e.photoName||"photo.jpg").split(".").pop();
+            await githubUpsert(state.github, `expenses/photos/${day.date}-${e.id}.${ext}`, e.photo.split(",")[1], `영수증 사진: ${day.date}`);
+          }
+        }
+        state.expenses = state.expenses.map(e=> e.dayId===state.expDay? {...e, synced:true} : e);
+        showToast("success","GitHub에 저장했습니다.");
+        renderTabContent();
+      }catch(err){ showToast("error", `저장 실패: ${err.message}`); }
+    };
+  }
+  if(state.tab==="diary"){
+    document.querySelectorAll("[data-diaday]").forEach(b=>{
+      b.onclick = ()=>{ state.diaryDay = Number(b.dataset.diaday); renderTabContent(); };
+    });
+    document.querySelectorAll("[data-person]").forEach(b=>{
+      b.onclick = ()=>{ state.diaryPerson = b.dataset.person; renderTabContent(); };
+    });
+    const key = `${state.diaryDay}-${state.diaryPerson}`;
+    const txt = document.getElementById("diaryText");
+    txt.oninput = ()=>{
+      state.diary[key] = { ...(state.diary[key]||{}), text:txt.value, synced:false };
+    };
+    document.getElementById("diaryPhoto").onchange = async (e)=>{
+      const f = e.target.files[0]; if(!f) return;
+      const dataUrl = await fileToBase64(f);
+      state.diary[key] = { ...(state.diary[key]||{text:txt.value}), photo:dataUrl, photoName:f.name, synced:false };
+      renderTabContent();
+    };
+    document.getElementById("diarySave").onclick = async ()=>{
+      const day = DAYS.find(d=>d.id===state.diaryDay);
+      const cur = state.diary[key] || {text:txt.value};
+      const md = `# ${day.md} (${day.wd}) 여행일기 — ${state.diaryPerson}\n\n_날짜: ${day.date}_\n\n${cur.text||"_(작성된 내용 없음)_"}\n`;
+      if(!state.github.connected){ downloadText(`${day.date}-${state.diaryPerson}.md`, md); showToast("info","GitHub 미연결 — 파일로 다운로드했습니다."); return; }
+      try{
+        await githubUpsert(state.github, `diary/${day.date}-${state.diaryPerson}.md`, b64Utf8(md), `여행일기: ${day.date} ${state.diaryPerson}`);
+        if(cur.photo){
+          const ext = (cur.photoName||"photo.jpg").split(".").pop();
+          await githubUpsert(state.github, `diary/photos/${day.date}-${state.diaryPerson}.${ext}`, cur.photo.split(",")[1], `여행일기 사진: ${day.date} ${state.diaryPerson}`);
+        }
+        state.diary[key] = { ...cur, synced:true };
+        showToast("success","GitHub에 저장했습니다.");
+        renderTabContent();
+      }catch(err){ showToast("error", `저장 실패: ${err.message}`); }
+    };
+  }
+}
+
+/* ---------------- settings modal ---------------- */
+function renderModal(){
+  const root = document.getElementById("modalRoot");
+  if(!state.settingsOpen){ root.innerHTML=""; return; }
+  const g = state.github;
+  root.innerHTML = `
+  <div class="overlay" id="ovl">
+    <div class="modal">
+      <div class="modal-head"><h2>설정</h2><button id="closeModal">${ICON.x}</button></div>
+      <p class="sect-lbl">GitHub 연동</p>
+      <input id="ghOwner" placeholder="GitHub 사용자명 (owner)" value="${g.owner}"/>
+      <input id="ghRepo" placeholder="저장소 이름 (repo)" value="${g.repo}"/>
+      <input id="ghBranch" placeholder="브랜치 (기본: main)" value="${g.branch}"/>
+      <input id="ghToken" type="password" placeholder="Personal Access Token (repo 권한)" value="${g.token}"/>
+      <button class="btn" id="testConn" style="width:100%;justify-content:center;background:#0F3B40;">${ICON.github} 연결 테스트</button>
+      <div id="connResult"></div>
+      <p class="hint">토큰은 이 브라우저 세션에만 저장되며 새로고침 시 사라져요. github.com/settings/tokens 에서 "repo" 권한으로 발급받으세요. 연결하지 않아도 파일(.md/사진)을 직접 다운로드할 수 있어요.</p>
+      <div class="divider"></div>
+      <p class="sect-lbl">환율</p>
+      <div class="rate-row">
+        <span style="font-size:13px;opacity:.6;">1 AUD =</span>
+        <input id="rateInput" type="number" value="${state.rate}" style="flex:1;"/>
+        <span style="font-size:13px;opacity:.6;">KRW</span>
+      </div>
+      <button class="btn" id="doneModal" style="width:100%;justify-content:center;margin-top:18px;">완료</button>
+    </div>
+  </div>`;
+  document.getElementById("closeModal").onclick = ()=>{ state.settingsOpen=false; renderModal(); };
+  document.getElementById("ovl").onclick = (e)=>{ if(e.target.id==="ovl"){ state.settingsOpen=false; renderModal(); } };
+  document.getElementById("ghOwner").oninput = e=>g.owner=e.target.value;
+  document.getElementById("ghRepo").oninput = e=>g.repo=e.target.value;
+  document.getElementById("ghBranch").oninput = e=>g.branch=e.target.value;
+  document.getElementById("ghToken").oninput = e=>g.token=e.target.value;
+  document.getElementById("rateInput").oninput = e=>{ state.rate = Number(e.target.value)||0; };
+  document.getElementById("testConn").onclick = async ()=>{
+    const resBox = document.getElementById("connResult");
+    resBox.innerHTML = `<p class="hint">${ICON.loader} 연결 확인 중...</p>`;
+    try{
+      const res = await fetch(`https://api.github.com/repos/${g.owner}/${g.repo}`, { headers:{Authorization:`token ${g.token}`, Accept:"application/vnd.github+json"} });
+      if(!res.ok) throw new Error(`상태 코드 ${res.status}`);
+      g.connected = true;
+      resBox.innerHTML = `<p class="result-ok">${ICON.check} 연결 성공! 이제부터 저장 시 GitHub에 자동 반영됩니다.</p>`;
+      document.querySelector(".dot").classList.add("on");
+    }catch(e){
+      g.connected = false;
+      resBox.innerHTML = `<p class="result-fail">${ICON.alert} 연결 실패. owner/repo/token을 확인해주세요.</p>`;
+    }
+  };
+  document.getElementById("doneModal").onclick = ()=>{ state.settingsOpen=false; renderModal(); render(); };
+}
+
+/* ---------------- toast ---------------- */
+function renderToast(){
+  const t = document.getElementById("toast");
+  if(!t) return;
+  if(!state.toast){ t.style.display="none"; t.innerHTML=""; return; }
+  const bg = state.toast.type==="error"?"#FEE2E2":state.toast.type==="success"?"#DCFCE7":"#E0F2FE";
+  const fg = state.toast.type==="error"?"#B91C1C":state.toast.type==="success"?"#15803D":"#0369A1";
+  t.style.display="flex";
+  t.innerHTML = `<div class="box" style="background:${bg};color:${fg};">${state.toast.text}<button id="toastX" style="background:none;border:none;cursor:pointer;color:inherit;">${ICON.x}</button></div>`;
+  document.getElementById("toastX").onclick = ()=>{ state.toast=null; renderToast(); };
+}
+
+/* spin animation */
+const styleTag = document.createElement("style");
+styleTag.textContent = `.spin{animation:spin 1s linear infinite}@keyframes spin{to{transform:rotate(360deg)}}`;
+document.head.appendChild(styleTag);
+
+render();
+</script>
+</body>
+</html>
