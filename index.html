@@ -184,7 +184,7 @@
 
 <script>
 /* ---------------- data ---------------- */
-const DAYS = [
+const DEFAULT_DAYS = [
   { id:1, date:"2026-12-22", md:"12/22", wd:"화", label:"출국" },
   { id:2, date:"2026-12-23", md:"12/23", wd:"수", label:"도착" },
   { id:3, date:"2026-12-24", md:"12/24", wd:"목", label:"오페라하우스 & 록스" },
@@ -199,11 +199,20 @@ const DAYS = [
   { id:12, date:"2027-01-02", md:"1/2", wd:"토", label:"출국" },
 ];
 
-// expense tab only: adds a Day 0 for pre-trip prep spending (flights, gear, visas...)
-const EXP_DAYS = [
-  { id:0, date:"2026-12-01", md:"준비", wd:"", label:"여행 준비" },
-  ...DAYS,
-];
+const PREP_DAY = { id:0, date:"2026-12-01", md:"준비", wd:"", label:"여행 준비" };
+// expense tab only: prepends a Day 0 for pre-trip prep spending (flights, gear, visas...)
+function getExpDays(){ return [PREP_DAY, ...state.days]; }
+
+const WD_KR = ["일","월","화","수","목","금","토"];
+function addDaysISO(iso, n){
+  const d = new Date(iso + "T00:00:00");
+  d.setDate(d.getDate() + n);
+  return d.toISOString().slice(0,10);
+}
+function isoToMdWd(iso){
+  const d = new Date(iso + "T00:00:00");
+  return { md: `${d.getMonth()+1}/${d.getDate()}`, wd: WD_KR[d.getDay()] };
+}
 
 // each item: time, name, address, hours, desc, note, lat/lng (optional -> shown on map)
 const DEFAULT_ITINERARY = {
@@ -395,6 +404,7 @@ function findTransitLeg(day, fromName, toName) {
 /* ---------------- state ---------------- */
 const state = {
   tab: "itinerary",
+  days: JSON.parse(JSON.stringify(DEFAULT_DAYS)),
   openDay: 2,
   mapOpenDays: {},
   itinerary: JSON.parse(JSON.stringify(DEFAULT_ITINERARY)),
@@ -423,7 +433,14 @@ async function loadItineraryFromGithub(){
     if(!res.ok) return; // not saved yet — keep defaults
     const remote = await res.json();
     if(remote && typeof remote === "object"){
-      state.itinerary = remote;
+      if(remote.itinerary && remote.days){
+        // new format: { days:[...], itinerary:{...} }
+        state.days = remote.days;
+        state.itinerary = remote.itinerary;
+      }else{
+        // legacy format: itinerary object only, keep default day list
+        state.itinerary = remote;
+      }
       state.itinerarySynced = true;
       if(state.tab === "itinerary") renderTabContent();
     }
@@ -651,7 +668,7 @@ function ItineraryTab(){
     <button class="btn" id="saveItinerary" style="background:var(--harbour);">${state.github.connected?ICON.github:ICON.save} ${state.github.connected?'GitHub에 전체 저장':'전체 다운로드'}</button>
   </div>
   <div style="padding:0 0 28px;">
-    ${DAYS.map(day=>{
+    ${state.days.map(day=>{
       const items = withMapNumbers(day.id);
       const open = state.openDay===day.id;
       const editing = state.editDay===day.id;
@@ -686,6 +703,12 @@ function ItineraryTab(){
           ${!editing?`
             ${renderTimeline(day.id, items)}
           `:`
+            <div class="edit-row" style="background:var(--cream);">
+              <div class="erow">
+                <input data-daylabel="${day.id}" value="${day.label}" placeholder="이 날의 제목 (예: 오페라하우스 & 록스)" style="flex:2;"/>
+                <input data-daydate="${day.id}" type="date" value="${day.date}" style="flex:1;"/>
+              </div>
+            </div>
             <div class="edit-list">
               ${items.map((it,idx)=>`
                 <div class="edit-row">
@@ -716,10 +739,12 @@ function ItineraryTab(){
               <button class="btn" style="flex:1;justify-content:center;background:#9CA3AF;" data-canceledit="${day.id}">취소</button>
               <button class="btn" style="flex:1;justify-content:center;" data-doneedit="${day.id}">${ICON.check} 완료</button>
             </div>
+            <button class="pillbtn" style="width:100%;justify-content:center;margin-top:10px;color:var(--coral);border-color:var(--coral);" data-deleteday="${day.id}">${ICON.trash} 이 날짜 전체 삭제</button>
           `}
         </div>`:""}
       </div>`;
     }).join("")}
+    <button class="iconbtn" style="display:flex;align-items:center;gap:6px;width:calc(100% - 32px);justify-content:center;border:1px dashed var(--coral);color:var(--coral);border-radius:14px;padding:14px;margin:6px 16px 0;font-size:13px;font-weight:600;" id="addDay">${ICON.plus} 날짜 추가</button>
   </div>`;
 }
 
@@ -758,10 +783,10 @@ function ExpenseTab(){
   const total = dayEntries.reduce((s,e)=>s+Number(e.aud||0),0);
   return `
   <div style="padding-bottom:32px;">
-    <div class="stamp-row">${EXP_DAYS.map(d=>Stamp(d, state.expDay===d.id, 'exp', d.id===0)).join("")}</div>
+    <div class="stamp-row">${getExpDays().map(d=>Stamp(d, state.expDay===d.id, 'exp', d.id===0)).join("")}</div>
     <div class="summary-box">
       <div>
-        <p class="lab">${EXP_DAYS.find(d=>d.id===state.expDay).md} 지출 합계</p>
+        <p class="lab">${getExpDays().find(d=>d.id===state.expDay).md} 지출 합계</p>
         <p class="val">A$${total.toFixed(2)} <small>(약 ₩${Math.round(total*state.rate).toLocaleString()})</small></p>
       </div>
       <button class="btn" id="syncExpDay" ${dayEntries.length===0?"disabled":""}>${state.github.connected?ICON.github:''}${state.github.connected?'GitHub 저장':'다운로드'}</button>
@@ -815,10 +840,10 @@ function buildExpenseMd(day, entries){
 function DiaryTab(){
   const key = `${state.diaryDay}-${state.diaryPerson}`;
   const cur = state.diary[key] || {text:"", photo:null, synced:false};
-  const day = DAYS.find(d=>d.id===state.diaryDay);
+  const day = state.days.find(d=>d.id===state.diaryDay);
   return `
   <div style="padding-bottom:32px;">
-    <div class="stamp-row">${DAYS.map(d=>Stamp(d, state.diaryDay===d.id, 'dia')).join("")}</div>
+    <div class="stamp-row">${state.days.map(d=>Stamp(d, state.diaryDay===d.id, 'dia')).join("")}</div>
     <div class="person-row">
       ${["기엽이","민지"].map(p=>`<button class="person-btn ${state.diaryPerson===p?'active':''}" data-person="${p}">${p}의 일기</button>`).join("")}
     </div>
@@ -928,6 +953,25 @@ function bindTabEvents(){
       };
     });
 
+    // day-level label/date edits
+    document.querySelectorAll("[data-daylabel]").forEach(inp=>{
+      inp.oninput = ()=>{
+        const day = state.days.find(d=>d.id===Number(inp.dataset.daylabel));
+        if(day) day.label = inp.value;
+      };
+    });
+    document.querySelectorAll("[data-daydate]").forEach(inp=>{
+      inp.onchange = ()=>{
+        const day = state.days.find(d=>d.id===Number(inp.dataset.daydate));
+        if(day && inp.value){
+          day.date = inp.value;
+          const { md, wd } = isoToMdWd(inp.value);
+          day.md = md; day.wd = wd;
+          renderTabContent();
+        }
+      };
+    });
+
     // reorder
     document.querySelectorAll("[data-move]").forEach(b=>{
       b.onclick = (e)=>{
@@ -986,10 +1030,44 @@ function bindTabEvents(){
       };
     });
 
+    // delete an entire day
+    document.querySelectorAll("[data-deleteday]").forEach(b=>{
+      b.onclick = (e)=>{
+        e.stopPropagation();
+        const dayId = Number(b.dataset.deleteday);
+        const day = state.days.find(d=>d.id===dayId);
+        if(!confirm(`${day.md} (${day.wd}) · ${day.label} 날짜를 통째로 삭제할까요? 이 날의 모든 일정이 사라져요.`)) return;
+        state.days = state.days.filter(d=>d.id!==dayId);
+        delete state.itinerary[dayId];
+        state.editDay = null;
+        state.editBackup = null;
+        state.openDay = null;
+        state.itinerarySynced = false;
+        renderTabContent();
+      };
+    });
+
+    // add a new day (appended after the last day, defaults to next date)
+    const addDayBtn = document.getElementById("addDay");
+    if(addDayBtn) addDayBtn.onclick = ()=>{
+      const lastDay = state.days[state.days.length-1];
+      const newId = Math.max(0, ...state.days.map(d=>d.id)) + 1;
+      const newDate = lastDay ? addDaysISO(lastDay.date, 1) : new Date().toISOString().slice(0,10);
+      const { md, wd } = isoToMdWd(newDate);
+      const newDay = { id:newId, date:newDate, md, wd, label:"새 일정" };
+      state.days.push(newDay);
+      state.itinerary[newId] = [];
+      state.openDay = newId;
+      state.editDay = newId;
+      state.editBackup = [];
+      state.itinerarySynced = false;
+      renderTabContent();
+    };
+
     // save whole itinerary
     const saveBtn = document.getElementById("saveItinerary");
     if(saveBtn) saveBtn.onclick = async ()=>{
-      const json = JSON.stringify(state.itinerary, null, 2);
+      const json = JSON.stringify({ days: state.days, itinerary: state.itinerary }, null, 2);
       if(!state.github.connected){
         downloadText("itinerary.json", json);
         showToast("info","GitHub 미연결 — itinerary.json 파일로 다운로드했습니다.");
@@ -1032,7 +1110,7 @@ function bindTabEvents(){
       renderTabContent();
     };
     document.getElementById("syncExpDay").onclick = async ()=>{
-      const day = EXP_DAYS.find(d=>d.id===state.expDay);
+      const day = getExpDays().find(d=>d.id===state.expDay);
       const dayEntries = state.expenses.filter(e=>e.dayId===state.expDay);
       const md = buildExpenseMd(day, dayEntries);
       if(!state.github.connected){ downloadText(`${day.date}-가계부.md`, md); showToast("info","GitHub 미연결 — 파일로 다운로드했습니다."); return; }
@@ -1069,7 +1147,7 @@ function bindTabEvents(){
       renderTabContent();
     };
     document.getElementById("diarySave").onclick = async ()=>{
-      const day = DAYS.find(d=>d.id===state.diaryDay);
+      const day = state.days.find(d=>d.id===state.diaryDay);
       const cur = state.diary[key] || {text:txt.value};
       const md = `# ${day.md} (${day.wd}) 여행일기 — ${state.diaryPerson}\n\n_날짜: ${day.date}_\n\n${cur.text||"_(작성된 내용 없음)_"}\n`;
       if(!state.github.connected){ downloadText(`${day.date}-${state.diaryPerson}.md`, md); showToast("info","GitHub 미연결 — 파일로 다운로드했습니다."); return; }
