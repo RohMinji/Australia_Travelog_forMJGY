@@ -281,6 +281,114 @@
   ],
   "6": [
     {
+      "time": "07:00",
+      "name": "차량 출발",
+      "address": "-",
+      "hours": "-",
+      "desc": "블루마운틴으로 이동 (약 2시간)",
+      "note": ""
+    },
+    {
+      "time": "09:00",
+      "name": "에코 포인트 & 세자매봉",
+      "address": "Prince Henry Cliff Walk, Katoomba NSW 2780",
+      "hours": "24시간",
+      "desc": "블루마운틴 대표 전망대",
+      "note": "",
+      "lat": -33.7325833,
+      "lng": 150.3120446
+    },
+    {
+      "time": "10:00",
+      "name": "시닉월드",
+      "address": "1 Violet St, Katoomba NSW 2780",
+      "hours": "09:00–17:00(주말)",
+      "desc": "케이블카 & 스카이웨이",
+      "note": "일요일이라 주말 운영시간 적용",
+      "lat": -33.7288041,
+      "lng": 150.3012037
+    },
+    {
+      "time": "13:00",
+      "name": "Unique Patisserie (카툼바 점심)",
+      "address": "169 Katoomba St, Katoomba NSW 2780",
+      "hours": "09:00–17:00(수요일 휴무)",
+      "desc": "말레이시안 퓨전 베이커리 카페 — 락사, 스위트&사워 포크 추천",
+      "note": "",
+      "lat": -33.7161031,
+      "lng": 150.311088
+    },
+    {
+      "time": "14:00",
+      "name": "링컨스 락",
+      "address": "51 Little Switzerland Dr, Wentworth Falls NSW 2782",
+      "hours": "24시간",
+      "desc": "절벽 전망대",
+      "note": "주차 공간 협소",
+      "lat": -33.7401395,
+      "lng": 150.372104
+    },
+    {
+      "time": "16:00",
+      "name": "귀환 출발",
+      "address": "-",
+      "hours": "-",
+      "desc": "",
+      "note": ""
+    }
+  ],
+  "7": [
+    {
+      "time": "10:00",
+      "name": "루나파크 시드니",
+      "address": "1 Olympic Dr, Milsons Point NSW 2061",
+      "hours": "월요일 10:00–14:00",
+      "desc": "빅디퍼 등 스릴 라이드 집중 공략",
+      "note": "요일별 운영시간 상이 — 월요일은 단축 운영",
+      "lat": -33.8476987,
+      "lng": 151.2098382
+    },
+    {
+      "time": "14:00",
+      "name": "폐장",
+      "address": "-",
+      "hours": "-",
+      "desc": "",
+      "note": ""
+    },
+    {
+      "time": "14:30",
+      "name": "밀슨스 포인트",
+      "address": "Milsons Point NSW 2061",
+      "hours": "-",
+      "desc": "산책로",
+      "note": "",
+      "lat": -33.8474389,
+      "lng": 151.2119408
+    },
+    {
+      "time": "15:00",
+      "name": "하버브릿지 뷰",
+      "address": "Sydney Harbour Bridge, Sydney NSW",
+      "hours": "-",
+      "desc": "대표 랜드마크 조망",
+      "note": "",
+      "lat": -33.8523063,
+      "lng": 151.2107871
+    },
+    {
+      "time": "18:30",
+      "name": "Lavendra Indian (저녁)",
+      "address": "5 Walker St, Lavender Bay NSW 2060",
+      "hours": "12:00–22:00(화~일)",
+      "desc": "하버브릿지 뷰, 인도+일본 퓨전 — 버터치킨 가츠 커리 추천",
+      "note": "BYO 가능, 예약 권장",
+      "lat": -33.843236,
+      "lng": 151.208143
+    }
+  ],
+  "8": [
+    {
       "time": "08:30",
       "name": "서큘러키 페리 탑승",
       "address": "Circular Quay, Sydney NSW 2000",
@@ -350,7 +458,7 @@
       "time": "17:30",
       "name": "Felons Seafood (피시앤칩스)",
       "address": "West Esplanade, Manly NSW 2095",
-      "hours": "12:00–23:00",
+      "hours": "12:00–23:00(화~일)",
       "desc": "맨리 워프 바로 위, 평점 4.4 — 비프탈로 튀김 감자칩 필수",
       "note": "",
       "lat": -33.7995125,
@@ -359,114 +467,6 @@
     {
       "time": "19:00",
       "name": "서큘러키 복귀",
-      "address": "-",
-      "hours": "-",
-      "desc": "",
-      "note": ""
-    }
-  ],
-  "7": [
-    {
-      "time": "10:00",
-      "name": "루나파크 시드니",
-      "address": "1 Olympic Dr, Milsons Point NSW 2061",
-      "hours": "월요일 10:00–14:00",
-      "desc": "빅디퍼 등 스릴 라이드 집중 공략",
-      "note": "요일별 운영시간 상이 — 월요일은 단축 운영",
-      "lat": -33.8476987,
-      "lng": 151.2098382
-    },
-    {
-      "time": "14:00",
-      "name": "폐장",
-      "address": "-",
-      "hours": "-",
-      "desc": "",
-      "note": ""
-    },
-    {
-      "time": "14:30",
-      "name": "밀슨스 포인트",
-      "address": "Milsons Point NSW 2061",
-      "hours": "-",
-      "desc": "산책로",
-      "note": "",
-      "lat": -33.8474389,
-      "lng": 151.2119408
-    },
-    {
-      "time": "15:00",
-      "name": "하버브릿지 뷰",
-      "address": "Sydney Harbour Bridge, Sydney NSW",
-      "hours": "-",
-      "desc": "대표 랜드마크 조망",
-      "note": "",
-      "lat": -33.8523063,
-      "lng": 151.2107871
-    },
-    {
-      "time": "18:30",
-      "name": "Lavendra Indian (저녁)",
-      "address": "5 Walker St, Lavender Bay NSW 2060",
-      "hours": "12:00–22:00(화~일)",
-      "desc": "하버브릿지 뷰, 인도+일본 퓨전 — 버터치킨 가츠 커리 추천",
-      "note": "BYO 가능, 예약 권장",
-      "lat": -33.843236,
-      "lng": 151.208143
-    }
-  ],
-  "8": [
-    {
-      "time": "07:00",
-      "name": "차량 출발",
-      "address": "-",
-      "hours": "-",
-      "desc": "블루마운틴으로 이동 (약 2시간)",
-      "note": ""
-    },
-    {
-      "time": "09:00",
-      "name": "에코 포인트 & 세자매봉",
-      "address": "Prince Henry Cliff Walk, Katoomba NSW 2780",
-      "hours": "24시간",
-      "desc": "블루마운틴 대표 전망대",
-      "note": "",
-      "lat": -33.7325833,
-      "lng": 150.3120446
-    },
-    {
-      "time": "10:00",
-      "name": "시닉월드",
-      "address": "1 Violet St, Katoomba NSW 2780",
-      "hours": "10:00–16:00(평일)",
-      "desc": "케이블카 & 스카이웨이",
-      "note": "",
-      "lat": -33.7288041,
-      "lng": 150.3012037
-    },
-    {
-      "time": "13:00",
-      "name": "Hominy Bakery (카툼바 점심)",
-      "address": "185 Katoomba St, Katoomba NSW 2780",
-      "hours": "화~토 06:00–16:00",
-      "desc": "블루마운틴 대표 베이커리 — 비프파이, 포크·펜넬 소시지롤",
-      "note": "월·일 휴무",
-      "lat": -33.7164623,
-      "lng": 150.3110433
-    },
-    {
-      "time": "14:00",
-      "name": "링컨스 락",
-      "address": "51 Little Switzerland Dr, Wentworth Falls NSW 2782",
-      "hours": "24시간",
-      "desc": "절벽 전망대",
-      "note": "주차 공간 협소",
-      "lat": -33.7401395,
-      "lng": 150.372104
-    },
-    {
-      "time": "16:00",
-      "name": "귀환 출발",
       "address": "-",
       "hours": "-",
       "desc": "",
