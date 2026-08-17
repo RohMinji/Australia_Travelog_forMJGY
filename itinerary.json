@@ -480,6 +480,16 @@
     ],
     "8": [
       {
+        "time": "08:00",
+        "name": "Central Studio Sydney H (짐 맡기기)",
+        "address": "803-813 George St, Haymarket NSW 2000",
+        "hours": "24시간",
+        "desc": "정식 체크인은 15:00부터지만 프론트에 짐 맡기고 바로 관광 가능",
+        "note": "예약 상세정보는 정보 탭 > 숙소 정보 참고",
+        "lat": -33.8826478,
+        "lng": 151.2036672
+      },
+      {
         "time": "08:30",
         "name": "서큘러키 페리 탑승",
         "address": "Circular Quay, Sydney NSW 2000",
@@ -618,6 +628,16 @@
     ],
     "10": [
       {
+        "time": "09:30",
+        "name": "Central Studio Sydney H (체크아웃, Superior)",
+        "address": "803-813 George St, Haymarket NSW 2000",
+        "hours": "-",
+        "desc": "12/29~31 예약분 체크아웃 (10:00 마감)",
+        "note": "",
+        "lat": -33.8826478,
+        "lng": 151.2036672
+      },
+      {
         "time": "10:00",
         "name": "여유로운 아침",
         "address": "-",
@@ -654,6 +674,16 @@
         "note": "",
         "lat": -33.857208,
         "lng": 151.201206
+      },
+      {
+        "time": "15:30",
+        "name": "Central Studio Sydney H (체크인, Deluxe)",
+        "address": "803-813 George St, Haymarket NSW 2000",
+        "hours": "-",
+        "desc": "12/31~1/2 예약분 체크인, 같은 호텔 룸 변경",
+        "note": "짐 옮기기",
+        "lat": -33.8826478,
+        "lng": 151.2036672
       },
       {
         "time": "17:00",
@@ -755,11 +785,13 @@
     "12": [
       {
         "time": "08:00",
-        "name": "체크아웃",
-        "address": "-",
-        "hours": "-",
-        "desc": "",
-        "note": "전날 짐 정리 권장"
+        "name": "Central Studio Sydney H (체크아웃, Deluxe)",
+        "address": "803-813 George St, Haymarket NSW 2000",
+        "hours": "공식 체크아웃 10:00",
+        "desc": "1/2 출국 당일 체크아웃",
+        "note": "전날 짐 정리 권장",
+        "lat": -33.8826478,
+        "lng": 151.2036672
       },
       {
         "time": "09:00",
