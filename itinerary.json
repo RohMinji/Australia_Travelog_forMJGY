@@ -240,17 +240,7 @@
         "lng": 151.2743049
       },
       {
-        "time": "12:00",
-        "name": "브론테 비치",
-        "address": "Bronte Beach, Bronte NSW 2024",
-        "hours": "-",
-        "desc": "코스탈워크 경유지, 피크닉 명소",
-        "note": "",
-        "lat": -33.9034192,
-        "lng": 151.2682636
-      },
-      {
-        "time": "13:30",
+        "time": "11:30",
         "name": "D.Bowls Açaí Bondi",
         "address": "18/110 Ramsgate Ave, Bondi Beach NSW 2026",
         "hours": "08:00–17:00",
@@ -260,7 +250,27 @@
         "lng": 151.281075
       },
       {
+        "time": "12:30",
+        "name": "브론테 비치",
+        "address": "Bronte Beach, Bronte NSW 2024",
+        "hours": "-",
+        "desc": "코스탈워크 경유지, 피크닉 명소",
+        "note": "",
+        "lat": -33.9034192,
+        "lng": 151.2682636
+      },
+      {
         "time": "14:00",
+        "name": "쿠지 비치",
+        "address": "Coogee Beach, Coogee NSW 2034",
+        "hours": "-",
+        "desc": "브론테에서 클로벨리 경유 도보 약 45분 — 코스탈워크 종점",
+        "note": "강추받은 곳",
+        "lat": -33.9189677,
+        "lng": 151.2572993
+      },
+      {
+        "time": "15:30",
         "name": "오후 자유시간",
         "address": "-",
         "hours": "-",
