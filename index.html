@@ -271,6 +271,7 @@ const DEFAULT_ITINERARY = {
     { time:"18:30", name:"Lavendra Indian (저녁)", address:"5 Walker St, Lavender Bay NSW 2060", hours:"12:00–22:00(화~일)", desc:"하버브릿지 뷰, 인도+일본 퓨전 — 버터치킨 가츠 커리 추천", note:"BYO 가능, 예약 권장", lat:-33.843236, lng:151.208143 },
   ],
   8: [
+    { time:"08:00", name:"Central Studio Sydney H (짐 맡기기)", address:"803-813 George St, Haymarket NSW 2000", hours:"24시간", desc:"정식 체크인은 15:00부터지만 프론트에 짐 맡기고 바로 관광 가능", note:"예약 상세정보는 정보 탭 > 숙소 정보 참고", lat:-33.8826478, lng:151.2036672 },
     { time:"08:30", name:"서큘러키 페리 탑승", address:"Circular Quay, Sydney NSW 2000", hours:"-", desc:"", note:"", lat:-33.8611374, lng:151.2126457 },
     { time:"09:00", name:"타롱가 동물원", address:"Bradleys Head Rd, Mosman NSW 2088", hours:"09:30–16:30", desc:"코알라·캥거루 등 호주 동물, 하버뷰 케이블카", note:"", lat:-33.8435473, lng:151.2413418 },
     { time:"13:00", name:"서큘러키 복귀", address:"-", hours:"-", desc:"", note:"", lat:-33.8611374, lng:151.2126457 },
@@ -289,10 +290,12 @@ const DEFAULT_ITINERARY = {
     { time:"15:00", name:"갭 파크", address:"Gap Road, Watsons Bay NSW 2030", hours:"24시간", desc:"절벽 전망대", note:"", lat:-33.846274, lng:151.285666 },
   ],
   10: [
+    { time:"09:30", name:"Central Studio Sydney H (체크아웃, Superior)", address:"803-813 George St, Haymarket NSW 2000", hours:"-", desc:"12/29~31 예약분 체크아웃 (10:00 마감)", note:"", lat:-33.8826478, lng:151.2036672 },
     { time:"10:00", name:"여유로운 아침", address:"-", hours:"-", desc:"", note:"" },
     { time:"11:30", name:"서큘러키 산책", address:"Circular Quay, Sydney NSW 2000", hours:"-", desc:"", note:"", lat:-33.8611374, lng:151.2126457 },
     { time:"12:30", name:"Wild Sage (점심)", address:"Exchange Place, 3 Sussex St, Barangaroo NSW 2000", hours:"07:00–15:00", desc:"바랑가루 리저브 바로 옆 — 그린 샥슈카, 참치 포케볼 추천", note:"", lat:-33.8650518, lng:151.2028378 },
     { time:"14:00", name:"바랑가루 리저브", address:"Hickson Rd, Barangaroo NSW 2000", hours:"24시간", desc:"불꽃놀이 명당 중 하나", note:"", lat:-33.857208, lng:151.201206 },
+    { time:"15:30", name:"Central Studio Sydney H (체크인, Deluxe)", address:"803-813 George St, Haymarket NSW 2000", hours:"-", desc:"12/31~1/2 예약분 체크인, 같은 호텔 룸 변경", note:"짐 옮기기", lat:-33.8826478, lng:151.2036672 },
     { time:"17:00", name:"자리 잡기", address:"-", hours:"-", desc:"", note:"이른 시간부터 인파 몰림 주의" },
     { time:"21:00", name:"9시 불꽃놀이", address:"-", hours:"-", desc:"가족 단위 프리쇼", note:"" },
     { time:"24:00", name:"자정 하버브릿지 불꽃놀이", address:"-", hours:"-", desc:"메인 불꽃놀이", note:"", lat:-33.8523063, lng:151.2107871 },
@@ -307,7 +310,7 @@ const DEFAULT_ITINERARY = {
     { time:"17:30", name:"Hanoi on King (뉴타운 저녁)", address:"126 King St, Newtown NSW 2042", hours:"11:00–21:00", desc:"Sydney Park에서 도보권 — 분짜, 소고기 쌀국수 추천", note:"", lat:-33.8932831, lng:151.1840488 },
   ],
   12: [
-    { time:"08:00", name:"체크아웃", address:"-", hours:"-", desc:"", note:"전날 짐 정리 권장" },
+    { time:"08:00", name:"Central Studio Sydney H (체크아웃, Deluxe)", address:"803-813 George St, Haymarket NSW 2000", hours:"공식 체크아웃 10:00", desc:"1/2 출국 당일 체크아웃", note:"전날 짐 정리 권장", lat:-33.8826478, lng:151.2036672 },
     { time:"09:00", name:"공항 이동", address:"-", hours:"-", desc:"", note:"" },
     { time:"12:15", name:"시드니 출발 (SYD)", address:"Sydney Airport", hours:"-", desc:"→ ICN 19:15 도착 예정", note:"", lat:-33.9399, lng:151.1753 },
   ],
@@ -349,6 +352,20 @@ const AUSTRALIA_INFO = [
 ];
 
 // key = one or more substrings that appear in an itinerary item's `name`; first match wins.
+// hotel booking confirmations — shown in the Info tab for quick front-desk reference
+const ACCOMMODATIONS = [
+  { id:"stay1", hotel:"Central Studio Sydney H", bookingNo:"1762702793", guest:"Minji Roh", phone:"+61292122544",
+    checkinDate:"2026-12-29", checkinTime:"15:00", checkoutDate:"2026-12-31", checkoutTime:"10:00",
+    room:"Superior Room", rooms:"객실 1개", guests:"성인 2명", price:"₩537,502", policy:"환불 불가 · 노쇼 시 예약금액 100% 취소요금 부과", bookingRef:"아고다" },
+  { id:"stay2", hotel:"Central Studio Sydney H", bookingNo:"1762701960", guest:"Minji Roh", phone:"+61292122544",
+    checkinDate:"2026-12-31", checkinTime:"15:00", checkoutDate:"2027-01-02", checkoutTime:"10:00",
+    room:"Deluxe Room", rooms:"객실 1개", guests:"성인 2명", price:"₩907,504", policy:"환불 불가 · 노쇼 시 예약금액 100% 취소요금 부과", bookingRef:"아고다" },
+];
+
+function accommodationText(a){
+  return `${a.hotel}\n예약번호: ${a.bookingNo}\n투숙객명: ${a.guest}\n체크인: ${a.checkinDate} ${a.checkinTime}\n체크아웃: ${a.checkoutDate} ${a.checkoutTime}\n객실: ${a.room} (${a.rooms}, ${a.guests})\n숙소 연락처: ${a.phone}`;
+}
+
 const PLACE_INFO = [
   { id:"opera-house", keys:["오페라하우스"], title:"시드니 오페라하우스", body:"덴마크 건축가 예른 웃손이 설계했고, 조개껍질 또는 돛을 형상화한 지붕이 상징이에요. 1959년 착공해 1973년 완공까지 우여곡절이 많았던 걸로 유명하고, 2007년 유네스코 세계문화유산으로 등재됐어요. 내부는 콘서트홀, 오페라극장 등 여러 공연장으로 이뤄져 있어 투어로 둘러볼 수 있어요." },
   { id:"botanic-garden", keys:["로열 보타닉 가든"], title:"로열 보타닉 가든", body:"1816년 조성된 호주에서 가장 오래된 식물원으로, 원래 이 자리는 시드니 최초 정착민들의 농경지였어요. 무료 입장이며 오페라하우스와 하버브릿지를 동시에 조망할 수 있는 산책로가 매력이에요." },
@@ -395,6 +412,10 @@ const TRANSIT = [
   { day:11, fromKey:"크루즈", toKey:"시드니대학교", mode:"bus", route:"Darling Dr 정류장 → Sydney Uni 정류장 (버스 370, Broadway 경유)", mins:22, transfers:0, note:"" },
   { day:11, fromKey:"시드니대학교", toKey:"Sydney Park", mode:"bus", route:"City Rd 정류장 → Sydney Park 정류장 (버스 352)", mins:15, transfers:0, note:"" },
   { day:11, fromKey:"Sydney Park", toKey:"Hanoi on King", mode:"walk", route:"도보 약 20분, 또는 버스 352", mins:20, transfers:0, note:"짧은 구간이라 걷기도 무난" },
+  { day:8, fromKey:"짐 맡기기", toKey:"서큘러키 페리", mode:"train", route:"센트럴역 → 서큘러키역 (T-라인 직행)", mins:8, transfers:0, note:"호텔이 센트럴역 바로 앞" },
+  { day:10, fromKey:"체크아웃", toKey:"서큘러키 산책", mode:"train", route:"센트럴역 → 서큘러키역 (T-라인 직행)", mins:8, transfers:0, note:"" },
+  { day:10, fromKey:"바랑가루 리저브", toKey:"체크인", mode:"walk", route:"바랑가루 → 타운홀 경유 도보, 또는 라이트레일 L1", mins:22, transfers:0, note:"" },
+  { day:12, fromKey:"체크아웃", toKey:"시드니 출발", mode:"train", route:"센트럴역 → 국제/국내공항역 (T8 Airport Line 직행)", mins:15, transfers:0, note:"짐 많으면 택시/우버도 고려" },
 ];
 
 function findTransitLeg(day, fromName, toName) {
@@ -491,6 +512,15 @@ function downloadText(filename, text){
   document.body.appendChild(a); a.click(); document.body.removeChild(a);
   URL.revokeObjectURL(url);
 }
+async function geocodeAddress(query){
+  const url = `https://nominatim.openstreetmap.org/search?format=json&limit=1&q=${encodeURIComponent(query)}`;
+  const res = await fetch(url, { headers: { "Accept": "application/json" } });
+  if(!res.ok) throw new Error("조회 실패");
+  const data = await res.json();
+  if(!data || !data.length) throw new Error("검색 결과 없음");
+  return { lat: parseFloat(data[0].lat), lng: parseFloat(data[0].lon) };
+}
+
 async function githubUpsert(cfg, path, base64Content, message){
   const url = `https://api.github.com/repos/${cfg.owner}/${cfg.repo}/contents/${path.split("/").map(encodeURIComponent).join("/")}`;
   const headers = { Authorization:`token ${cfg.token}`, Accept:"application/vnd.github+json" };
@@ -722,7 +752,8 @@ function ItineraryTab(){
                     </div>
                   </div>
                   <div class="erow">
-                    <input data-f="address" data-idx="${idx}" value="${it.address||''}" placeholder="주소"/>
+                    <input data-f="address" data-idx="${idx}" value="${it.address||''}" placeholder="주소" style="flex:1;"/>
+                    <button class="pillbtn geocode-btn" data-geocode="${idx}" style="flex-shrink:0;${it.lat?'color:#22C55E;border-color:#86EFAC;':''}">${it.lat?ICON.check:ICON.pin} ${it.lat?'좌표 있음':'좌표 조회'}</button>
                   </div>
                   <div class="erow">
                     <input data-f="hours" data-idx="${idx}" value="${it.hours||''}" placeholder="영업시간" style="flex:1;"/>
@@ -867,6 +898,25 @@ function DiaryTab(){
 function InfoTab(){
   return `
   <div style="padding-bottom:32px;">
+    <div class="info-sectiontitle">숙소 정보</div>
+    ${ACCOMMODATIONS.map(a=>`
+      <div class="info-card" id="stay-${a.id}">
+        <h3>${a.hotel} <span style="font-weight:400;font-size:11px;opacity:.5;">· ${a.bookingRef} #${a.bookingNo}</span></h3>
+        <div style="font-size:12.5px;line-height:1.9;">
+          <div style="display:flex;justify-content:space-between;"><span style="opacity:.6;">투숙객명</span><b>${a.guest}</b></div>
+          <div style="display:flex;justify-content:space-between;"><span style="opacity:.6;">체크인</span><b>${a.checkinDate} ${a.checkinTime}</b></div>
+          <div style="display:flex;justify-content:space-between;"><span style="opacity:.6;">체크아웃</span><b>${a.checkoutDate} ${a.checkoutTime}</b></div>
+          <div style="display:flex;justify-content:space-between;"><span style="opacity:.6;">객실</span><b>${a.room} · ${a.rooms} · ${a.guests}</b></div>
+          <div style="display:flex;justify-content:space-between;"><span style="opacity:.6;">결제금액</span><b>${a.price}</b></div>
+        </div>
+        <p style="font-size:11px;color:var(--coralDark);background:#FFF3E9;border-radius:8px;padding:6px 8px;margin-top:8px;">${a.policy}</p>
+        <div class="tactions" style="margin-top:8px;display:flex;gap:6px;">
+          <a class="pillbtn" href="tel:${a.phone}" style="text-decoration:none;">${ICON.info2} ${a.phone}</a>
+          <button class="pillbtn" data-copystay="${a.id}">${ICON.copy} 예약정보 복사</button>
+        </div>
+      </div>
+    `).join("")}
+
     <div class="info-sectiontitle">호주 알아가기</div>
     ${AUSTRALIA_INFO.map(s=>`
       <div class="info-card"><h3>${s.title}</h3><p>${s.body}</p></div>
@@ -995,6 +1045,28 @@ function bindTabEvents(){
         const idx = Number(b.dataset.delitem);
         state.itinerary[dayId].splice(idx,1);
         renderTabContent();
+      };
+    });
+
+    // geocode address -> lat/lng (so distance/map works for newly added or edited places)
+    document.querySelectorAll("[data-geocode]").forEach(b=>{
+      b.onclick = async (e)=>{
+        e.stopPropagation();
+        const dayId = state.editDay;
+        const idx = Number(b.dataset.geocode);
+        const item = state.itinerary[dayId][idx];
+        if(!item.address){ showToast("error", "주소를 먼저 입력해주세요."); return; }
+        const original = b.innerHTML;
+        b.innerHTML = `${ICON.loader} 조회중`;
+        try{
+          const { lat, lng } = await geocodeAddress(item.address);
+          item.lat = lat; item.lng = lng;
+          showToast("success", "좌표를 찾았어요 — 지도·거리 계산에 반영돼요.");
+          renderTabContent();
+        }catch(err){
+          showToast("error", "좌표를 못 찾았어요 — 주소를 더 구체적으로 적어보세요.");
+          b.innerHTML = original;
+        }
       };
     });
 
@@ -1162,6 +1234,20 @@ function bindTabEvents(){
         renderTabContent();
       }catch(err){ showToast("error", `저장 실패: ${err.message}`); }
     };
+  }
+  if(state.tab==="info"){
+    document.querySelectorAll("[data-copystay]").forEach(b=>{
+      b.onclick = async ()=>{
+        const a = ACCOMMODATIONS.find(x=>x.id===b.dataset.copystay);
+        try{
+          await navigator.clipboard.writeText(accommodationText(a));
+          b.innerHTML = `${ICON.check} 복사됨`;
+          setTimeout(()=>{ b.innerHTML = `${ICON.copy} 예약정보 복사`; }, 1600);
+        }catch(err){
+          showToast("error", "복사에 실패했어요.");
+        }
+      };
+    });
   }
 }
 
