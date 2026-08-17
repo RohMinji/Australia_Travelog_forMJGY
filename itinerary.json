@@ -143,7 +143,7 @@
         "address": "330A/330B George St, Sydney NSW 2000",
         "hours": "12:00–24:00(수)",
         "desc": "이탈리안 스몰플레이트 — 우드파이어 브레드+부라타, 파파르델레 추천",
-        "note": "인기 많아 예약 권장",
+        "note": "사촌 추천: 안티파스티 꼭 먹어보기",
         "lat": -33.866462,
         "lng": 151.2073516
       },
@@ -719,7 +719,7 @@
         "address": "1 Bridge Rd, Glebe NSW 2037",
         "hours": "07:00–22:00",
         "desc": "신선 해산물 아침 식사",
-        "note": "",
+        "note": "스시도넛 꼭 먹어보기",
         "lat": -33.8751173,
         "lng": 151.199992
       },
@@ -772,14 +772,34 @@
         "lng": 151.1851663
       },
       {
-        "time": "17:30",
+        "time": "17:00",
+        "name": "The Grounds of Alexandria (커피 & 케이크)",
+        "address": "7a/2 Huntley St, Alexandria NSW 2015",
+        "hours": "07:30–21:00",
+        "desc": "정원 같은 카페, Sydney Park에서 도보 10분 — 스몰카푸치노+디저트 추천",
+        "note": "",
+        "lat": -33.9106777,
+        "lng": 151.1941376
+      },
+      {
+        "time": "18:00",
         "name": "Hanoi on King (뉴타운 저녁)",
         "address": "126 King St, Newtown NSW 2042",
         "hours": "11:00–21:00",
-        "desc": "Sydney Park에서 도보권 — 분짜, 소고기 쌀국수 추천",
+        "desc": "분짜, 소고기 쌀국수 추천",
         "note": "",
         "lat": -33.8932831,
         "lng": 151.1840488
+      },
+      {
+        "time": "19:00",
+        "name": "Black Star Pastry (디저트)",
+        "address": "1/325 King St, Newtown NSW 2042",
+        "hours": "09:30–20:00(목)",
+        "desc": "시드니 대표 디저트 — 딸기수박케이크(Strawberry Watermelon Cake) 꼭 먹어보기",
+        "note": "",
+        "lat": -33.8972123,
+        "lng": 151.1789963
       }
     ],
     "12": [
