@@ -191,7 +191,7 @@ const DEFAULT_DAYS = [
   { id:4, date:"2026-12-25", md:"12/25", wd:"금", label:"크리스마스, 본다이" },
   { id:5, date:"2026-12-26", md:"12/26", wd:"토", label:"박싱데이 & 쇼핑" },
   { id:6, date:"2026-12-27", md:"12/27", wd:"일", label:"블루마운틴" },
-  { id:7, date:"2026-12-28", md:"12/28", wd:"월", label:"루나파크" },
+  { id:7, date:"2026-12-28", md:"12/28", wd:"월", label:"와타몰라 낚시 & 수영" },
   { id:8, date:"2026-12-29", md:"12/29", wd:"화", label:"타롱가 & 맨리" },
   { id:9, date:"2026-12-30", md:"12/30", wd:"수", label:"파슬리 베이" },
   { id:10, date:"2026-12-31", md:"12/31", wd:"목", label:"새해맞이" },
@@ -265,11 +265,11 @@ const DEFAULT_ITINERARY = {
     { time:"16:00", name:"귀환 출발", address:"-", hours:"-", desc:"", note:"" },
   ],
   7: [
-    { time:"10:00", name:"루나파크 시드니", address:"1 Olympic Dr, Milsons Point NSW 2061", hours:"월요일 10:00–14:00", desc:"빅디퍼 등 스릴 라이드 집중 공략", note:"요일별 운영시간 상이 — 월요일은 단축 운영", lat:-33.8476987, lng:151.2098382 },
-    { time:"14:00", name:"폐장", address:"-", hours:"-", desc:"", note:"" },
-    { time:"14:30", name:"밀슨스 포인트", address:"Milsons Point NSW 2061", hours:"-", desc:"산책로", note:"", lat:-33.8474389, lng:151.2119408 },
-    { time:"15:00", name:"하버브릿지 뷰", address:"Sydney Harbour Bridge, Sydney NSW", hours:"-", desc:"대표 랜드마크 조망", note:"", lat:-33.8523063, lng:151.2107871 },
-    { time:"18:30", name:"Lavendra Indian (저녁)", address:"5 Walker St, Lavender Bay NSW 2060", hours:"12:00–22:00(화~일)", desc:"하버브릿지 뷰, 인도+일본 퓨전 — 버터치킨 가츠 커리 추천", note:"BYO 가능, 예약 권장", lat:-33.843236, lng:151.208143 },
+    { time:"07:00", name:"차량 출발", address:"-", hours:"-", desc:"로열 국립공원으로 이동 (약 1~1.5시간)", note:"" },
+    { time:"09:00", name:"와타몰라 비치 (낚시 & 수영, 소현과 함께)", address:"Royal National Park NSW 2232", hours:"07:30–20:30", desc:"잔잔한 라군에서 수영, 바위에서 낚시", note:"차량당 $12 입장료(연간패스 없을 시)", lat:-34.1371975, lng:151.1163563 },
+    { time:"12:00", name:"점심 (피크닉 / 현지 BBQ)", address:"-", hours:"-", desc:"", note:"현장에 BBQ·피크닉 시설 있음" },
+    { time:"15:00", name:"자유시간", address:"-", hours:"-", desc:"여유롭게 쉬기", note:"" },
+    { time:"17:00", name:"귀환 출발", address:"-", hours:"-", desc:"", note:"" },
   ],
   8: [
     { time:"08:00", name:"Central Studio Sydney H (짐 맡기기)", address:"803-813 George St, Haymarket NSW 2000", hours:"24시간", desc:"정식 체크인은 15:00부터지만 프론트에 짐 맡기고 바로 관광 가능", note:"예약 상세정보는 정보 탭 > 숙소 정보 참고", lat:-33.8826478, lng:151.2036672 },
@@ -327,7 +327,7 @@ const PACKING = {
   4: ["수영복", "수건", "선크림", "물안경", "방수팩"],
   5: ["편한 신발", "장바구니(쇼핑백)"],
   6: ["워킹화", "물", "간식", "얇은 겉옷(산간지역 쌀쌀)"],
-  7: ["편한 신발", "모자"],
+  7: ["낚시도구", "수영복", "수건", "선크림", "돗자리", "쿨러백/아이스박스"],
   8: ["수영복", "선크림", "수건", "카메라"],
   9: ["돗자리", "수영복", "수건", "선크림", "물안경"],
   10: ["돗자리", "담요", "방석", "간식", "보온병"],
@@ -382,6 +382,7 @@ const PLACE_INFO = [
   { id:"manly", keys:["맨리"], title:"맨리 비치", body:"1788년 초대 총독 아서 필립이 원주민들의 당당한(manly) 태도를 보고 이름 붙였다는 설이 있어요. 서큘러키에서 페리로 30분, 시드니 도심에서 가장 가까운 서핑 명소예요." },
   { id:"luna-park", keys:["루나파크"], title:"루나파크 시드니", body:"1935년 개장한 아르데코 양식의 클래식 놀이공원이에요. 입구의 거대한 웃는 얼굴 조형물이 상징이고, 하버브릿지 바로 옆이라 롤러코스터를 타면서 하버 뷰를 함께 즐길 수 있어요." },
   { id:"blue-mountains", keys:["블루마운틴", "시닉월드", "에코 포인트", "세자매봉", "링컨스 락"], title:"블루마운틴 & 세자매봉", body:"유칼립투스 나무에서 나오는 오일 성분이 대기 중에 퍼지며 산이 푸른빛으로 보여서 '블루'마운틴이란 이름이 붙었어요. 세자매봉(Three Sisters)에는 세 자매가 마법에 걸려 돌이 됐다는 애보리진 전설이 전해져요. 2000년 유네스코 세계자연유산으로 등재됐습니다." },
+  { id:"wattamolla", keys:["와타몰라"], title:"와타몰라 비치", body:"로열 국립공원(세계에서 두 번째로 오래된 국립공원, 1879년 지정) 안에 있는 해변이에요. 파도가 거친 바다와 잔잔한 라군이 폭포로 연결된 독특한 지형이라 수영·낚시 둘 다 인기예요. 현지인들이 시드니 근교 최고 숨은 명소로 꼽는 곳 중 하나예요." },
   { id:"watsons-bay", keys:["파슬리 베이", "니엘슨 파크", "캠프 코브", "갭 파크", "왓슨스"], title:"왓슨스베이 일대", body:"시드니 항구 초입, 태즈먼해와 맞닿은 조용한 동부 해안 지역이에요. 잔잔한 파슬리 베이·캠프 코브 같은 하버비치와, 거친 파도가 절벽에 부딪히는 갭 파크가 걸어서 5분 거리에 공존하는 게 이 지역의 매력이에요." },
   { id:"barangaroo", keys:["바랑가루"], title:"바랑가루 리저브", body:"원래 항만 시설이었던 곳을 2015년 대규모 재개발로 시민 공원화한 곳이에요. 이름은 이 지역 초기 원주민 여성 지도자 '바랑가루'에서 따왔고, 조성 시 자생 사암 절벽과 토종 식물을 복원한 게 특징이에요." },
   { id:"darling-harbour", keys:["달링하버"], title:"달링하버", body:"1988년 호주 건국 200주년을 기념해 낙후된 항만 부지를 재개발한 곳이에요. 씨라이프 아쿠아리움, 컨벤션센터 등이 모여있는 시드니의 대표 워터프론트 관광지예요." },
@@ -402,7 +403,7 @@ function findPlaceInfo(name) {
 
 // days where the person already has a private/rental car for the whole day —
 // transit suggestions don't make sense here, everything is by car.
-const CAR_DAYS = new Set([6, 9]);
+const CAR_DAYS = new Set([6, 7, 9]);
 
 // manual transit legs: {day, fromKey, toKey, mode, route, mins, transfers, note}
 // fromKey/toKey are substrings matched against item.name.
