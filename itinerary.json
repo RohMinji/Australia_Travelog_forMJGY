@@ -47,7 +47,7 @@
       "date": "2026-12-28",
       "md": "12/28",
       "wd": "월",
-      "label": "루나파크"
+      "label": "와타몰라 낚시 & 수영"
     },
     {
       "id": 8,
@@ -440,52 +440,46 @@
     ],
     "7": [
       {
-        "time": "10:00",
-        "name": "루나파크 시드니",
-        "address": "1 Olympic Dr, Milsons Point NSW 2061",
-        "hours": "월요일 10:00–14:00",
-        "desc": "빅디퍼 등 스릴 라이드 집중 공략",
-        "note": "요일별 운영시간 상이 — 월요일은 단축 운영",
-        "lat": -33.8476987,
-        "lng": 151.2098382
+        "time": "07:00",
+        "name": "차량 출발",
+        "address": "-",
+        "hours": "-",
+        "desc": "로열 국립공원으로 이동 (약 1~1.5시간)",
+        "note": ""
       },
       {
-        "time": "14:00",
-        "name": "폐장",
+        "time": "09:00",
+        "name": "와타몰라 비치 (낚시 & 수영, 소현과 함께)",
+        "address": "Royal National Park NSW 2232",
+        "hours": "07:30–20:30",
+        "desc": "잔잔한 라군에서 수영, 바위에서 낚시",
+        "note": "차량당 $12 입장료(연간패스 없을 시)",
+        "lat": -34.1371975,
+        "lng": 151.1163563
+      },
+      {
+        "time": "12:00",
+        "name": "점심 (피크닉 / 현지 BBQ)",
+        "address": "-",
+        "hours": "-",
+        "desc": "",
+        "note": "현장에 BBQ·피크닉 시설 있음"
+      },
+      {
+        "time": "15:00",
+        "name": "자유시간",
+        "address": "-",
+        "hours": "-",
+        "desc": "여유롭게 쉬기",
+        "note": ""
+      },
+      {
+        "time": "17:00",
+        "name": "귀환 출발",
         "address": "-",
         "hours": "-",
         "desc": "",
         "note": ""
-      },
-      {
-        "time": "14:30",
-        "name": "밀슨스 포인트",
-        "address": "Milsons Point NSW 2061",
-        "hours": "-",
-        "desc": "산책로",
-        "note": "",
-        "lat": -33.8474389,
-        "lng": 151.2119408
-      },
-      {
-        "time": "15:00",
-        "name": "하버브릿지 뷰",
-        "address": "Sydney Harbour Bridge, Sydney NSW",
-        "hours": "-",
-        "desc": "대표 랜드마크 조망",
-        "note": "",
-        "lat": -33.8523063,
-        "lng": 151.2107871
-      },
-      {
-        "time": "18:30",
-        "name": "Lavendra Indian (저녁)",
-        "address": "5 Walker St, Lavender Bay NSW 2060",
-        "hours": "12:00–22:00(화~일)",
-        "desc": "하버브릿지 뷰, 인도+일본 퓨전 — 버터치킨 가츠 커리 추천",
-        "note": "BYO 가능, 예약 권장",
-        "lat": -33.843236,
-        "lng": 151.208143
       }
     ],
     "8": [
