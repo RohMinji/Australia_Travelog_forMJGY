@@ -690,6 +690,26 @@
         "lng": 151.2036672
       },
       {
+        "time": "16:00",
+        "name": "Chat Thai - Circular Quay (저녁)",
+        "address": "Gateway Shopping Centre, L05/1 Macquarie Pl, Sydney NSW 2000",
+        "hours": "11:00–22:00(목)",
+        "desc": "소현 추천 — 팟씨유, 파파야샐러드 추천. 자리 잡기 전에 미리 저녁",
+        "note": "",
+        "lat": -33.8619151,
+        "lng": 151.2098802
+      },
+      {
+        "time": "16:45",
+        "name": "Yo-Chi (후식)",
+        "address": "Tenancy 05-13, Alfred St, Gateway Plaza, 1 Macquarie Pl, Sydney NSW 2000",
+        "hours": "11:00–22:30(목)",
+        "desc": "셀프 토핑 프로즌요거트, 평점 4.8 — Chat Thai 바로 옆 건물",
+        "note": "",
+        "lat": -33.8617469,
+        "lng": 151.2100958
+      },
+      {
         "time": "17:00",
         "name": "자리 잡기",
         "address": "-",
